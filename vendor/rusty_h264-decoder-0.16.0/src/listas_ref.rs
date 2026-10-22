@@ -1,7 +1,7 @@
-//! Construcción y modificación de listas de imágenes de referencia (`RefPicList0` y `RefPicList1`, UIT-T H.264 §8.2.4).
+﻿//! ConstrucciÃ³n y modificaciÃ³n de listas de imÃ¡genes de referencia (`RefPicList0` y `RefPicList1`, UIT-T H.264 Â§8.2.4).
 //!
-//! Implementa la inicialización por `FrameNumWrap` para cortes P (§8.2.4.2.1), la inicialización
-//! por `PicOrderCnt` para cortes B (§8.2.4.2.3) y el proceso `ref_pic_list_modification` (§8.2.4.3).
+//! Implementa la inicializaciÃ³n por `FrameNumWrap` para cortes P (Â§8.2.4.2.1), la inicializaciÃ³n
+//! por `PicOrderCnt` para cortes B (Â§8.2.4.2.3) y el proceso `ref_pic_list_modification` (Â§8.2.4.3).
 
 use alloc::boxed::Box;
 use alloc::vec::Vec;
@@ -10,16 +10,16 @@ use rusty_h264_common::BitReader;
 use crate::dpb::{Ref, RefFrame};
 use crate::error::DecodeError;
 
-/// Código de fin de la lista de modificaciones de índices de referencia (`modification_of_pic_nums_idc == 3`).
+/// CÃ³digo de fin de la lista de modificaciones de Ã­ndices de referencia (`modification_of_pic_nums_idc == 3`).
 const IDC_MODIFICACION_FIN: u32 = 3;
 
-/// Código de modificación mediante índice de referencia a largo plazo (`modification_of_pic_nums_idc == 2`).
+/// CÃ³digo de modificaciÃ³n mediante Ã­ndice de referencia a largo plazo (`modification_of_pic_nums_idc == 2`).
 const IDC_MODIFICACION_LARGO_PLAZO: u32 = 2;
 
-/// Número máximo de comandos `ref_pic_list_modification` aceptados en una cabecera de corte.
+/// NÃºmero mÃ¡ximo de comandos `ref_pic_list_modification` aceptados en una cabecera de corte.
 const MAX_MODIFICACIONES_LISTA_REF: usize = 64;
 
-/// Parámetros de construcción y modificación de las dos listas de referencia de un corte B.
+/// ParÃ¡metros de construcciÃ³n y modificaciÃ³n de las dos listas de referencia de un corte B.
 pub(crate) struct ContextoListaB<'a> {
     pub curr_poc: i32,
     pub curr_frame_num: u32,
@@ -30,7 +30,7 @@ pub(crate) struct ContextoListaB<'a> {
     pub mods1: &'a [(u32, u32)],
 }
 
-/// Parses a `ref_pic_list_modification` command list (spec §7.3.3.1) into
+/// Parses a `ref_pic_list_modification` command list (spec Â§7.3.3.1) into
 /// `(modification_of_pic_nums_idc, value)` pairs, stopping at idc 3.
 pub(crate) fn parse_ref_pic_list_modification(
     r: &mut BitReader,
@@ -56,7 +56,7 @@ pub(crate) fn parse_ref_pic_list_modification(
 }
 
 /// Builds the P-slice `RefPicList0`: short-term references ordered by descending
-/// `FrameNumWrap`, then long-term by ascending idx (spec §8.2.4.2.1), with any
+/// `FrameNumWrap`, then long-term by ascending idx (spec Â§8.2.4.2.1), with any
 /// `ref_pic_list_modification` applied.
 pub(crate) fn build_ref_list_p(
     dpb: &[Ref],
@@ -83,7 +83,7 @@ pub(crate) fn build_ref_list_p(
     apply_list_modification(init, curr_frame_num, max_frame_num, num_active, mods)
 }
 
-/// Builds the B-slice `RefPicList0` and `RefPicList1` (spec §8.2.4.2.3), ordered
+/// Builds the B-slice `RefPicList0` and `RefPicList1` (spec Â§8.2.4.2.3), ordered
 /// by `PicOrderCnt` relative to the current picture: List0 leads with nearer
 /// past pictures, List1 with nearer future pictures. Long-term references follow.
 /// Per-list `ref_pic_list_modification` is then applied.
@@ -114,10 +114,10 @@ pub(crate) fn build_ref_list_b(
     init1.extend(long);
 
     // When List1 equals List0 and has more than one entry, swap its first two
-    // entries (spec §8.2.4.2.3). PARCHE-WODW (ARR-2): la comparación es sobre las
+    // entries (spec Â§8.2.4.2.3). PARCHE-CRUSTY (ARR-2): la comparaciÃ³n es sobre las
     // listas INICIALES completas, antes de recortarlas a num_ref_idx_lX_active; con
-    // una sola referencia activa en la lista 1 el intercambio también se aplica
-    // (último fotograma B sin referencias futuras: salía con la referencia errónea).
+    // una sola referencia activa en la lista 1 el intercambio tambiÃ©n se aplica
+    // (Ãºltimo fotograma B sin referencias futuras: salÃ­a con la referencia errÃ³nea).
     if init1.len() > 1
         && init0.len() == init1.len()
         && init0
@@ -160,7 +160,7 @@ fn same_picture(a: &RefFrame, b: &RefFrame) -> bool {
 }
 
 /// Applies `ref_pic_list_modification` to an initialized reference list and
-/// truncates it to `num_active` (spec §8.2.4.3). `init` is the full ordered list;
+/// truncates it to `num_active` (spec Â§8.2.4.3). `init` is the full ordered list;
 /// the result is `num_active` entries, possibly reordered. idc 0/1 reference
 /// short-term pictures by PicNum, idc 2 long-term ones by LongTermFrameIdx.
 fn apply_list_modification(

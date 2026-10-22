@@ -3,7 +3,7 @@
 Esta carpeta es `rusty_h264-decoder` 0.16.0 tal como se publica en crates.io
 (https://crates.io/crates/rusty_h264-decoder, repositorio https://github.com/remade-with-rust/rusty_h264),
 con su licencia BSD-2-Clause y su aviso de copyright intactos, más ocho correcciones. Cada línea
-cambiada lleva la marca `PARCHE-WODW`. Ninguna de ellas está en la rama principal del autor a fecha
+cambiada lleva la marca `PARCHE-CRUSTY`. Ninguna de ellas está en la rama principal del autor a fecha
 de 2026-10-08 (comprobado en el commit `5eeec05` del 2026-10-03).
 
 Todas se midieron con los flujos de conformidad oficiales de la UIT-T (H.264.1,
@@ -46,7 +46,7 @@ sale idéntico a la reconstrucción oficial después, y el resto de la batería 
    de su parche se excluyó una modificación ajena a estos flujos (`abl_deblock`).
 
 9. **Cortes con listas de referencias distintas** (`lib.rs`, `mb16.rs`, `mb_deblock.rs`, en la
-   refactorización; véase abajo). Hallado por WoDW, no por un flujo de la UIT-T: ninguno de los
+   refactorización; véase abajo). Hallado por Crusty_H264, no por un flujo de la UIT-T: ninguno de los
    que se aceptan tiene cortes de una misma imagen con listas distintas.
 
 Con las ocho, los 95 flujos progresivos 4:2:0 de la batería salen idénticos (90) o se rechazan con
@@ -57,7 +57,7 @@ existe: se retiró con el resto del código de hilos, véase abajo.)
 ## Refactorización y endurecimiento posteriores (2026-10-08 a 2026-10-12)
 
 Después de los ocho arreglos, la copia (decodificador y su `rusty_h264-common`) se reorganizó para
-cumplir las normas de escritura de WoDW, sin cambiar ni un byte de lo que decodifica. La red de
+cumplir las normas de escritura de Crusty_H264, sin cambiar ni un byte de lo que decodifica. La red de
 equivalencia (2 129 entradas: los flujos de la UIT-T, salidas de codificadores reales y 2 000
 mutaciones, con la huella SHA-256 de cada salida o el motivo exacto de cada rechazo) dio idéntico
 en cada paso, en Windows y en Linux, con y sin la aceleración `asm`.
@@ -117,3 +117,4 @@ La cabecera del corte se valida además como hace FFmpeg: un indicador distinto 
 desplazamiento fuera de −6…6, rechaza el flujo. Eso cambia el resultado de 30 entradas mutadas de la
 red (26 ya se rechazaban por otro motivo; las otras 4 las rechaza también FFmpeg) y de ninguna sin
 mutar.
+

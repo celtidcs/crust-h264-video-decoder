@@ -1,4 +1,4 @@
-//! Pure-Rust H.264 decoder — Constrained Baseline **+ B-slices + most of High
+﻿//! Pure-Rust H.264 decoder â€” Constrained Baseline **+ B-slices + most of High
 //! profile**, CAVLC and CABAC.
 //!
 //! Validated **bit-exact against Cisco's `h264dec`** on 35 of 35 clean streams
@@ -9,18 +9,18 @@
 //! construction.
 //!
 //! Decodes: full intra (`I_16x16`/`I_4x4`/`I_8x8`/`I_PCM`), inter
-//! (`P_Skip`/16×16/16×8/8×16/`P_8x8`) with quarter-pel motion compensation,
+//! (`P_Skip`/16Ã—16/16Ã—8/8Ã—16/`P_8x8`) with quarter-pel motion compensation,
 //! B-slices (temporal + spatial direct, implicit + explicit weighted
-//! prediction), the 8×8 transform and 8×8 intra prediction, scaling matrices,
+//! prediction), the 8Ã—8 transform and 8Ã—8 intra prediction, scaling matrices,
 //! in-loop deblocking, and a multi-reference DPB with POC reordering and MMCO.
-//! CABAC covers I, P and B slices incl. High-profile 8×8 residual (not yet: `I_PCM`).
+//! CABAC covers I, P and B slices incl. High-profile 8Ã—8 residual (not yet: `I_PCM`).
 //!
 //! This crate is `#![forbid(unsafe_code)]` and is **fuzzed to never panic or
-//! hang** on malformed input — errors surface as [`DecodeError`].
+//! hang** on malformed input â€” errors surface as [`DecodeError`].
 //!
 //! [`Decoder::decode_stream`] is the one-call entry point (frames in display
 //! order); [`Decoder::decode`] is the streaming form (one picture per access
-//! unit, in decode order — pair it with [`Decoder::last_poc`]).
+//! unit, in decode order â€” pair it with [`Decoder::last_poc`]).
 
 extern crate alloc;
 
@@ -78,21 +78,21 @@ use poc::PocState;
 use rusty_h264_common::nal::{emulation_unprevent, split_annex_b};
 use rusty_h264_common::{BitReader, NalUnitType, YuvFrame};
 
-/// Desplazamiento en bits del campo `nal_ref_idc` en el primer octeto NAL (UIT-T H.264 §7.3.1).
+/// Desplazamiento en bits del campo `nal_ref_idc` en el primer octeto NAL (UIT-T H.264 Â§7.3.1).
 const DESPLAZAMIENTO_NAL_REF_IDC: u8 = 5;
 
-/// Máscara de 2 bits para extraer `nal_ref_idc` (UIT-T H.264 §7.3.1).
+/// MÃ¡scara de 2 bits para extraer `nal_ref_idc` (UIT-T H.264 Â§7.3.1).
 const MASCARA_NAL_REF_IDC: u8 = 3;
 
-/// Valor máximo de `cabac_init_idc` en cortes P/B (UIT-T H.264 §7.4.3).
+/// Valor mÃ¡ximo de `cabac_init_idc` en cortes P/B (UIT-T H.264 Â§7.4.3).
 const MAX_CABAC_INIT_IDC: u32 = 2;
 
 /// Identificador `profile_idc` del perfil Baseline / Constrained Baseline (UIT-T H.264 Anexo A.2.1).
 const PERFIL_IDC_BASELINE: u8 = 66;
 
 /// A picture being assembled from one or more slices (spec allows a picture to
-/// be split into multiple slices). Finalized — deblocked, output, and entered
-/// into the DPB — once all its macroblocks are decoded.
+/// be split into multiple slices). Finalized â€” deblocked, output, and entered
+/// into the DPB â€” once all its macroblocks are decoded.
 struct PendingPic {
     fd: mb16::FrameDecoder,
     frame_num: u32,
@@ -101,7 +101,7 @@ struct PendingPic {
     next_mb: usize,
     total_mb: usize,
     slice_count: u16,
-    /// PARCHE-WODW (ARR-2): recorte completo (izquierda, derecha, arriba, abajo).
+    /// PARCHE-CRUSTY (ARR-2): recorte completo (izquierda, derecha, arriba, abajo).
     crop: mb16::Recorte,
     max_refs: usize,
     log2_max_frame_num: u32,
@@ -116,8 +116,8 @@ struct PendingPic {
 /// and the previous decoded picture (the inter reference) across calls.
 #[derive(Default)]
 pub struct Decoder {
-    /// Active parameter sets, keyed by id — a stream may carry several and switch
-    /// between them per slice (spec §7.3.2.1/.2).
+    /// Active parameter sets, keyed by id â€” a stream may carry several and switch
+    /// between them per slice (spec Â§7.3.2.1/.2).
     // 11.11: Arc'd so the per-slice "clone to end the map borrow" is a
     // refcount bump, not a struct copy (scaling lists included).
     pub(crate) sps: alloc::collections::BTreeMap<u32, alloc::sync::Arc<Sps>>,
@@ -126,16 +126,16 @@ pub struct Decoder {
     pub(crate) refs: Vec<Ref>,
     /// The picture currently being assembled from its slices, if any.
     cur: Option<PendingPic>,
-    /// Picture-order-count state (spec §8.2.1). Tracks the previous reference
+    /// Picture-order-count state (spec Â§8.2.1). Tracks the previous reference
     /// picture's MSB/LSB (type 0) and frame-num offset (types 1/2) so display
-    /// order can be recovered — needed once B-pictures (out-of-order) land.
+    /// order can be recovered â€” needed once B-pictures (out-of-order) land.
     pub(crate) poc: PocState,
     /// `PicOrderCnt` of the most recently returned picture (display-order key).
     pub(crate) last_poc: i32,
     pub(crate) last_has_mmco5: bool,
     pub(crate) last_frame_num: u32,
     /// `frame_num` of the previous short-term reference picture, for detecting
-    /// gaps in `frame_num` (spec §8.2.5.2).
+    /// gaps in `frame_num` (spec Â§8.2.5.2).
     pub(crate) prev_ref_frame_num: u32,
     /// Per-picture grid allocations, handed from the finished picture to the next
     /// one instead of being freed and re-allocated. See `mb16::GridPool`.
@@ -149,7 +149,7 @@ pub struct Decoder {
     pub(crate) plane_pool: Vec<Vec<u8>>,
     /// Reference frames evicted from the DPB whose planes have not been
     /// reclaimed yet. Reclamation must wait until the evicting picture's
-    /// `FrameDecoder` is consumed — while it lives it still holds `Arc` clones
+    /// `FrameDecoder` is consumed â€” while it lives it still holds `Arc` clones
     /// of its ref lists, so `Arc::try_unwrap` would fail at eviction time.
     pub(crate) retired: Vec<Ref>,
 }
@@ -169,7 +169,7 @@ impl Decoder {
     pub fn decode(&mut self, annex_b: &[u8]) -> Result<Option<YuvFrame>, DecodeError> {
         let mut frame = None;
         // The Annex-B scan and the RBSP unescape are each a FULL byte-wise pass over
-        // the stream, and neither was timed — they landed in the unnamed residue that
+        // the stream, and neither was timed â€” they landed in the unnamed residue that
         // the anatomy measured at 23-30% of decode outside the MB bodies.
         let nals = split_annex_b(annex_b);
         for nal in nals {
@@ -205,8 +205,8 @@ impl Decoder {
     /// Decodes a complete Annex-B byte stream and returns every picture in
     /// **display order** (`PicOrderCnt` within each GOP; an IDR ends a GOP).
     ///
-    /// This is the convenient whole-stream entry point — it handles access-unit
-    /// splitting, multi-slice picture assembly, and B-picture reordering — versus
+    /// This is the convenient whole-stream entry point â€” it handles access-unit
+    /// splitting, multi-slice picture assembly, and B-picture reordering â€” versus
     /// the lower-level per-access-unit [`Decoder::decode`], which returns pictures
     /// in decode order.
     ///
@@ -299,11 +299,11 @@ impl Decoder {
         if is_idr {
             let _idr_pic_id = r.read_ue()?;
         }
-        // pic_order_cnt fields (spec §7.3.3). `field_pic_flag` is always 0
+        // pic_order_cnt fields (spec Â§7.3.3). `field_pic_flag` is always 0
         // (frame_mbs_only). Captured to derive PicOrderCnt for display ordering.
         let mut poc_lsb = 0u32;
         let mut delta_poc_bottom = 0i32;
-        let mut delta_poc_0 = 0i32; // PARCHE-WODW (ARR-1): delta_pic_order_cnt[0]
+        let mut delta_poc_0 = 0i32; // PARCHE-CRUSTY (ARR-1): delta_pic_order_cnt[0]
         if sps.pic_order_cnt_type == 0 {
             poc_lsb = r.read_bits(sps.log2_max_pic_order_cnt_lsb)?;
             if pps.bottom_field_pic_order_present {
@@ -328,13 +328,13 @@ impl Decoder {
             )
         } else {
             // COR-3, pendiente de acuerdo: sin imagen en curso este 0 es provisional; el
-            // corte se rechaza SIEMPRE más abajo («slice continues a missing picture») y
+            // corte se rechaza SIEMPRE mÃ¡s abajo (Â«slice continues a missing pictureÂ») y
             // nunca da imagen. Adelantar el rechazo cambia el motivo en 6 flujos de la red.
             self.cur.as_ref().map_or(0, |p| p.poc)
         };
         // redundant_pic_cnt: a non-zero value marks a *redundant* coded picture
         // (an alternative representation of the primary picture). A primary
-        // decoder discards it (spec §7.4.3, §8.2.5 note). Must be read here or the
+        // decoder discards it (spec Â§7.4.3, Â§8.2.5 note). Must be read here or the
         // rest of the slice header desyncs.
         if pps.redundant_pic_cnt_present_flag {
             let redundant_pic_cnt = r.read_ue()?;
@@ -342,7 +342,7 @@ impl Decoder {
                 return Ok(None);
             }
         }
-        // B slices choose direct-mode derivation here (spec §7.3.3).
+        // B slices choose direct-mode derivation here (spec Â§7.3.3).
         let direct_spatial = if is_b { r.read_bit()? } else { true };
         let mut num_ref_idx_l0 = pps.num_ref_idx_l0_default as usize;
         let mut num_ref_idx_l1 = pps.num_ref_idx_l1_default as usize;
@@ -378,7 +378,7 @@ impl Decoder {
         } else {
             None
         };
-        // dec_ref_pic_marking (spec §7.3.3.3) — present only for reference
+        // dec_ref_pic_marking (spec Â§7.3.3.3) â€” present only for reference
         // pictures (nal_ref_idc != 0). Reading it for a non-reference slice would
         // desync the rest of the header.
         let mut mmco_ops: Vec<Mmco> = core::mem::take(&mut self.sc_mmco);
@@ -389,7 +389,7 @@ impl Decoder {
         } else {
             leer_marcado_referencia(&mut r, is_idr, &mut mmco_ops)?
         };
-        // cabac_init_idc (spec §7.3.3) — CABAC context-model preset, P/B slices only.
+        // cabac_init_idc (spec Â§7.3.3) â€” CABAC context-model preset, P/B slices only.
         // Spec range [0,2]; a larger (corrupt) value would index the 4-model context-init
         // table out of bounds, so reject it here.
         let cabac_init_idc = if cabac && !is_i {
@@ -403,8 +403,8 @@ impl Decoder {
         };
         let slice_qp_delta = r.read_se()?;
         // When deblocking_filter_control_present_flag is 0 the slice carries no
-        // disable_deblocking_filter_idc and it is inferred 0 — i.e. the in-loop
-        // filter is ON by default (spec §7.4.3). (Our own encoder always signals
+        // disable_deblocking_filter_idc and it is inferred 0 â€” i.e. the in-loop
+        // filter is ON by default (spec Â§7.4.3). (Our own encoder always signals
         // the control explicitly, so this default was previously untested.)
         let filtro = if pps.deblocking_filter_control_present_flag {
             leer_filtro_corte(&mut r)?
@@ -416,7 +416,7 @@ impl Decoder {
                 .unwrap_or(0);
 
         // Synthesize placeholder short-term references for any gap in frame_num
-        // (spec §8.2.5.2) so the DPB / PicNum mapping stays correct.
+        // (spec Â§8.2.5.2) so the DPB / PicNum mapping stays correct.
         if first_mb_in_slice == 0 && !is_idr && sps.gaps_in_frame_num_allowed {
             self.insert_frame_num_gaps(
                 frame_num,
@@ -462,7 +462,7 @@ impl Decoder {
                 self.refs.clear();
             }
             // H-49: the CABAC macroblock loop never decodes `transform_size_8x8_flag`
-            // — both reads of it sit on the CAVLC `BitReader`, and `decode_i8x8` only
+            // â€” both reads of it sit on the CAVLC `BitReader`, and `decode_i8x8` only
             // accepts one. A PPS with `transform_8x8_mode_flag` set therefore desyncs
             // the arithmetic decoder within a few macroblocks, and the failure surfaces
             // as a bogus `CABAC I_PCM` far from its cause (the mb_type parse lands on
@@ -560,9 +560,9 @@ impl Decoder {
             }
             // Latest slice's marking parameters win at finalization.
             pic.idr_long_term |= idr_long_term;
-            // PARCHE-WODW (ARR-1): todos los cortes de una imagen llevan el mismo
-            // dec_ref_pic_marking (H.264 §7.4.3.3); acumularlos repetía cada MMCO una vez
-            // por corte y un MMCO 3 repetido borraba la referencia a largo plazo recién creada.
+            // PARCHE-CRUSTY (ARR-1): todos los cortes de una imagen llevan el mismo
+            // dec_ref_pic_marking (H.264 Â§7.4.3.3); acumularlos repetÃ­a cada MMCO una vez
+            // por corte y un MMCO 3 repetido borraba la referencia a largo plazo reciÃ©n creada.
             pic.mmco_ops.clear();
             pic.mmco_ops.extend(mmco_ops);
         }
@@ -570,7 +570,7 @@ impl Decoder {
         let pic = self.cur.as_mut().ok_or(DecodeError::Truncated)?;
         let first = first_mb_in_slice.min(pic.total_mb);
         let next = if cabac {
-            // cabac_alignment_one_bit → the slice data is byte-aligned from here.
+            // cabac_alignment_one_bit â†’ the slice data is byte-aligned from here.
             r.align_to_byte().map_err(|_| DecodeError::Truncated)?;
             let (data, start) = (r.data(), r.bit_pos() / 8);
             pic.fd
@@ -623,11 +623,11 @@ impl Decoder {
         self.last_poc = display_poc;
         self.last_has_mmco5 = has_mmco5;
         self.last_frame_num = frame_num;
-        // PARCHE-WODW (ARR-1): el vaciado no puede depender de que haya filtro.
+        // PARCHE-CRUSTY (ARR-1): el vaciado no puede depender de que haya filtro.
         fd.flush_deferred()?;
         // Siempre: los macrobloques de un corte sin filtro tienen todos sus bS a 0 (COR-4).
         fd.deblock()?;
-        // The necessary DPB plane clone (rec_y/u/v → RefFrame) — measured as its own
+        // The necessary DPB plane clone (rec_y/u/v â†’ RefFrame) â€” measured as its own
         // stage, OUTSIDE the Finalize scope so the two don't double-count.
         let reference = if is_reference {
             Some(fd.as_reference_pooled(&mut self.plane_pool))
@@ -715,7 +715,7 @@ mod tests {
     #[test]
     fn b_ref_list1_swap_when_equal() {
         // Only past references -> List0 and List1 initialize identically, so
-        // List1's first two entries are swapped (spec §8.2.4.2.3).
+        // List1's first two entries are swapped (spec Â§8.2.4.2.3).
         let dpb = vec![ref_at(4, 2), ref_at(2, 1), ref_at(0, 0)];
         let (l0, l1) = build_ref_list_b(
             &dpb,
@@ -770,7 +770,7 @@ mod tests {
     fn missing_param_sets_errors() {
         let mut d = Decoder::new();
         // A lone (fake) IDR slice header: first_mb_in_slice=0, slice_type=7 (I),
-        // pic_parameter_set_id=0 — then the PPS lookup fails (none stored).
+        // pic_parameter_set_id=0 â€” then the PPS lookup fails (none stored).
         let nal = rusty_h264_common::NalUnit::new(3, NalUnitType::IdrSlice, vec![0x88, 0x80]);
         let err = d.decode(&nal.to_annex_b()).unwrap_err();
         assert_eq!(err, DecodeError::MissingParameterSet);

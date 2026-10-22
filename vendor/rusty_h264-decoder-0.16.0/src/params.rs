@@ -1,4 +1,4 @@
-//! SPS/PPS parsing for Constrained Baseline.
+﻿//! SPS/PPS parsing for Constrained Baseline.
 //!
 //! Parses any conformant Baseline SPS/PPS and **rejects** (never misparses or
 //! panics on) profiles and tools outside Constrained Baseline.
@@ -20,23 +20,23 @@ use rusty_h264_common::BitReader;
 
 /// Profiles that carry the High-profile SPS prefix (`chroma_format_idc`,
 /// bit-depths, scaling matrices). Decoding their SPS with the Baseline layout
-/// would shift every later field — so we reject them up front rather than
-/// misparse. (Spec Table A-1 / §7.3.2.1.1.)
+/// would shift every later field â€” so we reject them up front rather than
+/// misparse. (Spec Table A-1 / Â§7.3.2.1.1.)
 const HIGH_PROFILE_IDCS: &[u8] = &[100, 110, 122, 244, 44, 83, 86, 118, 128, 138, 139, 134, 135];
 
 /// Upper bound on the coded frame size, in macroblocks. Above this we reject the
 /// SPS rather than attempt a multi-gigabyte allocation from a hostile header.
-/// (≈ 4× H.264 Level 5.2's MaxFS of 36 864 MBs — generous but finite.)
+/// (â‰ˆ 4Ã— H.264 Level 5.2's MaxFS of 36 864 MBs â€” generous but finite.)
 const MAX_FRAME_MBS: u64 = 36_864 * 4;
 
-/// Default 4×4 scaling lists in zig-zag order (spec Table 7-3).
+/// Default 4Ã—4 scaling lists in zig-zag order (spec Table 7-3).
 pub(crate) const DEFAULT_4X4_INTRA: [u8; 16] = [
     6, 13, 13, 20, 20, 20, 28, 28, 28, 28, 32, 32, 32, 37, 37, 42,
 ];
 pub(crate) const DEFAULT_4X4_INTER: [u8; 16] = [
     10, 14, 14, 20, 20, 20, 24, 24, 24, 24, 27, 27, 27, 30, 30, 34,
 ];
-/// Default 8×8 scaling lists in zig-zag order (spec Table 7-4).
+/// Default 8Ã—8 scaling lists in zig-zag order (spec Table 7-4).
 pub(crate) const DEFAULT_8X8_INTRA: [u8; 64] = [
     6, 10, 10, 13, 11, 13, 16, 16, 16, 16, 18, 18, 18, 18, 18, 23, 23, 23, 23, 23, 23, 25, 25, 25,
     25, 25, 25, 25, 27, 27, 27, 27, 27, 27, 27, 27, 29, 29, 29, 29, 29, 29, 29, 31, 31, 31, 31, 31,
@@ -48,7 +48,7 @@ pub(crate) const DEFAULT_8X8_INTER: [u8; 64] = [
     27, 28, 28, 28, 28, 28, 30, 30, 30, 30, 32, 32, 32, 33, 33, 35,
 ];
 
-/// Parses a `scaling_list` of `size` coefficients (spec §7.3.2.1.1.1), filling
+/// Parses a `scaling_list` of `size` coefficients (spec Â§7.3.2.1.1.1), filling
 /// `out` (zig-zag order) and returning `use_default`. Consumes the exact bits so
 /// the rest of the SPS/PPS stays aligned even when we ignore the weights.
 fn parse_scaling_list(r: &mut BitReader, out: &mut [u8], size: usize) -> Result<bool, DecodeError> {
@@ -85,17 +85,17 @@ pub struct Sps {
     pub log2_max_pic_order_cnt_lsb: u32,
     /// `delta_pic_order_always_zero_flag` (only meaningful for POC type 1).
     pub delta_pic_order_always_zero: bool,
-    /// PARCHE-WODW (ARR-1): `offset_for_non_ref_pic` (POC tipo 1, §8.2.1.2).
+    /// PARCHE-CRUSTY (ARR-1): `offset_for_non_ref_pic` (POC tipo 1, Â§8.2.1.2).
     pub offset_for_non_ref_pic: i32,
-    /// PARCHE-WODW (ARR-1): `offset_for_top_to_bottom_field` (POC tipo 1).
+    /// PARCHE-CRUSTY (ARR-1): `offset_for_top_to_bottom_field` (POC tipo 1).
     pub offset_for_top_to_bottom_field: i32,
-    /// PARCHE-WODW (ARR-1): `offset_for_ref_frame[]`, el ciclo del POC tipo 1.
+    /// PARCHE-CRUSTY (ARR-1): `offset_for_ref_frame[]`, el ciclo del POC tipo 1.
     pub offset_for_ref_frame: Vec<i32>,
     /// `gaps_in_frame_num_value_allowed_flag`: when set, `frame_num` may skip
     /// values and the decoder must synthesize placeholder reference frames.
     pub gaps_in_frame_num_allowed: bool,
     /// `direct_8x8_inference_flag`: when set, B direct/skip derives one motion per
-    /// 8×8 from the co-located corner 4×4 (vs per-4×4).
+    /// 8Ã—8 from the co-located corner 4Ã—4 (vs per-4Ã—4).
     pub direct_8x8_inference: bool,
     pub max_num_ref_frames: u32,
     pub pic_width_in_mbs: usize,
@@ -106,7 +106,7 @@ pub struct Sps {
     pub frame_crop_bottom: u32,
     /// `chroma_format_idc` (1 = 4:2:0; the only value we decode).
     pub chroma_format_idc: u32,
-    /// Sequence scaling lists in zig-zag order (six 4×4, two 8×8); `16`
+    /// Sequence scaling lists in zig-zag order (six 4Ã—4, two 8Ã—8); `16`
     /// everywhere = flat (no weighting). High-profile only.
     pub scaling_4x4: [[u8; 16]; 6],
     pub scaling_8x8: [[u8; 64]; 2],
@@ -145,7 +145,7 @@ impl Sps {
         let level_idc = r.read_bits(8)? as u8;
         let seq_parameter_set_id = r.read_ue()?;
         // High/Main-prefix profiles add chroma_format_idc, bit-depths, and the
-        // sequence scaling matrices here (spec §7.3.2.1.1, after seq_parameter_set_id).
+        // sequence scaling matrices here (spec Â§7.3.2.1.1, after seq_parameter_set_id).
         // Parse the 4:2:0 / 8-bit subset; reject the rest cleanly.
         let mut chroma_format_idc = 1u32;
         let mut transform_bypass = false;
@@ -165,9 +165,9 @@ impl Sps {
             }
             transform_bypass = r.read_bit()?;
             if r.read_bit()? {
-                // seq_scaling_matrix_present_flag — six 4×4 then two 8×8 (4:2:0),
+                // seq_scaling_matrix_present_flag â€” six 4Ã—4 then two 8Ã—8 (4:2:0),
                 // with fall-back rule set A for absent / use-default lists
-                // (UIT-T H.264 08/2024, tabla 7-2 y §7.4.2.1.1).
+                // (UIT-T H.264 08/2024, tabla 7-2 y Â§7.4.2.1.1).
                 has_scaling = true;
                 for i in 0..8 {
                     let present = r.read_bit()?;
@@ -186,7 +186,7 @@ impl Sps {
                                 0 => DEFAULT_4X4_INTRA,
                                 3 => DEFAULT_4X4_INTER,
                                 // Regla de respaldo A (tabla 7-2): la lista anterior.
-                                // En esta rama i está en {1, 2, 4, 5}, así que i - 1 está en rango.
+                                // En esta rama i estÃ¡ en {1, 2, 4, 5}, asÃ­ que i - 1 estÃ¡ en rango.
                                 _ => scaling_4x4[i - 1],
                             };
                         }
@@ -210,7 +210,7 @@ impl Sps {
             }
         }
         // CBP/Baseline: no chroma_format_idc / scaling-list section.
-        // Spec §7.4.2.1.1: log2_max_frame_num_minus4 ∈ [0,12] → log2_max_frame_num ≤ 16.
+        // Spec Â§7.4.2.1.1: log2_max_frame_num_minus4 âˆˆ [0,12] â†’ log2_max_frame_num â‰¤ 16.
         // Reject anything larger: an attacker-inflated value makes MaxFrameNum = 1<<n
         // billions, which would drive the frame-num-gap loop unbounded.
         let log2_max_frame_num = r.read_ue()? + 4;
@@ -231,8 +231,8 @@ impl Sps {
                 ));
             }
         } else if pic_order_cnt_type == 1 {
-            // PARCHE-WODW (ARR-1): el ciclo se conserva para derivar el POC tipo 1
-            // según §8.2.1.2 (antes se aproximaba con frame_num y desordenaba la salida
+            // PARCHE-CRUSTY (ARR-1): el ciclo se conserva para derivar el POC tipo 1
+            // segÃºn Â§8.2.1.2 (antes se aproximaba con frame_num y desordenaba la salida
             // cuando frame_num daba la vuelta).
             delta_pic_order_always_zero = r.read_bit()?;
             offset_for_non_ref_pic = r.read_se()?;
@@ -269,7 +269,7 @@ impl Sps {
             cb = r.read_ue()?;
             // Reject crop windows that exceed the coded frame (would underflow
             // the display-size subtraction in into_frame / display_*).
-            // PARCHE-WODW (ARR-2): sumas en u64; en u32 un flujo hostil podía dar la
+            // PARCHE-CRUSTY (ARR-2): sumas en u64; en u32 un flujo hostil podÃ­a dar la
             // vuelta (overflow-checks desactivado en release) y saltarse esta barrera.
             let ancho = (pic_width_in_mbs as u64) * 16;
             let alto = (pic_height_in_mbs as u64) * 16;
@@ -323,15 +323,15 @@ pub struct Pps {
     pub weighted_pred: bool,
     pub weighted_bipred_idc: u8,
     pub pic_init_qp: i32,
-    /// Signed offset applied when mapping luma QP to chroma QP (§8.5.8).
+    /// Signed offset applied when mapping luma QP to chroma QP (Â§8.5.8).
     pub chroma_qp_index_offset: i32,
     pub deblocking_filter_control_present_flag: bool,
     pub constrained_intra_pred_flag: bool,
     pub redundant_pic_cnt_present_flag: bool,
     /// `transform_8x8_mode_flag` (High PPS extension): when set, macroblocks may
-    /// signal `transform_size_8x8_flag` to use the 8×8 transform.
+    /// signal `transform_size_8x8_flag` to use the 8Ã—8 transform.
     pub transform_8x8_mode_flag: bool,
-    /// `second_chroma_qp_index_offset` (High PPS extension) — the Cr QP offset;
+    /// `second_chroma_qp_index_offset` (High PPS extension) â€” the Cr QP offset;
     /// defaults to `chroma_qp_index_offset` (the Cb offset) when absent.
     pub second_chroma_qp_index_offset: i32,
     /// `pic_scaling_matrix_present_flag`: per-picture scaling lists overriding
@@ -357,7 +357,7 @@ impl Pps {
         let num_slice_groups_minus1 = r.read_ue()?;
         if num_slice_groups_minus1 != 0 {
             // FMO: a slice_group map follows here that we neither parse nor
-            // support — reject before the syntax shifts under us.
+            // support â€” reject before the syntax shifts under us.
             return Err(DecodeError::Unsupported("slice groups (FMO)"));
         }
         let num_ref_idx_l0_default = r.read_ue()? + 1;
@@ -381,8 +381,8 @@ impl Pps {
         if r.more_rbsp_data() {
             transform_8x8_mode_flag = r.read_bit()?;
             if r.read_bit()? {
-                // pic_scaling_matrix_present_flag: 6 4×4 lists + (2 8×8 when the
-                // 8×8 transform is enabled, for 4:2:0). Absent lists resolve via
+                // pic_scaling_matrix_present_flag: 6 4Ã—4 lists + (2 8Ã—8 when the
+                // 8Ã—8 transform is enabled, for 4:2:0). Absent lists resolve via
                 // fall-back rule B against the SPS at slice time.
                 pic_scaling_matrix_present = true;
                 let n = 6 + if transform_8x8_mode_flag { 2 } else { 0 };

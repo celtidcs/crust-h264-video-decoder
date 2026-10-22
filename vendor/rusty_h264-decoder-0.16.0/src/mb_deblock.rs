@@ -1,8 +1,8 @@
-//! Filtro de desbloqueo en bucle (*in-loop deblocking filter*) para macrobloques H.264.
+﻿//! Filtro de desbloqueo en bucle (*in-loop deblocking filter*) para macrobloques H.264.
 //!
-//! Este módulo contiene la lógica de derivación de fuerza de borde (`bS`),
+//! Este mÃ³dulo contiene la lÃ³gica de derivaciÃ³n de fuerza de borde (`bS`),
 //! filtrado entrelazado por filas (*row-interleaved deblocking*) y filtrado
-//! completo al cierre de imagen (§8.7 de la norma UIT-T H.264), desacoplada
+//! completo al cierre de imagen (Â§8.7 de la norma UIT-T H.264), desacoplada
 //! de `mb16.rs`.
 
 #[allow(unused_imports)]
@@ -21,8 +21,8 @@ use crate::error::MbError;
 use crate::mb16::FrameDecoder;
 
 impl FrameDecoder {
-    /// Deriva `bS` para la fila de macrobloques `r` a partir de las cuadrículas recién
-    /// decodificadas hacia `bs_frame`, manteniendo la ventana móvil de dos filas.
+    /// Deriva `bS` para la fila de macrobloques `r` a partir de las cuadrÃ­culas reciÃ©n
+    /// decodificadas hacia `bs_frame`, manteniendo la ventana mÃ³vil de dos filas.
     #[allow(
         clippy::too_many_lines,
         clippy::cast_possible_truncation,
@@ -30,7 +30,7 @@ impl FrameDecoder {
         clippy::needless_range_loop
     )]
     pub(crate) fn derive_bs_row(&mut self, r: usize) -> Result<(), MbError> {
-        // La derivación de bS lee las cuadrículas de movimiento/nnz: vaciar tramos diferidos.
+        // La derivaciÃ³n de bS lee las cuadrÃ­culas de movimiento/nnz: vaciar tramos diferidos.
         self.span_flush()?;
         let (mb_w, w4) = (self.mb_w, self.mb_w * 4);
 
@@ -103,7 +103,7 @@ impl FrameDecoder {
         for mb_x in 0..mb_w {
             let addr = row0 + mb_x;
             // Cada macrobloque se traduce con los mapas de SU corte (COR-3) y se filtra con
-            // los parámetros de SU corte (COR-4): la fila puede derivarse ya en otro corte.
+            // los parÃ¡metros de SU corte (COR-4): la fila puede derivarse ya en otro corte.
             let corte = corte_de(cortes, addr)?;
             let datos = cortes.get(corte).ok_or(MbError::Inconsistent("cortes"))?;
             let rec = pack_mb(
@@ -150,7 +150,7 @@ impl FrameDecoder {
                     bs_row[mb_x] = m;
                 }
             }
-            // §8.7: el idc del corte del macrobloque decide qué bordes suyos se filtran. Un
+            // Â§8.7: el idc del corte del macrobloque decide quÃ© bordes suyos se filtran. Un
             // macrobloque sin filtro queda con bS 0 en todos sus bordes; la fila se filtra igual.
             match datos.filtro.idc {
                 IdcFiltro::Activo => {}
@@ -247,9 +247,9 @@ impl FrameDecoder {
         Ok(())
     }
 
-    /// PARCHE-WODW (ARR-1): vacía las reconstrucciones diferidas y los trabajos de píxel
-    /// pendientes al cerrar la imagen. Antes solo lo hacía `deblock`, así que con el filtro de
-    /// desbloqueo desactivado (`disable_deblocking_filter_idc = 1`) los últimos macrobloques
+    /// PARCHE-CRUSTY (ARR-1): vacÃ­a las reconstrucciones diferidas y los trabajos de pÃ­xel
+    /// pendientes al cerrar la imagen. Antes solo lo hacÃ­a `deblock`, asÃ­ que con el filtro de
+    /// desbloqueo desactivado (`disable_deblocking_filter_idc = 1`) los Ãºltimos macrobloques
     /// saltados de la imagen se quedaban sin reconstruir.
     pub fn flush_deferred(&mut self) -> Result<(), MbError> {
         self.span_flush()?;
@@ -257,11 +257,11 @@ impl FrameDecoder {
         Ok(())
     }
 
-    /// Aplica el filtro de desbloqueo en bucle a las filas de la imagen que aún no se han
-    /// filtrado, cada macrobloque con los parámetros de su corte.
+    /// Aplica el filtro de desbloqueo en bucle a las filas de la imagen que aÃºn no se han
+    /// filtrado, cada macrobloque con los parÃ¡metros de su corte.
     ///
     /// # Errors
-    /// Los de la derivación de `bS` y del filtro común.
+    /// Los de la derivaciÃ³n de `bS` y del filtro comÃºn.
     #[allow(clippy::too_many_lines)]
     pub fn deblock(&mut self) -> Result<(), MbError> {
         self.span_flush()?;

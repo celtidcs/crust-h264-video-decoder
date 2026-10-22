@@ -1,5 +1,5 @@
-//! Macrobloques intra en CABAC, comunes a los tres tipos de corte: `mb_type` del corte I, `I_PCM`,
-//! `I_16x16`, `I_4x4` e `I_8x8` (UIT-T H.264 §7.3.5, §8.3, §9.3).
+﻿//! Macrobloques intra en CABAC, comunes a los tres tipos de corte: `mb_type` del corte I, `I_PCM`,
+//! `I_16x16`, `I_4x4` e `I_8x8` (UIT-T H.264 Â§7.3.5, Â§8.3, Â§9.3).
 
 use alloc::boxed::Box;
 
@@ -28,11 +28,11 @@ use crate::mb_cabac::{
 use crate::mb_intra::modo_intra_desde_rem;
 
 impl FrameDecoder {
-    /// `mb_type` de un macrobloque de un corte I (§9.3.3.1.1.3: el contexto cuenta los vecinos
+    /// `mb_type` de un macrobloque de un corte I (Â§9.3.3.1.1.3: el contexto cuenta los vecinos
     /// que no son `I_NxN`).
     ///
     /// # Errors
-    /// `MbError::Inconsistent` si la tabla de categorías no cubre un vecino disponible.
+    /// `MbError::Inconsistent` si la tabla de categorÃ­as no cubre un vecino disponible.
     pub(super) fn mb_type_cabac_i(
         corte: &mut CorteCabac<'_>,
         pos: PosicionMb,
@@ -47,11 +47,11 @@ impl FrameDecoder {
     }
 
     /// Un macrobloque intra de cualquier tipo de corte (`I_PCM`, `I_16x16`, `I_4x4` o `I_8x8`) con su
-    /// `mb_type` ya leído y normalizado a la numeración del corte I (§7.4.5, tabla 7-11).
+    /// `mb_type` ya leÃ­do y normalizado a la numeraciÃ³n del corte I (Â§7.4.5, tabla 7-11).
     /// Devuelve `end_of_slice_flag`.
     ///
     /// # Errors
-    /// Los de la decodificación del macrobloque.
+    /// Los de la decodificaciÃ³n del macrobloque.
     pub(super) fn mb_cabac_intra(
         &mut self,
         corte: &mut CorteCabac<'_>,
@@ -67,16 +67,16 @@ impl FrameDecoder {
         } = pos;
 
         // H-48: the CABAC intra path is INLINED in this loop, not routed through
-        // `decode_intra_mb` (which only the CAVLC readers call) — wiring the scope
+        // `decode_intra_mb` (which only the CAVLC readers call) â€” wiring the scope
         // there reported ZERO calls against 480,510 intra-pred calls. All three
         // intra entries (I-slice, P-slice mb_type>3, B-slice bmt>=23) converge
         // here, so this is the one point that sees every intra MB.
         self.edc_flush()?; // intra reconstruction reads neighbour PIXELS
                            // Intra prediction ALSO reads the coded_y/modes_y/inter_y grids a
-                           // deferred span still owes (this arm is inline — it never passes
+                           // deferred span still owes (this arm is inline â€” it never passes
                            // decode_b_mb's flush). Caught by the tempete ARM-DIFF.
         self.span_flush()?;
-        // Intra bS is a constant pattern (4 on MB edges, 3 internal) — written
+        // Intra bS is a constant pattern (4 on MB edges, 3 internal) â€” written
         // here because CABAC inlines I recon and never calls decode_intra_mb.
         *self
             .mb_kind
@@ -104,11 +104,11 @@ impl FrameDecoder {
         self.intra_nxn(corte, pos, cci)
     }
 
-    /// `I_PCM` (§7.3.5): las 384 muestras van en crudo dentro del flujo CABAC, alineadas a byte; el
-    /// motor se reinicia tras ellas conservando los contextos (§9.3.1). Devuelve `end_of_slice_flag`.
+    /// `I_PCM` (Â§7.3.5): las 384 muestras van en crudo dentro del flujo CABAC, alineadas a byte; el
+    /// motor se reinicia tras ellas conservando los contextos (Â§9.3.1). Devuelve `end_of_slice_flag`.
     ///
     /// # Errors
-    /// Los de la decodificación del macrobloque.
+    /// Los de la decodificaciÃ³n del macrobloque.
     pub(super) fn intra_pcm(
         &mut self,
         corte: &mut CorteCabac<'_>,
@@ -131,11 +131,11 @@ impl FrameDecoder {
         } = rejillas;
         let PosicionMb { addr, mbx, mby, .. } = pos;
 
-        // ---- I_PCM (spec §7.3.5): 384 raw byte-aligned sample bytes inside
+        // ---- I_PCM (spec Â§7.3.5): 384 raw byte-aligned sample bytes inside
         // the CABAC stream. The PCM marker was a terminate bin, so the engine
         // has stopped; DecodeFlush + pcm_alignment_zero_bit put the samples
         // at `pcm_start_byte()`, and the engine re-initialises after them
-        // with its CONTEXTS KEPT (§9.3.1). All three slice types (I, P via
+        // with its CONTEXTS KEPT (Â§9.3.1). All three slice types (I, P via
         // mbt 30, B via bmt 48) reach here as mb_type 25.
         let pcm = cab.pcm_start_byte();
         let end = pcm + BYTES_I_PCM;
@@ -145,12 +145,12 @@ impl FrameDecoder {
         let mut pr = BitReader::new(&rbsp[pcm..end]);
         self.decode_ipcm(&mut pr, mbx, mby)?;
         cab.reinit_at(end);
-        // Neighbour context (§7.4.5 + §9.3.3.1.1.x inferences): intra, QPy
-        // unchanged (no mb_qp_delta — its ctxInc resets), CodedBlockPattern
+        // Neighbour context (Â§7.4.5 + Â§9.3.3.1.1.x inferences): intra, QPy
+        // unchanged (no mb_qp_delta â€” its ctxInc resets), CodedBlockPattern
         // luma/chroma inferred 15/2, every coded_block_flag (incl. DC) 1,
         // nnz 16, chroma pred mode 0.
-        // PARCHE-WODW (ARR-1): QPY de un I_PCM para el desbloqueo = 0 (§8.7.2.2);
-        // `cur_qp` (predicción del siguiente) no cambia.
+        // PARCHE-CRUSTY (ARR-1): QPY de un I_PCM para el desbloqueo = 0 (Â§8.7.2.2);
+        // `cur_qp` (predicciÃ³n del siguiente) no cambia.
         *self
             .mb_qp
             .get_mut(addr)
@@ -171,13 +171,13 @@ impl FrameDecoder {
         Ok(cab.decode_terminate())
     }
 
-    /// `I_16x16` (`mb_type` 1..=24): modo de predicción y `coded_block_pattern` salen de `mb_type`;
+    /// `I_16x16` (`mb_type` 1..=24): modo de predicciÃ³n y `coded_block_pattern` salen de `mb_type`;
     /// `cci` es el `ctxIdxInc` de `intra_chroma_pred_mode`. Devuelve `end_of_slice_flag`.
     ///
     /// # Errors
-    /// Los de la decodificación del macrobloque.
+    /// Los de la decodificaciÃ³n del macrobloque.
     #[allow(clippy::unnecessary_lazy_evaluations)]
-    // Invariante de rendimiento (filtrado.rs:683): evaluación perezosa para evitar
+    // Invariante de rendimiento (filtrado.rs:683): evaluaciÃ³n perezosa para evitar
     // construir en la pila arrays de 1024 y 512 bytes en cada macrobloque.
     pub(super) fn intra_16x16(
         &mut self,
@@ -238,7 +238,7 @@ impl FrameDecoder {
         let nd = resolve_ndc(ndc, true);
         let (data, mut e, ctx) = cab.view();
 
-        // Luma DC (iz=0, category I16_LUMA_DC, 16 coeffs) → Hadamard dequant.
+        // Luma DC (iz=0, category I16_LUMA_DC, 16 coeffs) â†’ Hadamard dequant.
         let mut dc_scan = [0i32; 16];
         residual_block_eng::<RP_I16_DC, 16>(
             &mut e,
@@ -257,7 +257,7 @@ impl FrameDecoder {
             inverse_quant_luma_dc_scan(&dc_scan, qp, self.scaling.as_ref().map(|s| s[0][0]));
 
         // Luma AC (iz 0..15, category I16_LUMA_AC, 15 coeffs) when cbp_luma set.
-        // Materialised only when AC is actually coded — a DC-only
+        // Materialised only when AC is actually coded â€” a DC-only
         // I_16x16 zeroed 1 KB of stack for nothing.
         let mut q_blocks: Option<[[i32; 16]; 16]> = None;
         let mut coded16 = 0u16;
@@ -320,7 +320,7 @@ impl FrameDecoder {
         }
 
         cab.commit(e);
-        // Luma recon: 16×16 intra prediction, then per-4×4 (dequant AC + injected DC).
+        // Luma recon: 16Ã—16 intra prediction, then per-4Ã—4 (dequant AC + injected DC).
         let top_ok = mby > 0
             && self.nbr_in_slice(mbx, mby - 1)
             && self.intra_nbr_ok(mbx * 4, mby * 4 - 1)?;
@@ -376,12 +376,12 @@ impl FrameDecoder {
         Ok(cab.decode_terminate())
     }
 
-    /// `I_4x4` o `I_8x8` (`mb_type` 0): `transform_size_8x8_flag`, modos de predicción por bloque,
+    /// `I_4x4` o `I_8x8` (`mb_type` 0): `transform_size_8x8_flag`, modos de predicciÃ³n por bloque,
     /// croma, `coded_block_pattern` y residuo; `cci` es el `ctxIdxInc` de `intra_chroma_pred_mode`.
     /// Devuelve `end_of_slice_flag`.
     ///
     /// # Errors
-    /// Los de la decodificación del macrobloque.
+    /// Los de la decodificaciÃ³n del macrobloque.
     pub(super) fn intra_nxn(
         &mut self,
         corte: &mut CorteCabac<'_>,
@@ -413,7 +413,7 @@ impl FrameDecoder {
         *cat.get_mut(addr).ok_or(MbError::Inconsistent("cat"))? = CATEGORIA_I_NXN;
         let w4 = self.mb_w * 4;
         // H-49: transform_size_8x8_flag. For I_NxN it precedes the intra pred
-        // modes (spec §7.3.5); ctxIdx = 399 + condTermFlagA + condTermFlagB,
+        // modes (spec Â§7.3.5); ctxIdx = 399 + condTermFlagA + condTermFlagB,
         // each 1 when that neighbour MB carries the flag. Omitting this read is
         // what desynced every High-profile stream.
         let t8 = self.transform_8x8_mode && {
@@ -434,7 +434,7 @@ impl FrameDecoder {
         let left_ok = mbx > 0
             && self.nbr_in_slice(mbx - 1, mby)
             && self.intra_nbr_ok(mbx * 4 - 1, mby * 4)?;
-        // Brick 2.4 + recon: derive & store each intra mode (prev-flag → the
+        // Brick 2.4 + recon: derive & store each intra mode (prev-flag â†’ the
         // neighbour-predicted mode, else rem), exactly as the CAVLC path.
         let (modes, modes8) = self.leer_modos_nxn(cab, (mbx, mby), t8, (top_ok, left_ok))?;
         let chroma_mode = parse_intra_chroma_pred_mode_cabac(cab, cci) as u8;
@@ -452,7 +452,7 @@ impl FrameDecoder {
         // Build the padded nzc cache from neighbours (openh264 WelsFillCacheNonZeroCount).
         let mut nzc = cache_nzc_vecinos(mb_nzc, top, left)?;
 
-        // Bricks 2.6 + 2.7: mb_qp_delta + residual (I_4x4 luma 4×4 + chroma DC/AC),
+        // Bricks 2.6 + 2.7: mb_qp_delta + residual (I_4x4 luma 4Ã—4 + chroma DC/AC),
         // storing scan-order coefficients for recon.
         let mut cbfdc = 0u16;
         // Both materialised only when the parse writes them: an I_8x8
@@ -565,11 +565,11 @@ impl FrameDecoder {
         Ok(cab.decode_terminate())
     }
 
-    /// Modos de predicción de luma de un `I_4x4` (16) o un `I_8x8` (4, repetidos en sus cuatro
-    /// celdas 4x4): cada uno es el predicho por los vecinos o el que dé `rem_intra_pred_mode`
-    /// (§7.3.5.1, §8.3.1.1, §8.3.2.1). Los guarda en `modes_y` y devuelve los 16 en orden de
+    /// Modos de predicciÃ³n de luma de un `I_4x4` (16) o un `I_8x8` (4, repetidos en sus cuatro
+    /// celdas 4x4): cada uno es el predicho por los vecinos o el que dÃ© `rem_intra_pred_mode`
+    /// (Â§7.3.5.1, Â§8.3.1.1, Â§8.3.2.1). Los guarda en `modes_y` y devuelve los 16 en orden de
     /// trama y, con `t8`, los 4 de 8x8. `disponibles` dice si hay vecino de arriba y de la
-    /// izquierda para la predicción.
+    /// izquierda para la predicciÃ³n.
     ///
     /// # Errors
     /// `MbError::Inconsistent` si una celda cae fuera de `modes_y`.
@@ -582,11 +582,11 @@ impl FrameDecoder {
     ) -> Result<([u8; 16], [u8; 4]), MbError> {
         let w4 = self.mb_w * 4;
         let mut modes = [2u8; 16]; // raster [lby*4+lbx]
-        let mut modes8 = [2u8; 4]; // one per 8×8 when t8
+        let mut modes8 = [2u8; 4]; // one per 8Ã—8 when t8
                                    // ONE engine view for all 16 (or 4) pred-mode reads of the macroblock.
         let (data, mut e, ctx) = cab.view();
         if t8 {
-            // One mode per 8×8, broadcast to its four 4×4 cells so neighbour
+            // One mode per 8Ã—8, broadcast to its four 4Ã—4 cells so neighbour
             // mode prediction keeps working unchanged.
             for (b8, modo8) in modes8.iter_mut().enumerate() {
                 let (b8x, b8y) = (b8 % 2, b8 / 2);
@@ -631,12 +631,12 @@ impl FrameDecoder {
         Ok((modes, modes8))
     }
 
-    /// Reconstrucción de la luma de un `I_8x8`: predicción de cada bloque 8x8 con su modo y, si
-    /// `cbp_luma` lo marca como codificado, su residuo de `luma8` (§8.3.2, §8.5.13); marca las
+    /// ReconstrucciÃ³n de la luma de un `I_8x8`: predicciÃ³n de cada bloque 8x8 con su modo y, si
+    /// `cbp_luma` lo marca como codificado, su residuo de `luma8` (Â§8.3.2, Â§8.5.13); marca las
     /// celdas como codificadas en `coded_y`. Usa el QP del macrobloque (`cur_qp`).
     ///
     /// # Errors
-    /// Los de la reconstrucción de cada bloque.
+    /// Los de la reconstrucciÃ³n de cada bloque.
     fn reconstruir_luma_i8(
         &mut self,
         (mbx, mby): (usize, usize),
@@ -673,13 +673,13 @@ impl FrameDecoder {
         Ok(())
     }
 
-    /// Reconstrucción de la luma de un `I_4x4`: los 16 bloques en orden de decodificación,
-    /// predicción con su modo más residuo de `scans` (§8.3.1, §8.5.12); vuelca `mn` (los
+    /// ReconstrucciÃ³n de la luma de un `I_4x4`: los 16 bloques en orden de decodificaciÃ³n,
+    /// predicciÃ³n con su modo mÃ¡s residuo de `scans` (Â§8.3.1, Â§8.5.12); vuelca `mn` (los
     /// coeficientes por celda en orden de trama) a `nnz_y` y marca las celdas en `coded_y`. Usa
     /// el QP del macrobloque (`cur_qp`).
     ///
     /// # Errors
-    /// Los de la reconstrucción de cada bloque.
+    /// Los de la reconstrucciÃ³n de cada bloque.
     fn reconstruir_luma_i4(
         &mut self,
         (mbx, mby): (usize, usize),

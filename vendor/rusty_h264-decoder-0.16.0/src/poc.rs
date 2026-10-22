@@ -1,13 +1,13 @@
-//! Derivación del recuento de orden de imagen (`PicOrderCnt`, UIT-T H.264 §8.2.1).
+﻿//! DerivaciÃ³n del recuento de orden de imagen (`PicOrderCnt`, UIT-T H.264 Â§8.2.1).
 //!
-//! Mantiene el estado entre imágenes de referencia para calcular `PicOrderCnt` en los
-//! modos de tipo 0 (§8.2.1.1), tipo 1 (§8.2.1.2) y tipo 2 (§8.2.1.3), así como el
-//! reajuste tras una operación `MMCO 5` (§8.2.5.4.5).
+//! Mantiene el estado entre imÃ¡genes de referencia para calcular `PicOrderCnt` en los
+//! modos de tipo 0 (Â§8.2.1.1), tipo 1 (Â§8.2.1.2) y tipo 2 (Â§8.2.1.3), asÃ­ como el
+//! reajuste tras una operaciÃ³n `MMCO 5` (Â§8.2.5.4.5).
 
 use crate::params::Sps;
 
 /// Running picture-order-count derivation state.
-/// Estado acumulado para la derivación de `PicOrderCnt` entre fotogramas (UIT-T H.264 §8.2.1).
+/// Estado acumulado para la derivaciÃ³n de `PicOrderCnt` entre fotogramas (UIT-T H.264 Â§8.2.1).
 #[derive(Clone, Default)]
 pub(crate) struct PocState {
     prev_msb: i32,
@@ -18,7 +18,7 @@ pub(crate) struct PocState {
 }
 
 impl PocState {
-    /// Aplica el reinicio de estado tras una operación `MMCO 5` (UIT-T H.264 §8.2.5.4.5).
+    /// Aplica el reinicio de estado tras una operaciÃ³n `MMCO 5` (UIT-T H.264 Â§8.2.5.4.5).
     pub(crate) fn apply_mmco5(&mut self, poc_type: u32, current_poc: i32) -> i32 {
         self.prev_has_mmco5 = true;
         match poc_type {
@@ -44,8 +44,8 @@ impl PocState {
         }
     }
 
-    /// PARCHE-WODW (ARR-1): `PicOrderCnt` de tipo 1 para un fotograma (H.264 §8.2.1.2).
-    /// Aritmética en i64 con saturación: un flujo hostil no puede desbordar.
+    /// PARCHE-CRUSTY (ARR-1): `PicOrderCnt` de tipo 1 para un fotograma (H.264 Â§8.2.1.2).
+    /// AritmÃ©tica en i64 con saturaciÃ³n: un flujo hostil no puede desbordar.
     fn compute_poc_type1(
         &mut self,
         sps: &Sps,
@@ -114,9 +114,9 @@ impl PocState {
         }
     }
 
-    /// Derives `PicOrderCnt` for the current picture (spec §8.2.1) and advances
+    /// Derives `PicOrderCnt` for the current picture (spec Â§8.2.1) and advances
     /// this state. `deltas` = (`delta_pic_order_cnt[0]`, `delta_pic_order_cnt_bottom`
-    /// or `delta_pic_order_cnt[1]`). PARCHE-WODW (ARR-1): type 1 now follows §8.2.1.2
+    /// or `delta_pic_order_cnt[1]`). PARCHE-CRUSTY (ARR-1): type 1 now follows Â§8.2.1.2
     /// instead of being approximated by frame_num.
     pub(crate) fn compute_poc(
         &mut self,

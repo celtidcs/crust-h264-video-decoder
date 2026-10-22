@@ -1,4 +1,4 @@
-//! I_16x16 macroblock decoding — the mirror of the encoder's `mb16`.
+﻿//! I_16x16 macroblock decoding â€” the mirror of the encoder's `mb16`.
 //!
 //! Parses each macroblock's residuals and reconstructs it with the exact same
 //! prediction + inverse-transform helpers the encoder uses, so decoder output
@@ -25,15 +25,15 @@ pub(crate) use crate::edc::*;
 pub struct FrameDecoder {
     pub(crate) mb_w: usize,
     pub(crate) mb_h: usize,
-    /// Slice QP (`SliceQPy`) — the deblock filter's frame-level QP.
+    /// Slice QP (`SliceQPy`) â€” the deblock filter's frame-level QP.
     pub(crate) qp: u8,
     /// Running luma QP (`QPy`), carried across macroblocks and stepped by each
-    /// `mb_qp_delta` (spec §7.4.5). Equals `qp` on constant-QP streams.
+    /// `mb_qp_delta` (spec Â§7.4.5). Equals `qp` on constant-QP streams.
     pub(crate) cur_qp: u8,
-    /// PARCHE-WODW (ARR-1): el último macrobloque CAVLC fue I_PCM. Su QPY para el filtro de
-    /// desbloqueo es 0 (H.264 §8.7.2.2), pero no altera la predicción de QP del siguiente.
+    /// PARCHE-CRUSTY (ARR-1): el Ãºltimo macrobloque CAVLC fue I_PCM. Su QPY para el filtro de
+    /// desbloqueo es 0 (H.264 Â§8.7.2.2), pero no altera la predicciÃ³n de QP del siguiente.
     pub(crate) pcm_qp_pending: bool,
-    /// `chroma_qp_index_offset` from the active PPS (§8.5.8).
+    /// `chroma_qp_index_offset` from the active PPS (Â§8.5.8).
     pub(crate) chroma_qp_offset: i32,
     pub(crate) cw: usize,
     pub(crate) ch: usize,
@@ -45,19 +45,19 @@ pub struct FrameDecoder {
     pub(crate) mb_qp: Vec<u8>,
     /// First macroblock address of the slice currently being decoded. Neighbors
     /// with a lower address belong to an earlier slice and are "not available"
-    /// for prediction (spec §8.3/§8.4). Slices are contiguous raster ranges (we
-    /// reject FMO/slice-groups), so address ≥ this ⇔ same slice.
+    /// for prediction (spec Â§8.3/Â§8.4). Slices are contiguous raster ranges (we
+    /// reject FMO/slice-groups), so address â‰¥ this â‡” same slice.
     pub(crate) slice_first_mb: usize,
     pub(crate) nnz_y: Vec<u8>,
     pub(crate) nnz_c: [Vec<u8>; 2],
     pub(crate) modes_y: Vec<u8>,
     pub(crate) coded_y: Vec<bool>,
-    /// Per-4×4-block List-0 motion (mv + ref index, `-1` = no L0). For P slices
+    /// Per-4Ã—4-block List-0 motion (mv + ref index, `-1` = no L0). For P slices
     /// this is the only motion; B slices add the List-1 grids below.
     pub(crate) mv_y: Vec<(i32, i32)>,
     pub(crate) inter_y: Vec<bool>,
     pub(crate) ref_idx_y: Vec<i32>,
-    /// Per-4×4-block List-1 motion for B slices (`ref_idx1 = -1` = no L1).
+    /// Per-4Ã—4-block List-1 motion for B slices (`ref_idx1 = -1` = no L1).
     pub(crate) mv1: Vec<(i32, i32)>,
     pub(crate) ref_idx1: Vec<i32>,
     /// `RefPicList1` and B-slice flags (unused outside B slices).
@@ -74,31 +74,31 @@ pub struct FrameDecoder {
     /// Decoded-picture buffer (most-recent first); empty in I-slices. `ref_idx`
     /// indexes into this list.
     pub(crate) refs: Vec<crate::Ref>,
-    /// `num_ref_idx_l0_active` for the current slice — drives whether `ref_idx`
+    /// `num_ref_idx_l0_active` for the current slice â€” drives whether `ref_idx`
     /// is coded (active > 1) and its te(v)/ue(v) form, independently of how many
-    /// reference pictures actually exist (spec §7.4.5.1, §9.1).
+    /// reference pictures actually exist (spec Â§7.4.5.1, Â§9.1).
     pub(crate) num_ref_active: usize,
     /// `constrained_intra_pred_flag`: when set, intra prediction may only use
     /// samples from intra-coded neighbors (inter neighbors are "not available").
     pub(crate) constrained_intra: bool,
-    /// High-profile 4×4 scaling matrices in **raster** order, indexed by
+    /// High-profile 4Ã—4 scaling matrices in **raster** order, indexed by
     /// `[Y-intra, Cb-intra, Cr-intra, Y-inter, Cb-inter, Cr-inter]`. `None` = flat.
     pub(crate) scaling: Option<[[i32; 16]; 6]>,
-    /// High-profile 8×8 luma scaling matrices in raster order `[Y-intra, Y-inter]`
+    /// High-profile 8Ã—8 luma scaling matrices in raster order `[Y-intra, Y-inter]`
     /// (4:2:0 has only these two). `None` = flat.
     pub(crate) scaling8: Option<[[i32; 64]; 2]>,
     /// `transform_8x8_mode_flag` from the PPS: enables `transform_size_8x8_flag`.
     pub(crate) transform_8x8_mode: bool,
-    /// SPS `qpprime_y_zero_transform_bypass_flag` — refusal gate in `step_qp`.
+    /// SPS `qpprime_y_zero_transform_bypass_flag` â€” refusal gate in `step_qp`.
     pub(crate) transform_bypass: bool,
-    /// Los cortes de la imagen en orden de decodificación, uno por corte (ver [`DatosCorte`]).
-    /// El desbloqueo consulta el del corte dueño de cada macrobloque.
+    /// Los cortes de la imagen en orden de decodificaciÃ³n, uno por corte (ver [`DatosCorte`]).
+    /// El desbloqueo consulta el del corte dueÃ±o de cada macrobloque.
     pub(crate) cortes: Vec<DatosCorte>,
     /// Desplazamientos del filtro de cada macrobloque (los de su corte), escritos al derivar su
-    /// `bS` y leídos por el filtro común (§8.7.2).
+    /// `bS` y leÃ­dos por el filtro comÃºn (Â§8.7.2).
     pub(crate) desplazamientos_mb: Vec<DesplazamientosFiltro>,
-    /// Per-macroblock `transform_size_8x8_flag` (for deblocking: internal 4×4
-    /// luma edges of 8×8-transform MBs are not filtered).
+    /// Per-macroblock `transform_size_8x8_flag` (for deblocking: internal 4Ã—4
+    /// luma edges of 8Ã—8-transform MBs are not filtered).
     pub(crate) mb_t8x8: Vec<bool>,
     // ---- Row-interleaved deblocking state (docs/row-interleave-plan.md) ----
     /// Per-MB boundary strengths, filled row-by-row as decode completes rows.
@@ -117,14 +117,14 @@ pub struct FrameDecoder {
     pub(crate) bak_u: Vec<u8>,
     pub(crate) bak_v: Vec<u8>,
     /// Entropy-decouple: deferred pixel jobs + the per-slice activation flag
-    /// (CABAC slices only — the CAVLC loop has no flush hooks).
+    /// (CABAC slices only â€” the CAVLC loop has no flush hooks).
     pub(crate) edc_jobs: Vec<EdcJob>,
     /// Recycled job boxes (see `take_pinter_job`): a coded inter macroblock
     /// used to malloc, fill, memcpy and free a 2.8 KB box every time.
     #[allow(clippy::vec_box)]
     pub(crate) edc_job_pool: Vec<Box<PInterJob>>,
     /// Pool de reciclaje de cajas en heap para trabajos inter sin residuo (`PInterNoResJob`);
-    /// evita la sobrecarga constante de asignación y liberación en el bucle caliente EDC.
+    /// evita la sobrecarga constante de asignaciÃ³n y liberaciÃ³n en el bucle caliente EDC.
     #[allow(clippy::vec_box)]
     pub(crate) edc_nores_pool: Vec<Box<PInterNoResJob>>,
     /// Coefficient planes for the B and intra arms (which reconstruct inline,
@@ -140,13 +140,13 @@ pub struct FrameDecoder {
     /// can skip the 24-block neighbourhood gather on macroblocks whose strengths
     /// are determined by syntax alone. Starts UNSET; anything left UNSET simply
     /// takes the blind path, so a missed producer site costs speed, not
-    /// correctness. Only classes that are uniform BY SYNTAX are written — notably
-    /// NOT `B_Skip`/`B_Direct`, whose direct-derived motion varies per 4×4.
+    /// correctness. Only classes that are uniform BY SYNTAX are written â€” notably
+    /// NOT `B_Skip`/`B_Direct`, whose direct-derived motion varies per 4Ã—4.
     pub(crate) mb_kind: Vec<u8>,
     /// Explicit weighted-prediction tables, when active for this slice.
     pub(crate) weights: Option<WeightTable>,
     /// Colocated-picture fast-probe cache (set_b_context): true when refs1[0]
-    /// is frozen (1T), short-term, with motion grids — col_zero then skips
+    /// is frozen (1T), short-term, with motion grids â€” col_zero then skips
     /// the Option + live + long_term + w4 branch chain per probe.
     pub(crate) col_ok: bool,
     pub(crate) col_w4: usize,
@@ -158,26 +158,26 @@ pub struct FrameDecoder {
     pub(crate) any_t8: bool,
     /// Raster address whose P_Skip MV is FORCED (0,0): the previous
     /// decode_p_skip was at addr-1 and committed (0,0), so this MB's left
-    /// neighbor either fires §8.4.1.1's zero-MV rule (in-slice: ref 0,
-    /// (0,0)) or is unavailable (out-of-slice — same rule). Interior MBs of
+    /// neighbor either fires Â§8.4.1.1's zero-MV rule (in-slice: ref 0,
+    /// (0,0)) or is unavailable (out-of-slice â€” same rule). Interior MBs of
     /// a skip run skip the 3-neighbor gather entirely.
     pub(crate) skip_zero_next: usize,
     /// Pending B_Skip grid+recon span: (mb row, x0, n, kind) of CONSECUTIVE
     /// fast B_Skips with IDENTICAL committed values, deferred and range-
     /// filled/band-reconned at flush. Flushed before ANY grid or pixel
-    /// reader runs — see span_flush callers.
+    /// reader runs â€” see span_flush callers.
     pub(crate) bzspan: Option<(usize, usize, usize, BzKind)>,
-    /// Pending P_Skip (0,0) grid-commit span — the P mirror of `bzspan`
+    /// Pending P_Skip (0,0) grid-commit span â€” the P mirror of `bzspan`
     /// (values: ref 0 list-0, mv (0,0), inter, coded, DC mode, kind SKIP).
     /// The bool records whether the RECON is deferred too (1T, identity/no
-    /// weights) — decided at push time, not re-derived at flush (begin_slice
+    /// weights) â€” decided at push time, not re-derived at flush (begin_slice
     /// may have changed the fields in between).
     pub(crate) pzspan: Option<(usize, usize, usize, bool)>,
     /// Per-picture bitmap: MB decoded as a ref0/(0,0)-both-lists zero-bi fast
-    /// B_Skip. Never cleared mid-picture — false only ever means "derive
-    /// normally" — so no MB path carries a clearing duty.
+    /// B_Skip. Never cleared mid-picture â€” false only ever means "derive
+    /// normally" â€” so no MB path carries a clearing duty.
     pub(crate) bzero: Vec<bool>,
-    /// Pooled CABAC slice scratch — refilled (not reallocated) at slice entry;
+    /// Pooled CABAC slice scratch â€” refilled (not reallocated) at slice entry;
     /// carried across pictures via `GridPool`. Taken out of `self` at
     /// `decode_slice_cabac_inner` entry and put back at its normal exit (an
     /// error exit simply forfeits the pooled allocation).
@@ -192,14 +192,14 @@ pub struct FrameDecoder {
     pub(crate) sc_ref1: Vec<[i8; 16]>,
     pub(crate) sc_mvd1: Vec<[[i16; 2]; 16]>,
     pub(crate) sc_direct: Vec<bool>,
-    /// Lazily cached `implicit_weights(0, 0)` — slice-constant (POCs of
+    /// Lazily cached `implicit_weights(0, 0)` â€” slice-constant (POCs of
     /// refs[0]/refs1[0] and cur don't change within a slice). Reset in
     /// set_b_context.
     pub(crate) iw00: Option<Option<(i32, i32)>>,
-    /// Cached `weights.es_identidad_lista(0)` — all list-0 refs identity; gates the
+    /// Cached `weights.es_identidad_lista(0)` â€” all list-0 refs identity; gates the
     /// whole weight_partition pass for P inter (one choke point, all sites).
     pub(crate) weights_l0id: bool,
-    /// Cached `weights.es_identidad_ref0()` — identity tables (the x264 weightp=2
+    /// Cached `weights.es_identidad_ref0()` â€” identity tables (the x264 weightp=2
     /// common case) make every ref-0 weighting pass an exact no-op, and the
     /// skip fast paths check this per MB, so it is computed once per slice.
     pub(crate) weights_id0: bool,
@@ -209,13 +209,13 @@ pub struct FrameDecoder {
     pub(crate) weighted_bipred_idc: u8,
     /// `direct_8x8_inference_flag` (B direct co-located sub-block selection).
     pub(crate) direct_8x8_inference: bool,
-    /// Slice-stable ref→POC tables for bS (≤16 entries). `derive_bs_row` used
-    /// to `collect()` these every row — same values for the whole slice.
+    /// Slice-stable refâ†’POC tables for bS (â‰¤16 entries). `derive_bs_row` used
+    /// to `collect()` these every row â€” same values for the whole slice.
     pub(crate) ref_poc0: Vec<i32>,
     pub(crate) ref_poc1: Vec<i32>,
 }
 
-/// Explicit weighted-prediction tables (spec §7.4.3.2 / §8.4.2.3.2). Per
+/// Explicit weighted-prediction tables (spec Â§7.4.3.2 / Â§8.4.2.3.2). Per
 /// reference list, per ref index: a luma `(weight, offset)` and two chroma
 pub use crate::ponderacion::WeightTable;
 
@@ -223,12 +223,12 @@ pub use crate::ponderacion::WeightTable;
 ///
 /// `FrameDecoder::new` used to allocate ~1.65 MB of frame-wide grids for EVERY
 /// coded picture and drop them when the picture finished. The sampled profiler
-/// prices that (stage `dec-setup`) at 6.7% of decode — larger than dequant,
+/// prices that (stage `dec-setup`) at 6.7% of decode â€” larger than dequant,
 /// reconstruct and intra prediction combined, and none of it is codec work.
 ///
 /// Two costs are being paid, and the allocation is the bigger one. A ~460 KB
 /// `Vec` goes straight to the OS, so every page is a fresh zero page and the
-/// decoder takes a soft page fault on FIRST TOUCH of each 4 KB — a cost charged
+/// decoder takes a soft page fault on FIRST TOUCH of each 4 KB â€” a cost charged
 /// to whatever per-macroblock stage happens to touch it first, not to the
 /// allocation. Handing the same buffers back keeps the pages mapped and warm.
 ///
@@ -246,30 +246,30 @@ use crate::pool::refill;
 pub use crate::pool::GridPool;
 use rusty_h264_common::deblock::DesplazamientosFiltro;
 
-/// Parámetros de inicialización de un decodificador de cuadro ([`FrameDecoder`]).
+/// ParÃ¡metros de inicializaciÃ³n de un decodificador de cuadro ([`FrameDecoder`]).
 pub struct ParametrosCuadro {
-    /// Anchura del cuadro expresada en número de macrobloques (`pic_width_in_mbs`).
+    /// Anchura del cuadro expresada en nÃºmero de macrobloques (`pic_width_in_mbs`).
     pub mb_w: usize,
-    /// Altura del cuadro expresada en número de macrobloques (`pic_height_in_mbs`).
+    /// Altura del cuadro expresada en nÃºmero de macrobloques (`pic_height_in_mbs`).
     pub mb_h: usize,
-    /// Parámetro de cuantización inicial de luminancia para el corte (`slice_qp`).
+    /// ParÃ¡metro de cuantizaciÃ³n inicial de luminancia para el corte (`slice_qp`).
     pub qp: u8,
-    /// Desplazamiento de cuantización de crominancia respecto al corte (`chroma_qp_index_offset`).
+    /// Desplazamiento de cuantizaciÃ³n de crominancia respecto al corte (`chroma_qp_index_offset`).
     pub chroma_qp_offset: i32,
-    /// Lista de imágenes de referencia decodificadas disponibles para compensación de movimiento.
+    /// Lista de imÃ¡genes de referencia decodificadas disponibles para compensaciÃ³n de movimiento.
     pub refs: Vec<crate::Ref>,
     /// Cantidad de referencias activas en la Lista 0 (`num_ref_idx_l0_active`).
     pub num_ref_active: usize,
-    /// Bandera `constrained_intra_pred_flag` (restringe predicción intra a muestras intra).
+    /// Bandera `constrained_intra_pred_flag` (restringe predicciÃ³n intra a muestras intra).
     pub constrained_intra: bool,
-    /// Bandera `transform_8x8_mode_flag` del PPS (habilita transformada de 8×8).
+    /// Bandera `transform_8x8_mode_flag` del PPS (habilita transformada de 8Ã—8).
     pub transform_8x8_mode: bool,
     /// Indica si el perfil del flujo admite cortes predictivos B (`profile_idc != 66`).
     pub b_possible: bool,
 }
 
 impl ParametrosCuadro {
-    /// Parámetros auxiliares para pruebas unitarias con dimensiones fijadas a 1×1 macrobloque.
+    /// ParÃ¡metros auxiliares para pruebas unitarias con dimensiones fijadas a 1Ã—1 macrobloque.
     #[cfg(test)]
     pub fn para_prueba(qp: u8, chroma_qp_offset: i32) -> Self {
         Self {
@@ -287,7 +287,7 @@ impl ParametrosCuadro {
 }
 
 impl FrameDecoder {
-    /// Non-pooled ctor — tests only; production always enters via `with_pool`
+    /// Non-pooled ctor â€” tests only; production always enters via `with_pool`
     /// (`GridPool` recycling, see lib.rs).
     #[cfg(test)]
     #[allow(clippy::too_many_arguments)]
@@ -470,7 +470,7 @@ impl FrameDecoder {
     /// `list` is the reference list and `refi` the partition's reference index.
     ///
     /// # Errors
-    /// `MbError::Inconsistent` si `refi` no está en la tabla de pesos.
+    /// `MbError::Inconsistent` si `refi` no estÃ¡ en la tabla de pesos.
     pub(crate) fn weight_partition(
         &self,
         pred_y: &mut [u8; 256],
@@ -484,7 +484,7 @@ impl FrameDecoder {
             return Ok(());
         };
         // Identity list-0 table (x264 weightp=2 outside fades): the whole pass
-        // is an exact per-pixel no-op — skip it.
+        // is an exact per-pixel no-op â€” skip it.
         if list == 0 && self.weights_l0id {
             return Ok(());
         }
@@ -494,13 +494,13 @@ impl FrameDecoder {
         // win for this function was hoisting the identity test to its CALLERS,
         // which stands.
         // RESOLVE ONCE, APPLY MANY. `apply_luma` re-read `self.luma[list][refi]`
-        // — an array index, a Vec deref and an element index, two of them bounds
-        // checked — on EVERY sample, up to 256 luma plus 128 chroma per call.
+        // â€” an array index, a Vec deref and an element index, two of them bounds
+        // checked â€” on EVERY sample, up to 256 luma plus 128 chroma per call.
         // The weight is a property of the partition, not of the pixel. (The loop
         // SHAPE is untouched: row-slicing it is refuted above.)
         // MASKED, not row-sliced. `pred_y` is a fixed `[u8; 256]` and `c_pred` a
         // `[[u8; 64]; 2]`, so `& 255` / `& 63` are no-ops that prove the index
-        // outright — where SLICING these loops cost +28% (the extents are runtime
+        // outright â€” where SLICING these loops cost +28% (the extents are runtime
         // values, so the slice bounds outweigh the checks). Same lesson as
         // `luma_centre`: the refutation was of one SHAPE, not of the goal.
         let reg = crate::ponderacion::RegionParticion::nueva(rx, ry, rw, rh);
@@ -508,13 +508,13 @@ impl FrameDecoder {
         Ok(())
     }
 
-    /// SPS `qpprime_y_zero_transform_bypass_flag` — see [`Self::step_qp`].
+    /// SPS `qpprime_y_zero_transform_bypass_flag` â€” see [`Self::step_qp`].
     pub fn set_transform_bypass(&mut self, on: bool) {
         self.transform_bypass = on;
     }
 
-    /// Sets the High-profile scaling matrices (raster order: six 4×4 lists, two
-    /// 8×8 luma lists). The caller un-zig-zags the SPS lists. Flat is the default.
+    /// Sets the High-profile scaling matrices (raster order: six 4Ã—4 lists, two
+    /// 8Ã—8 luma lists). The caller un-zig-zags the SPS lists. Flat is the default.
     pub fn set_scaling(&mut self, scaling: [[i32; 16]; 6], scaling8: [[i32; 64]; 2]) {
         self.scaling = Some(scaling);
         self.scaling8 = Some(scaling8);
@@ -549,7 +549,7 @@ impl FrameDecoder {
         self.refresh_ref_pocs();
     }
 
-    /// Cached `implicit_weights(0, 0)` — constant within a slice.
+    /// Cached `implicit_weights(0, 0)` â€” constant within a slice.
     pub(crate) fn iw00(&mut self) -> Option<(i32, i32)> {
         // Read the discriminant ONCE. The `is_none()` + `unwrap()` pair tested it
         // twice and carried an `unwrap_failed` path for a value this very function
@@ -595,16 +595,16 @@ impl FrameDecoder {
     }
 
     /// Whether the neighbor macroblock at `(nbx, nby)` is in the slice currently
-    /// being decoded (address ≥ the slice's first MB). For single-slice pictures
+    /// being decoded (address â‰¥ the slice's first MB). For single-slice pictures
     /// `slice_first_mb == 0`, so this is always true and prediction is unchanged.
     #[inline]
     pub(crate) fn nbr_in_slice(&self, nbx: usize, nby: usize) -> bool {
         nby * self.mb_w + nbx >= self.slice_first_mb
     }
 
-    /// Whether the neighbor 4×4 block at `(nbx, nby)` may contribute to intra
+    /// Whether the neighbor 4Ã—4 block at `(nbx, nby)` may contribute to intra
     /// prediction. With `constrained_intra_pred`, an inter-coded neighbor is
-    /// treated as unavailable (spec §8.3.1.2.{1,2}); otherwise always usable.
+    /// treated as unavailable (spec Â§8.3.1.2.{1,2}); otherwise always usable.
     #[inline]
     ///
     /// # Errors
@@ -613,8 +613,8 @@ impl FrameDecoder {
         // Fallible read: this is inlined at eleven sites across the intra paths,
         // and `constrained_intra` short-circuits it on nearly every stream, so
         // the check was pure tax on a value that is usually never loaded.
-        // Un vecino fuera de rango no es «no disponible»: los llamadores ya
-        // decidieron la disponibilidad, así que significa que la rejilla ya no corresponde al
+        // Un vecino fuera de rango no es Â«no disponibleÂ»: los llamadores ya
+        // decidieron la disponibilidad, asÃ­ que significa que la rejilla ya no corresponde al
         // flujo (COR-3).
         if !self.constrained_intra {
             return Ok(true);
@@ -645,7 +645,7 @@ impl FrameDecoder {
     ///
     /// # Errors
     /// `MbError::Inconsistent` si la muestra cae fuera del plano: los llamadores ya
-    /// comprobaron que el vecino está disponible, así que no es una muestra «no disponible».
+    /// comprobaron que el vecino estÃ¡ disponible, asÃ­ que no es una muestra Â«no disponibleÂ».
     pub(crate) fn top_y_px(&self, py: usize, x: usize) -> Result<u8, MbError> {
         if py % 16 == 0 && self.flt_rows * 16 >= py {
             self.bak_y.get(x).copied()
@@ -698,13 +698,13 @@ impl FrameDecoder {
 
     /// Snapshots the (deblocked) reconstruction as a reference picture, drawing
     /// its padded-plane allocations from `pool` (recycled
-    /// planes of evicted DPB frames — see `Decoder::reclaim_retired`). ~1.9 MB of
+    /// planes of evicted DPB frames â€” see `Decoder::reclaim_retired`). ~1.9 MB of
     /// fresh allocation per reference picture otherwise (`dpb-clone` stage, 3-4%
     /// of decode, mostly first-touch page faults).
     pub fn as_reference_pooled(&self, pool: &mut Vec<Vec<u8>>) -> crate::RefFrame {
         // The per-block motion (mv/ref_idx/ref_poc) is read ONLY by B temporal/spatial
         // direct (`col.mv/ref_idx/ref_poc`, guarded on `w4 != 0` + `idx < len`). On
-        // Baseline/Constrained-Baseline streams (no B) it's pure waste — skip the two
+        // Baseline/Constrained-Baseline streams (no B) it's pure waste â€” skip the two
         // grid clones + the per-block ref_poc resolve/alloc. `w4 = 0` makes the B
         // readers no-op even on malformed input.
         let (mv, ref_idx, mv1, ref_idx1, ref_poc, w4) = if self.b_possible {
@@ -759,7 +759,7 @@ impl FrameDecoder {
         let (cpw, cph) = (self.ccw + 2 * crate::CPAD, self.ch / 2 + 2 * crate::CPAD);
         crate::RefFrame {
             // Pad once here (ExpandPicture) instead of extracting a clamped tile
-            // on every MC call — same copy class as the old plane clone.
+            // on every MC call â€” same copy class as the old plane clone.
             py: rusty_h264_common::inter::pad_plane_into(
                 take(lpw * lph),
                 &self.rec_y,
@@ -801,7 +801,7 @@ impl FrameDecoder {
     /// in parse order. Called before any intra macroblock (its reconstruction
     /// reads neighbour PIXELS), before row filtering, at B-branch entry, at
     /// slice end, and at `deblock()` as a backstop.
-    /// Per-macroblock guard: the B arm calls this once per B MB — the empty
+    /// Per-macroblock guard: the B arm calls this once per B MB â€” the empty
     /// test inlines, the drain body stays outlined.
     /// A job box from the pool (or a fresh one when the pool is empty -- the
     /// first row of a picture, or MT mode where boxes cross to the worker).
@@ -844,7 +844,7 @@ impl FrameDecoder {
                 EdcJob::Skip { mbx, mby, mv } => {
                     // mb_skip_run band coalescing: gather the maximal run of
                     // consecutive same-row (0,0)-skips and recon it as ONE
-                    // band copy (weighted-P falls back — the copy identity
+                    // band copy (weighted-P falls back â€” the copy identity
                     // only holds unweighted).
                     if *mv == (0, 0) && band_ok {
                         let (x0, y0) = (*mbx, *mby);
@@ -871,7 +871,7 @@ impl FrameDecoder {
                     self.recon_p_inter(job)?;
                 }
                 EdcJob::InterNoRes(job) => {
-                    // D9b: do NOT to_full() — that memset ~2.5 KB of zeros per MB
+                    // D9b: do NOT to_full() â€” that memset ~2.5 KB of zeros per MB
                     // then walked add_inter_residual's all-zero path. MC + plane copy.
                     self.recon_p_inter_nores(job)?;
                 }
@@ -939,7 +939,7 @@ impl FrameDecoder {
         (self.into_frame(crop), pool)
     }
 
-    /// Aplica la ventana de recorte delegando en el módulo especializado `recorte.rs`.
+    /// Aplica la ventana de recorte delegando en el mÃ³dulo especializado `recorte.rs`.
     pub fn into_frame(self, crop: Recorte) -> YuvFrame {
         crop.aplicar(
             crate::recorte::DimensionesFotograma {

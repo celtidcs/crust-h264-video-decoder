@@ -1,8 +1,8 @@
-//! Análisis sintáctico CAVLC y control de cortes (UIT-T H.264 §9.2).
+﻿//! AnÃ¡lisis sintÃ¡ctico CAVLC y control de cortes (UIT-T H.264 Â§9.2).
 //!
-//! Este módulo implementa la decodificación de macrobloques y cortes codificados
-//! con longitud variable adaptativa al contexto (CAVLC), incluyendo la gestión
-//! y predicción de la caché de coeficientes no nulos (`nnz` y `nC`), el bucle
+//! Este mÃ³dulo implementa la decodificaciÃ³n de macrobloques y cortes codificados
+//! con longitud variable adaptativa al contexto (CAVLC), incluyendo la gestiÃ³n
+//! y predicciÃ³n de la cachÃ© de coeficientes no nulos (`nnz` y `nC`), el bucle
 //! principal de corte CAVLC y el despacho multihilo con el trabajador EDC.
 #![allow(clippy::needless_range_loop)]
 
@@ -113,11 +113,11 @@ impl FrameDecoder {
     /// Decodes one slice's macroblocks (raster order) starting at `first_mb`,
     /// until `more_rbsp_data()` is exhausted or the picture is full. Returns the
     /// next macroblock address (= total when the picture is complete). In a
-    /// P-slice each macroblock is preceded by `mb_skip_run`. `filtro` son los parámetros del
-    /// filtro de desbloqueo de este corte, que quedan registrados con él.
+    /// P-slice each macroblock is preceded by `mb_skip_run`. `filtro` son los parÃ¡metros del
+    /// filtro de desbloqueo de este corte, que quedan registrados con Ã©l.
     ///
     /// # Errors
-    /// Los de la decodificación de los macrobloques del corte.
+    /// Los de la decodificaciÃ³n de los macrobloques del corte.
     pub fn decode_slice_data(
         &mut self,
         r: &mut BitReader,
@@ -161,7 +161,7 @@ impl FrameDecoder {
                 }
                 // The run length is KNOWN here (CAVLC codes it as one syntax
                 // element). P runs: after the first skip commits (0,0), every
-                // later run MB is FORCED (0,0) by the zero-MV rule — process
+                // later run MB is FORCED (0,0) by the zero-MV rule â€” process
                 // the remainder SEGMENT-WISE: one span extension + one mb_qp
                 // fill per row segment instead of a per-MB call + span match +
                 // store. Non-(0,0) runs and B runs keep the per-MB loop. The
@@ -199,7 +199,7 @@ impl FrameDecoder {
                     // exactly while skip_zero_next tracks addr (decode_p_skip
                     // set it iff this skip committed (0,0)).
                     // Worker mode (edc_tx) must route per-MB jobs through the
-                    // channel — the parse thread no longer owns the planes.
+                    // channel â€” the parse thread no longer owns the planes.
                     while remaining > 0 && self.skip_zero_next == addr {
                         if mbx == mbw_c {
                             mbx = 0;
@@ -236,7 +236,7 @@ impl FrameDecoder {
                 }
             }
             // The skip run above may have crossed a row boundary within this
-            // iteration — wrap before the non-skip MB decodes.
+            // iteration â€” wrap before the non-skip MB decodes.
             if mbx == mbw_c {
                 mbx = 0;
                 mby += 1;
@@ -247,11 +247,11 @@ impl FrameDecoder {
                 self.decode_b_mb(r, mbx, mby)?;
             } else {
                 // Non-skip CAVLC MB: inter MV prediction + intra gathers
-                // read the grids — flush deferred spans.
+                // read the grids â€” flush deferred spans.
                 self.span_flush()?;
                 self.decode_mb(r, mbx, mby, is_p)?;
             }
-            // PARCHE-WODW (ARR-1): un I_PCM se filtra con QPY = 0 (§8.7.2.2).
+            // PARCHE-CRUSTY (ARR-1): un I_PCM se filtra con QPY = 0 (Â§8.7.2.2).
             let qp_desbloqueo = if core::mem::take(&mut self.pcm_qp_pending) {
                 0
             } else {
@@ -281,7 +281,7 @@ impl FrameDecoder {
     ) -> Result<(), MbError> {
         let mut mb_type = { r.read_ue()? };
         if is_p {
-            // In P-slices, mb_type 0/1/2 are inter (16×16, 16×8, 8×16),
+            // In P-slices, mb_type 0/1/2 are inter (16Ã—16, 16Ã—8, 8Ã—16),
             // 3 = P_8x8, 4 = P_8x8ref0 (ref_idx forced 0), 5+ intra.
             if mb_type <= 2 {
                 return self.decode_inter(r, mb_x, mb_y, mb_type as u8);
@@ -306,11 +306,11 @@ mod tests {
     fn nc_pred_ambos_vecinos_disponibles() {
         let mut fd = FrameDecoder::new(1, 1, 26, 0, alloc::vec::Vec::new(), 0, false, false, false);
         // Para lbx=0, lby=0:
-        // left está en (lby + 1)*5 + lbx = 1*5 + 0 = 5
-        // top está en lby*5 + (lbx + 1) = 0*5 + 1 = 1
+        // left estÃ¡ en (lby + 1)*5 + lbx = 1*5 + 0 = 5
+        // top estÃ¡ en lby*5 + (lbx + 1) = 0*5 + 1 = 1
         fd.nnz_l_cache[5] = 2;
         fd.nnz_l_cache[1] = 4;
-        // Predicción: (2 + 4 + 1) >> 1 = 7 >> 1 = 3
+        // PredicciÃ³n: (2 + 4 + 1) >> 1 = 7 >> 1 = 3
         assert_eq!(fd.nc_pred(0, 0), 3);
     }
 
@@ -341,7 +341,7 @@ mod tests {
     fn nnz_cache_set_asigna_posicion_correcta() {
         let mut fd = FrameDecoder::new(1, 1, 26, 0, alloc::vec::Vec::new(), 0, false, false, false);
         fd.nnz_cache_set(2, 3, 11);
-        // Índice esperado: ((3 & 3) + 1) * 5 + ((2 & 3) + 1) = 4 * 5 + 3 = 23
+        // Ãndice esperado: ((3 & 3) + 1) * 5 + ((2 & 3) + 1) = 4 * 5 + 3 = 23
         assert_eq!(fd.nnz_l_cache[23], 11);
     }
 

@@ -1,11 +1,11 @@
-//! Predicción intra 4×4 y 8×8: recolección de vecinos y modos más probables (§8.3.1, §8.3.2).
+﻿//! PredicciÃ³n intra 4Ã—4 y 8Ã—8: recolecciÃ³n de vecinos y modos mÃ¡s probables (Â§8.3.1, Â§8.3.2).
 
 use super::{I4Res, I4_TR_IN_MB, I4_Z_OF_XY};
 use crate::error::MbError;
 use crate::mb16::FrameDecoder;
 
 impl FrameDecoder {
-    /// Clasifica y pre-descuantiza los bloques 4×4 para la reconstrucción intra.
+    /// Clasifica y pre-descuantiza los bloques 4Ã—4 para la reconstrucciÃ³n intra.
     #[must_use]
     pub(crate) fn i4_prepare(
         &self,
@@ -29,7 +29,7 @@ impl FrameDecoder {
         kinds
     }
 
-    /// Predice rápidamente el modo intra 4×4 comprobando disponibilidad local.
+    /// Predice rÃ¡pidamente el modo intra 4Ã—4 comprobando disponibilidad local.
     ///
     /// # Errors
     /// `MbError::Inconsistent` si la tabla de modos no cubre un vecino disponible.
@@ -47,7 +47,7 @@ impl FrameDecoder {
             return self.predict_i4_mode(bx, by);
         }
         // Vecino A o B no disponible: dcPredModePredictedFlag = 1, modo 2 (Intra_4x4_DC),
-        // UIT-T H.264 (08/2024) §8.3.1.1, pasos 2 y 3.
+        // UIT-T H.264 (08/2024) Â§8.3.1.1, pasos 2 y 3.
         if !((lbx > 0 || left_ok) && (lby > 0 || top_ok)) {
             return Ok(2);
         }
@@ -60,13 +60,13 @@ impl FrameDecoder {
         }
     }
 
-    /// Predice el modo intra 4×4 según vecinos izquierdo y superior (UIT-T H.264 §8.3.1.1).
+    /// Predice el modo intra 4Ã—4 segÃºn vecinos izquierdo y superior (UIT-T H.264 Â§8.3.1.1).
     ///
     /// # Errors
     /// `MbError::Inconsistent` si la tabla de modos no cubre un vecino disponible.
     pub(crate) fn predict_i4_mode(&self, bx: usize, by: usize) -> Result<u8, MbError> {
         // Vecino no disponible (o inter con constrained_intra_pred_flag): modo 2 (Intra_4x4_DC),
-        // §8.3.1.1, pasos 2 y 3.
+        // Â§8.3.1.1, pasos 2 y 3.
         if bx == 0 || by == 0 {
             return Ok(2);
         }
@@ -86,7 +86,7 @@ impl FrameDecoder {
         }
     }
 
-    /// Recopila las muestras de referencia vecinas para un bloque luma intra 4×4.
+    /// Recopila las muestras de referencia vecinas para un bloque luma intra 4Ã—4.
     ///
     /// # Errors
     /// `MbError::Inconsistent` si `coded_y` no cubre el vecino superior derecho.
@@ -137,10 +137,10 @@ impl FrameDecoder {
         Ok((top, left, corner))
     }
 
-    /// Recopila las muestras de referencia vecinas para un bloque luma intra 8×8.
+    /// Recopila las muestras de referencia vecinas para un bloque luma intra 8Ã—8.
     ///
-    /// Preserva estrictamente el PARCHE-WODW (ARR-2, hallado por Gemini): `p[-1,-1]` depende
-    /// solo del bloque de la esquina, no de que exista bloque superior (§6.4.11.4, §8.3.2.2.1).
+    /// Preserva estrictamente el PARCHE-CRUSTY (ARR-2, hallado por Gemini): `p[-1,-1]` depende
+    /// solo del bloque de la esquina, no de que exista bloque superior (Â§6.4.11.4, Â§8.3.2.2.1).
     ///
     /// # Errors
     /// `MbError::Inconsistent` si `coded_y` no cubre el vecino superior derecho.
