@@ -8,7 +8,7 @@ Soy un usuario novel en el mundo de la programación y la IA. He «ayudado a cre
 espero que a alguien le pueda servir para algo... sin más.
 
 Lo que no funciona no lo escondo: está escrito en
-[defectos conocidos](documentacion/defectos-conocidos.md). Si encuentras algo que no esté ahí,
+[defectos conocidos](https://github.com/celtidcs/crusty_h264/blob/main/documentacion/defectos-conocidos.md). Si encuentras algo que no esté ahí,
 cuéntamelo.
 
 Para realizar esta app he montado un sistema colaborativo y de consenso entre ChatGPT Codex,
