@@ -1,0 +1,9 @@
+# GitHub Linguist — Clasificación de lenguajes del repositorio
+# Asegurar que el código fuente Rust del decodificador dentro de vendor/ sea computado como lenguaje principal
+vendor/** linguist-vendored=false
+
+# Herramientas auxiliares, scripts y pruebas excluidos del cómputo de producto
+scripts/** linguist-documentation=true
+scripts/** linguist-detectable=false
+tests/** linguist-documentation=true
+tests/** linguist-detectable=false
