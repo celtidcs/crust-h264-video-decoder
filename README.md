@@ -2,6 +2,25 @@
 
 Bienvenido al repositorio oficial de **Crusty_H264**, la implementación moderna, auditada y 100% en Rust seguro (`#![forbid(unsafe_code)]`) del estándar de compresión de vídeo H.264 / AVC (ISO/IEC 14496-10 / UIT-T H.264).
 
+## Sobre Celtilander
+
+Soy un usuario novel en el mundo de la programación y la IA. He «ayudado a crear» esta app y
+espero que a alguien le pueda servir para algo... sin más.
+
+Lo que no funciona no lo escondo: está escrito en
+[defectos conocidos](documentacion/defectos-conocidos.md). Si encuentras algo que no esté ahí,
+cuéntamelo.
+
+Para realizar esta app he montado un sistema colaborativo y de consenso entre ChatGPT Codex,
+Claude Code y Gemini Antigravity. Yo puse la idea y dirigía el proyecto, mientras que ellos
+diseñaban, repartían y verificaban el trabajo. Ningún código fue revisado por el agente que lo
+había escrito, y una vez terminado todo debía ser aprobado por unanimidad. Hasta que no se
+conseguía el consenso, no se daba una tarea por concluida. Cuando por algún motivo no se llegaba
+a un consenso, era yo quien tomaba la decisión final, así que los fallos que pueda haber serán
+más míos que de ellos.
+
+Saludos a todo el mundo.
+
 ---
 
 ## 1. Visión General del Proyecto
