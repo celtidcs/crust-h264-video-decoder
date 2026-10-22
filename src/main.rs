@@ -1,9 +1,9 @@
-//! Banco de evaluación H.264 (criterios H264-1…5). Desechable, fuera del repositorio de WoDW.
+//! Banco de evaluación H.264 (criterios H264-1…5) para Crusty_H264.
 //!
 //! Uso:
 //!   banco_h264 decodificar <rusty|rusty-au|openh264> <flujo.264> [salida.yuv]
 //!       `rusty-au` decodifica unidad de acceso a unidad de acceso y ordena con el búfer de
-//!       reordenación acotado de WoDW (el mismo archivo, incluido con `#[path]`).
+//!       reordenación acotado de Crusty_H264 (el mismo archivo, incluido con `#[path]`).
 //!       Decodifica el flujo Annex B y escribe una línea de resultado:
 //!       `RESULTADO <decodificador> <ok|error> fotogramas=N ancho=W alto=H ms=T pico_mb=M huellas=<sha256 de todo>`
 //!       Con `salida.yuv` vuelca los fotogramas (Y,U,V compactos, sin paso) para comparar.
@@ -63,7 +63,7 @@ fn nivel_del_primer_sps(flujo: &[u8]) -> u8 {
         .map_or(0, |w| w[6])
 }
 
-/// Como lo hace WoDW: unidad de acceso a unidad de acceso, con su mismo orden de presentación
+/// Decodificación unidad de acceso a unidad de acceso, con su mismo orden de presentación
 /// (vaciado en cada IDR y búfer acotado al DPB del nivel).
 fn decodificar_rusty_au(flujo: &[u8]) -> Result<Vec<Fotograma>, String> {
     let mut dec = rusty_h264_decoder::Decoder::new();
@@ -128,7 +128,7 @@ fn compactar(img: &openh264::decoder::DecodedYUV<'_>) -> Fotograma {
     Fotograma { ancho, alto, datos }
 }
 
-/// OpenH264 como lo usa WoDW: API desde la fuente, sin vaciado tras cada paquete, recogida final.
+/// OpenH264 de referencia: API desde la fuente, sin vaciado tras cada paquete, recogida final.
 fn decodificar_openh264(flujo: &[u8], por_au: bool) -> Result<Vec<Fotograma>, String> {
     let cfg = openh264::decoder::DecoderConfig::new()
         .flush_after_decode(openh264::decoder::Flush::NoFlush);

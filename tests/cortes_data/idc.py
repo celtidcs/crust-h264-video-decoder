@@ -5,7 +5,7 @@ quitan alfa y beta (§7.3.3); con idc 0 o 2 se conservan los del corte o se pone
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[3]))  # cabeceras.py, en wodw-herramientas/h264
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'scripts'))
 import cabeceras as cab
 from reordenar import a_bits, a_bytes, con_emulacion, ue
 from desplazar import se

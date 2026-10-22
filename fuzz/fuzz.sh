@@ -1,6 +1,6 @@
 #!/bin/sh
 # H264-2: mutaciones deterministas; códigos: 0 normal, 101 pánico de Rust, 124 tope de tiempo, otro = caída del proceso.
-S="C:/Users/celti/wodw-herramientas/h264"
+S="$(cd "$(dirname "$0")/.." && pwd)"
 B=$S/h264/target/release/banco_h264.exe
 N=${1:-100}
 R=$S/fuzz/resultados.tsv; : > "$R"

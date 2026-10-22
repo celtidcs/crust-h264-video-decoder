@@ -19,7 +19,7 @@ import zipfile
 H = os.environ.get("RED_H", os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 # RED_BANCO permite verificar otra copia del banco (p. ej. un git worktree) sin tocar la de trabajo.
 # RED_MODO elige el modo del banco (por defecto `rusty`; `rusty-au` = por unidades de acceso con el
-# búfer de reordenación de WoDW).
+# búfer de reordenación de Crusty_H264).
 MODO = os.environ.get("RED_MODO", "rusty")
 BANCO_CANDIDATOS = [
     os.path.join(H, "material_secundario", "target", "release", "banco_h264.exe" if os.name == "nt" else "banco_h264"),

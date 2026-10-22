@@ -1,6 +1,6 @@
 """Lista los `unwrap_or*`, `unwrap()` y `expect()` del código de producción de la copia H.264.
 
-Uso: python valores_inventados.py   (desde wodw-herramientas/h264)
+Uso: python scripts/valores_inventados.py
 Salta las líneas de comentario y los bloques marcados con `#[cfg(test)]` (función, `impl` o
 módulo, delimitados por llaves). Calibración: `inter.rs:at()` en `626e91c` debe aparecer.
 """

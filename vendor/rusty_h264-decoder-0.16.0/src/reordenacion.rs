@@ -6,7 +6,7 @@
 //! sale la de menor POC, y una IDR o una `memory_management_control_operation` 5 vacían todo lo
 //! pendiente. Sin la cota, un grupo de imágenes largo retendría el vídeo entero en memoria.
 //!
-//! El módulo no depende de nada del resto de WoDW: el banco de equivalencia del decodificador lo
+//! El módulo es completamente autónomo: el banco de evaluación del decodificador lo
 //! incluye tal cual (`#[path]`) para comprobarlo sobre la red de flujos de referencia.
 
 /// Máximo de imágenes del DPB en cualquier nivel (anexo A.3.1: `max_dec_frame_buffering` ≤ 16).

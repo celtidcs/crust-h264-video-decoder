@@ -11,7 +11,7 @@ tienen listas distintas. En CABAC recalcula los `cabac_alignment_one_bit` tras l
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[3]))  # cabeceras.py, en wodw-herramientas/h264
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'scripts'))
 import cabeceras as cab
 
 
