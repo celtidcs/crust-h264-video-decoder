@@ -1,0 +1,38 @@
+# Rust
+/target/
+material_secundario/
+**/*.rs.bk
+*.pdb
+
+# Logs & temp
+*.log
+scratch/
+.tmp/
+tmp/
+
+# Archivos generados por el banco y la red
+red/flujos/
+red/mutantes/
+*.yuv
+
+# OS artifacts
+Thumbs.db
+[Dd]esktop.ini
+.DS_Store
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Worktrees y pruebas temporales del gestor
+.gestor/pruebas-temporales/
+.gestor/worktrees/
+
+# Coordinación interna de desarrollo
+.gestor/
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+.claude/

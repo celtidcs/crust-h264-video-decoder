@@ -1,0 +1,2129 @@
+calib-orden-h264.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+calib-video.264	ok fotogramas=10 64x48 huella=1698cd30ea3ce193fafcc25219f5a9325bd0b03989bf7b81343be71542fd4a0b
+cod-amf.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+cod-d3d12va.264	ok fotogramas=1 640x346 huella=7990e9d8e9f378cb3f2d3b06b60d470dae886ff695b43076e74bc00f7ec0c7c7
+cod-entrelazado.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+cod-mediafoundation.264	ok fotogramas=60 640x346 huella=0d5f2049229fad5a636e7c31f77808dcdb716e7f487ce42a41f172ed5e922d7b
+cod-nvenc.264	ok fotogramas=60 640x346 huella=792e60c772de8cf77f049c2c05ee4718f2975f6bb4e6d85bf12f74041ac8b07c
+cod-qsv.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+cod-vulkan.264	ok fotogramas=60 640x352 huella=0dd38acfb591054297ccb3c1d042a7ec2c69941213e7f3a2985be28238e0942b
+cod-x264-10bit.264	rechazo motivo=Unsupported("bit_depth_>_8")
+cod-x264-16refs.264	ok fotogramas=60 640x346 huella=5dfb0a36960f5155d7bc3fbb84a5c1a52e8abd6b8b0c8b75c51862a65f26a1e9
+cod-x264-422.264	rechazo motivo=Unsupported("non-4:2:0_chroma")
+cod-x264-444.264	rechazo motivo=Unsupported("non-4:2:0_chroma")
+cod-x264-8cortes.264	ok fotogramas=60 640x346 huella=98923ed28b8fafa3fc9cd46070ee518c15e0ab4e3a7c6d18e210fc3977dc426e
+cod-x264-baseline.264	ok fotogramas=60 640x346 huella=b8aee4e362ffd647c59156eda8f294308f6f77de5746fe46481484b3afe00c5b
+cod-x264-bpiramide-normal.264	ok fotogramas=60 640x346 huella=40685fcc785957f8903fe5c55b6d7064b72eef9479a8e400512c3e54284331ac
+cod-x264-cavlc.264	ok fotogramas=60 640x346 huella=3d69e47f7e1503fd9012292091cb240e1b4f6596194c5e88acb03df3944fb240
+cod-x264-entrelazado.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+cod-x264-gop-abierto.264	ok fotogramas=60 640x346 huella=4f274928eab78c92451465aed42a1ef3e2ee7365666e48133b25f3a19cd0bda6
+cod-x264-high-por-defecto.264	ok fotogramas=60 640x346 huella=7e68c65fe9141707af1ca44c66137a9acc6e6a6cd0c0ce8dcce811ba7a58657e
+cod-x264-intra-refresh.264	ok fotogramas=60 640x346 huella=32ad90a41bb8ca3c734217d1520416a96d23762a0855c96b96a3bc60de3c69d4
+cod-x264-intra-restringido.264	ok fotogramas=60 640x346 huella=470c11257f9fd5e26d07c757b895cf579bcf2c822e8364128b6a79d64450d520
+cod-x264-main.264	ok fotogramas=60 640x346 huella=6d6e5a81199d108206b033c7790592a30adcbee44bfc4e5a671faf22e9895f00
+cod-x264-matrices-escala.264	ok fotogramas=60 640x346 huella=0f8eaede3a87994c973f024fe214427c80640043bed95f315813940424da223a
+cod-x264-rango-completo.264	ok fotogramas=60 640x346 huella=06f52163d9ff7a75bc3d38424bfeb9cf17dec927e37a1ac6f9b3fbac8d4a4687
+cod-x264-recorte-impar.264	ok fotogramas=60 638x358 huella=24ee3e61352f38c55990b02184c1677374a95c2860f1fc07cc65f7f536a76cd7
+cod-x264-sin-8x8dct.264	ok fotogramas=60 640x346 huella=6d6e5a81199d108206b033c7790592a30adcbee44bfc4e5a671faf22e9895f00
+cod-x264-sin-perdidas.264	rechazo motivo=Unsupported("transform-bypass_(lossless)_macroblock")
+cod-x264-weightb-weightp.264	ok fotogramas=60 640x346 huella=7e68c65fe9141707af1ca44c66137a9acc6e6a6cd0c0ce8dcce811ba7a58657e
+real-bf0.264	ok fotogramas=120 1280x690 huella=e1210b63dc3eb6282839f35aa29cd1856e300cc1417af76b5f641bb76dcaf99e
+real-bf3main.264	ok fotogramas=120 1280x690 huella=dae0ef13a70d7b374654e6f3347ed7e5a34d0c9202f4aea0212fbe8339d02f6f
+real-s720nw.264	ok fotogramas=120 1280x690 huella=8662b0a47cc68a537fb7074483b4bbc7bbf5e1965ea36b416516488246ee1443
+real-safari4k.264	ok fotogramas=120 3840x2070 huella=5a066ad844b89f89d71e9e3a1f850cc0eb80114f79eadeedc7b50ea230e367af
+real-safari720.264	ok fotogramas=120 1280x690 huella=16a439f7ad65e41f3bb8e41e8e4fefa87a7f26fe72db1b1db68b2c28d3444fc5
+uit-AUD_MW_E.264	ok fotogramas=100 176x144 huella=a5d096e05a6dc569db8915c3f75930207d0ff9161db2895bfd01fcf6bf0cfbcd
+uit-BA1_FT_C.264	ok fotogramas=299 352x288 huella=f700884e840296d82357cbbe2d3b76b0304c750349e711d6ef341e03d1d29e39
+uit-BA1_Sony_D.264	ok fotogramas=17 176x144 huella=99422021881d1e6aa94f2b5d7434553b294701d66ab77aa441ec23727b3a3d28
+uit-BA2_Sony_F.264	ok fotogramas=300 176x144 huella=67e1d3bfc2dd3278b764b931ceeb6890362b07326e48e247524cb41fad548be0
+uit-BA3_SVA_C.264	ok fotogramas=33 176x144 huella=e24aaa533e4ee30ad108cf69a1870aa2abf32d19e1bd3b47a5381c235f95e6b7
+uit-BAMQ1_JVC_C.264	ok fotogramas=30 176x144 huella=8c38ebeb4d4b5ac3a855fc6018ac378b8d04222062ec30c4d9fd8f29347b1f5b
+uit-BAMQ2_JVC_C.264	ok fotogramas=30 176x144 huella=0ec302b8403920d212a51dc4ae39e2616e15a2dd1f2a04deab3dd087a44dbff1
+uit-BANM_MW_D.264	ok fotogramas=100 176x144 huella=d36d32a7f7e4aadd3772dd2b686ebd749fd31b9d3e9aabc4bcd06b99c6f667e9
+uit-BASQP1_Sony_C.264	ok fotogramas=4 176x144 huella=3dc1253bb64bd0411a0b4e41ec8dc95434c28f32e423f3fd4e5295c0ad7eba43
+uit-BA_MW_D.264	ok fotogramas=100 176x144 huella=6536d13ef743a29c4e080dbbb1d6d02043b0da80743d504a51d2f98aff3e1d0e
+uit-CABA1_SVA_B.264	ok fotogramas=17 176x144 huella=10fb37fcf6b3d292abd6425b0080d6823355dadf30394b723deeed495242aeb7
+uit-CABA1_Sony_D.264	ok fotogramas=50 176x144 huella=d946dd21fade26dd1482e8243de815659970495f47c26d41ec2cfc3f3524a32a
+uit-CABA2_SVA_B.264	ok fotogramas=17 176x144 huella=53738fa0f84635b1c24597e249cdd7b1a9454c6ba28b94a5f5aaa29bb69d87e8
+uit-CABA2_Sony_E.264	ok fotogramas=300 176x144 huella=4189fdc01ad9bb548b8b26ea7d79de92c8ce87791a775f8f0f3da422758592db
+uit-CABA3_SVA_B.264	ok fotogramas=33 176x144 huella=d7818f876ab1afc5cf4932941ef031946cca1d10f3232458e98470a391c98584
+uit-CABA3_Sony_C.264	ok fotogramas=300 176x144 huella=6cecfeacc4a52e11dd27badef0882043eb4980bca14e32eead08694bbbdf4896
+uit-CABA3_TOSHIBA_E.264	ok fotogramas=300 176x144 huella=3dd6454531b1e92bc796110fcfe69b1eee95a2dd58ae95c6e5ba97ae099518c2
+uit-CABACI3_Sony_B.264	ok fotogramas=300 176x144 huella=c203a0d90d2d41c85ed95a75aa03a2fb69dd7ca8b893f1fdcf39661d00af6bd0
+uit-CABAST3_Sony_E.264	rechazo motivo=Unsupported("B_without_references")
+uit-CABASTBR3_Sony_B.264	rechazo motivo=Unsupported("B_without_references")
+uit-CACQP3_Sony_D.264	ok fotogramas=50 176x144 huella=cb75caf4271c78f70b1b315465bdfbe2f85178fb8e289626489c23b51f908c00
+uit-CANL1_SVA_B.264	ok fotogramas=17 176x144 huella=cf465778bdbdcb5fa59b2b85e945822c44bd78f10fc2608fcb10258933744037
+uit-CANL1_Sony_E.264	ok fotogramas=50 176x144 huella=40aaa20a4229228c6c5b9c15a27add985078a07cbaaac6a47967cc74e78fd06b
+uit-CANL1_TOSHIBA_G.264	ok fotogramas=300 176x144 huella=f3f7ccdba5a2760ed4dc7a34943ba5b2d64bed164b6c0ff2a27b1e263b19e72b
+uit-CANL2_SVA_B.264	ok fotogramas=17 176x144 huella=cf465778bdbdcb5fa59b2b85e945822c44bd78f10fc2608fcb10258933744037
+uit-CANL2_Sony_E.264	ok fotogramas=300 176x144 huella=dd91ed3e74887f04ed527667db192273fa1d5b2f7dc47e16c25c7717930791a7
+uit-CANL3_SVA_B.264	ok fotogramas=17 176x144 huella=34ea053d32a4dfdd2e5dafc57f81aba21586ba4f6cc15c74f85f7661f7d888fb
+uit-CANL3_Sony_C.264	ok fotogramas=300 176x144 huella=ffcda64ea481a9d4b5a664b72a3ec722a8d43c9223ec48fc65db017a6454ebf1
+uit-CANL4_SVA_B.264	ok fotogramas=33 176x144 huella=e92b93373cf1028a389f3d1004a2d8df0394e900520dd7fc21752bbf80b5305d
+uit-CAPCM1_Sand_E.264	ok fotogramas=30 352x288 huella=a38b032943305afc8dfaea85a5004bce695e46628fa8a8e8d4811ffe22d950dd
+uit-CAPCMNL1_Sand_E.264	ok fotogramas=30 352x288 huella=db04afde036932d6e61dad0ca3a2996bbcd80df7bf34a788067298c1ac7d840d
+uit-CAPM3_Sony_D.264	ok fotogramas=300 176x144 huella=37a55784dcbe6c81b22b558485f66569a4a3a5fb476c62c1380a3e62bb7ebd9a
+uit-CAQP1_Sony_B.264	ok fotogramas=50 176x144 huella=da2e74c62d0ec73c55f4c18fba8e1b1e80e24a83bb1dc751d64a31958bd5ce7c
+uit-CAWP1_TOSHIBA_E.264	ok fotogramas=90 352x288 huella=6bede1d9de64ecbf8407ce9368d0d238dea3920f201bbd3dda9eb9d68d4fa85b
+uit-CAWP5_TOSHIBA_E.264	ok fotogramas=90 352x288 huella=b8db8ec30a6b2ded0ed20d4b1cd79fa867bd524b133c20d1e578ed530057df7f
+uit-CI1_FT_B.264	ok fotogramas=291 352x288 huella=602b052bcabc83ec137780283ead04ca78bd0822bdbdff79baf830a9fd225dc5
+uit-CI_MW_D.264	ok fotogramas=100 176x144 huella=dfe3d877f06f050999b0dee693af937ffc93d37514ddd95da8a818023b19f2b1
+uit-CVBS3_Sony_C.264	ok fotogramas=300 176x144 huella=f4dac03a9c1d26693a3b11574d44eb384252ba4cbebcece217ec79b72d27a6d7
+uit-CVFC1_Sony_C.264	ok fotogramas=50 300x168 huella=a46560a7b2d32f1ed7c19b910fd94ac8df1d11b9ace0d05d2aeb5f7dfbe67689
+uit-CVPCMNL1_SVA_C.264	ok fotogramas=30 352x288 huella=9aee48517b51875dbd0ed7f406bcc1040a3b5a2b5434737f3581c322fb12338a
+uit-CVPCMNL2_SVA_C.264	ok fotogramas=2 1280x720 huella=c467de6e2a5c1be9a0fffbcfe13097f42a40e5b4272b5382c517eb500e3ba4e3
+uit-CVSE2_Sony_B.264	ok fotogramas=278 176x144 huella=557249b0a37406a9b6a2034c44f094dbd78d40bf137027124018a7d098ced894
+uit-CVSE3_Sony_H.264	ok fotogramas=278 176x144 huella=7fd988d955d910bcbd83ff71a03c8af5de9464fff8f5a52083aa3e8fa3b157ed
+uit-CVSEFDFT3_Sony_E.264	ok fotogramas=200 176x144 huella=5afbb5e9ad618e2f4610d9f45ae6ca6480e80f181912d62287d23f708dc00fc2
+uit-CVWP1_TOSHIBA_E.264	ok fotogramas=90 352x288 huella=520845befb96da799a75a811cd3392b2ddaa558a20606b55cfb7d5553b2f5989
+uit-CVWP2_TOSHIBA_E.264	rechazo motivo=Unsupported("explicit_B_weighted_prediction")
+uit-CVWP3_TOSHIBA_E.264	ok fotogramas=90 352x288 huella=9404d6b9c2df6b9ae4ca27d4082ecf3753fd4857dc59eaad27e77bc25e119b98
+uit-CVWP5_TOSHIBA_E.264	ok fotogramas=90 352x288 huella=b8db8ec30a6b2ded0ed20d4b1cd79fa867bd524b133c20d1e578ed530057df7f
+uit-FM1_BT_B.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+uit-FM1_FT_E.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+uit-FRExt1_Panasonic_D.264	ok fotogramas=8 352x288 huella=eed20ebf06fd1494c67e1ed3fc8264faef39bf50ce4f6604017ad079a46fcaa6
+uit-FRExt3_Panasonic_E.264	ok fotogramas=11 352x288 huella=0a17cbd91582323d0f84a8befdf5473ec1095548c132a9f969aae2513cdd5a87
+uit-HCAFR1_HHI_C.264	ok fotogramas=10 352x288 huella=0df5e4159c0eb2cf35887bed1a360b07f5eac989ec55d2f39055a62f9f7ed853
+uit-HCAFR2_HHI_A.264	ok fotogramas=10 352x288 huella=411dc20c40ccb57a382b63281e16bf28f2a2bd0f7651f51fa2c5b9e4af69e23a
+uit-HCAFR3_HHI_A.264	ok fotogramas=10 352x288 huella=5da77d38be4eb74f63b6587f781c725faf05e88c478a93333d114b337cc31358
+uit-HCAFR4_HHI_A.264	ok fotogramas=10 352x288 huella=13659955dee5fb54162659d3f94211d3cfb410a85158bf36299d2b255dcaf695
+uit-HCBP1_HHI_A.264	ok fotogramas=250 352x288 huella=2b9a0af22077ad6ae3ab804b52dfd1e36541aad07d9c3808a761583973acba38
+uit-HCBP2_HHI_A.264	ok fotogramas=250 352x288 huella=ed8cc49f56e68df5a11b6dde2c6d9d6b270d03f793104c58118314625aaebcc1
+uit-HCHP1_HHI_B.264	ok fotogramas=250 352x288 huella=feb0fc374bdb72d042f1582f939a5776e673e52bcb2cbf24e2c93dd94534d36a
+uit-HCHP2_HHI_A.264	ok fotogramas=250 352x288 huella=8fe8caac53e70d611567456269921ec4284608d58a5ece75584ac0078d4a615c
+uit-HCMP1_HHI_A.264	ok fotogramas=250 352x288 huella=9320cb8e1ee8d626c25ccb858c1800db5ad74ed7dcbd234c56258ae5d84aff7a
+uit-HPCA_BRCM_C.264	ok fotogramas=300 352x288 huella=c086e5b18e0406064eec25c31ca36721ef7c0b1466e570082acef53c49417479
+uit-HPCV_BRCM_A.264	ok fotogramas=300 352x288 huella=c086e5b18e0406064eec25c31ca36721ef7c0b1466e570082acef53c49417479
+uit-LS_SVA_D.264	ok fotogramas=1700 176x144 huella=03fdee593675bbea8c4513f48ba8ac5991ec0a14aa8d207929c157dc8968e206
+uit-MIDR_MW_D.264	ok fotogramas=100 176x144 huella=f0701cf66f6f5085ea55d052eac5959ce95ab407dfe94b390bb018cc71d24745
+uit-MPS_MW_A.264	ok fotogramas=150 176x144 huella=df88687fbf9b4938473e3cb6bf4b8ae05ed8ac127b5782045771c5d1a58e4b1f
+uit-MR1_BT_A.264	ok fotogramas=62 176x144 huella=006f1add133b34369942f5ccfd350152aecfb010a2e7254ce3d9ef89234f0028
+uit-MR1_MW_A.264	ok fotogramas=150 176x144 huella=b788efb703a124088facc6ecdeb9e9974079e9dba6002dce4b50c63764010600
+uit-MR2_MW_A.264	ok fotogramas=300 176x144 huella=efb48cd6ad4529dd1502666d6008a3e1f88fdbb676bf6d6db85de19139522b1a
+uit-MR2_TANDBERG_E.264	ok fotogramas=300 176x144 huella=cb272f4f536d25d4278e6b2ee06405f87e42ae20481fa3d9a0fba159954a3969
+uit-MR3_TANDBERG_B.264	ok fotogramas=300 176x144 huella=99d892b2e7a8fec99f922615b8fa438c7d088c0f7c8d47c1b8230eb3757a624d
+uit-MR4_TANDBERG_C.264	ok fotogramas=300 176x144 huella=f1427d7c68a684eec8d9a2fe95679e9a1bc2d8afaa28ca6894dbcbfd8ad51ee3
+uit-MR5_TANDBERG_C.264	ok fotogramas=300 176x144 huella=f1427d7c68a684eec8d9a2fe95679e9a1bc2d8afaa28ca6894dbcbfd8ad51ee3
+uit-NL1_Sony_D.264	ok fotogramas=17 176x144 huella=76a23816c275966d5eeeaaf279626a916a3aace808a0164cbb90e978b12fc151
+uit-NL2_Sony_H.264	ok fotogramas=300 176x144 huella=cb0026c2fd585fd37022d969654a513e2ff711f9bccf640446829f94ef4a5dc4
+uit-NL3_SVA_E.264	ok fotogramas=33 176x144 huella=970278bc0bffff780596aaaaf916ce2ab4f0b93dbecf57649103c8f0e77db384
+uit-NLMQ1_JVC_C.264	ok fotogramas=30 176x144 huella=7fe951c70242c96eae1b34fc5f3d65b104536f633188ce0318e341b9d8498cdc
+uit-NLMQ2_JVC_C.264	ok fotogramas=30 176x144 huella=1e1cf7b4cf6b861767821a3f925df5910318af15757e1c22b9bda3e363a98655
+uit-NRF_MW_E.264	ok fotogramas=100 176x144 huella=20c9ba53c0cc0335cefa315455f4157756c1c7a34205d29069056dca2f716f70
+uit-SL1_SVA_B.264	ok fotogramas=33 176x144 huella=ba7d65df54789ae453eeb4e5f9d9e11b115220893394c62d65aea139604c796e
+uit-SVA_BA1_B.264	ok fotogramas=17 176x144 huella=3b6775898e4c03011c78a7d19a43e75c46dc119f547032025d5a90c40698e842
+uit-SVA_BA2_D.264	ok fotogramas=17 176x144 huella=3c5d9632971a37e8fb93aba15e41bf64fa86bdf9a746df09ff0c6e2fe134fba2
+uit-SVA_Base_B.264	ok fotogramas=17 176x144 huella=56987038538918e04f5616bee1b4d87822d46e29bb83bd4a345f50a6e40ef33d
+uit-SVA_CL1_E.264	ok fotogramas=50 176x144 huella=1e1ae45a6efb9a6ada1d6ecb2906a8d9594610f8bf456a6045f7ea236998cd35
+uit-SVA_FM1_E.264	ok fotogramas=17 176x144 huella=d862b8156dc9b5bfac71a74ea5c9ef0dff89b954fcf2b75c168f0c5705f7a6dc
+uit-SVA_NL1_B.264	ok fotogramas=17 176x144 huella=7751dca379587474930c085a789fc0f12ed787232504280d1c860ce24680c769
+uit-SVA_NL2_E.264	ok fotogramas=17 176x144 huella=ddadd365dd73e0a5accc6ebbb62083cc09c34b584400eddea56cda09d5877b13
+uit-brcm_freh3.264	ok fotogramas=100 352x288 huella=98e9530a8b7c73dcf6e607e021a64ec97aa6fb1fa59e140e72e20fc8354de614
+uit-brcm_freh8.264	ok fotogramas=100 352x288 huella=fe1987a04e1001ab8bb8e241b45c551c0c4309aa9f0a44cb6015db636459448e
+uit-brcm_freh9.264	ok fotogramas=100 352x288 huella=69a7c8af0cda84a6ee238d707a8350637bccbfd6885f056d4307151949469417
+uit-cabac_mot_frm0_full.264	ok fotogramas=30 720x480 huella=96f3cc64c2ff86993bb5a3217a75584ed76f8a524f226d8140c9f79b18ba3f7a
+uit-cavlc_mot_frm0_full_B.264	ok fotogramas=30 720x480 huella=2afe3cc00b91c3387b809f6cd2595c35e2b88e595f3c14ed205126eab030e17a
+uit-freh12_b.264	ok fotogramas=100 352x288 huella=ae30917122c79de0067ba892ab0a48a8b57bedbca2cdf4773d819d928937f04b
+uit-freh1_b.264	ok fotogramas=100 352x288 huella=e9843a4510df501d826a3f80faf54d22809612c854e91043fba0c94680b4e041
+uit-freh2_b.264	ok fotogramas=100 352x288 huella=9ae40e627a81e5d7eec76862618c854f65e21ec5c26eb0283226e9424585ff77
+base-bytes-1.264	rechazo motivo=Truncated
+base-bytes-10.264	rechazo motivo=Truncated
+base-bytes-100.264	rechazo motivo=Truncated
+base-bytes-11.264	rechazo motivo=Truncated
+base-bytes-12.264	rechazo motivo=Truncated
+base-bytes-13.264	rechazo motivo=Truncated
+base-bytes-14.264	rechazo motivo=Truncated
+base-bytes-15.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-bytes-16.264	rechazo motivo=Truncated
+base-bytes-17.264	rechazo motivo=Truncated
+base-bytes-18.264	rechazo motivo=Truncated
+base-bytes-19.264	rechazo motivo=Truncated
+base-bytes-2.264	rechazo motivo=Truncated
+base-bytes-20.264	rechazo motivo=Truncated
+base-bytes-21.264	rechazo motivo=Unsupported("B-slice_/_invalid_sub_mb_type")
+base-bytes-22.264	rechazo motivo=Truncated
+base-bytes-23.264	rechazo motivo=Truncated
+base-bytes-24.264	rechazo motivo=Truncated
+base-bytes-25.264	rechazo motivo=Truncated
+base-bytes-26.264	rechazo motivo=Truncated
+base-bytes-27.264	rechazo motivo=Truncated
+base-bytes-28.264	rechazo motivo=Truncated
+base-bytes-29.264	rechazo motivo=Truncated
+base-bytes-3.264	rechazo motivo=Truncated
+base-bytes-30.264	rechazo motivo=Truncated
+base-bytes-31.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-bytes-32.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-bytes-33.264	rechazo motivo=Truncated
+base-bytes-34.264	rechazo motivo=Truncated
+base-bytes-35.264	rechazo motivo=Truncated
+base-bytes-36.264	rechazo motivo=Truncated
+base-bytes-37.264	rechazo motivo=Truncated
+base-bytes-38.264	rechazo motivo=Truncated
+base-bytes-39.264	rechazo motivo=Truncated
+base-bytes-4.264	rechazo motivo=Truncated
+base-bytes-40.264	rechazo motivo=Truncated
+base-bytes-41.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-bytes-42.264	rechazo motivo=Truncated
+base-bytes-43.264	rechazo motivo=Truncated
+base-bytes-44.264	rechazo motivo=Truncated
+base-bytes-45.264	rechazo motivo=Truncated
+base-bytes-46.264	rechazo motivo=Truncated
+base-bytes-47.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-bytes-48.264	rechazo motivo=Truncated
+base-bytes-49.264	rechazo motivo=Truncated
+base-bytes-5.264	ok fotogramas=30 320x172 huella=3c2a4ff825247e69381bc9e297eb2125492b131fed09413a29e94bd8a1dd8d8a
+base-bytes-50.264	rechazo motivo=Truncated
+base-bytes-51.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-bytes-52.264	rechazo motivo=Truncated
+base-bytes-53.264	rechazo motivo=Truncated
+base-bytes-54.264	rechazo motivo=Truncated
+base-bytes-55.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-bytes-56.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-bytes-57.264	rechazo motivo=Truncated
+base-bytes-58.264	rechazo motivo=Truncated
+base-bytes-59.264	rechazo motivo=Truncated
+base-bytes-6.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-bytes-60.264	rechazo motivo=Unsupported("B-slice_/_invalid_sub_mb_type")
+base-bytes-61.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-bytes-62.264	rechazo motivo=Truncated
+base-bytes-63.264	rechazo motivo=Truncated
+base-bytes-64.264	rechazo motivo=Truncated
+base-bytes-65.264	rechazo motivo=Truncated
+base-bytes-66.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-bytes-67.264	rechazo motivo=Unsupported("B-slice_/_invalid_sub_mb_type")
+base-bytes-68.264	rechazo motivo=Truncated
+base-bytes-69.264	rechazo motivo=Truncated
+base-bytes-7.264	rechazo motivo=Truncated
+base-bytes-70.264	rechazo motivo=Truncated
+base-bytes-71.264	rechazo motivo=Truncated
+base-bytes-72.264	rechazo motivo=Truncated
+base-bytes-73.264	rechazo motivo=Unsupported("B-slice_/_invalid_sub_mb_type")
+base-bytes-74.264	rechazo motivo=Truncated
+base-bytes-75.264	rechazo motivo=Truncated
+base-bytes-76.264	rechazo motivo=Truncated
+base-bytes-77.264	rechazo motivo=Truncated
+base-bytes-78.264	rechazo motivo=Truncated
+base-bytes-79.264	rechazo motivo=Truncated
+base-bytes-8.264	rechazo motivo=Truncated
+base-bytes-80.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-bytes-81.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-bytes-82.264	rechazo motivo=Truncated
+base-bytes-83.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-bytes-84.264	rechazo motivo=Truncated
+base-bytes-85.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-bytes-86.264	rechazo motivo=Truncated
+base-bytes-87.264	rechazo motivo=Unsupported("B-slice_/_invalid_sub_mb_type")
+base-bytes-88.264	rechazo motivo=Truncated
+base-bytes-89.264	rechazo motivo=Truncated
+base-bytes-9.264	rechazo motivo=Truncated
+base-bytes-90.264	rechazo motivo=Truncated
+base-bytes-91.264	rechazo motivo=Truncated
+base-bytes-92.264	rechazo motivo=Truncated
+base-bytes-93.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-bytes-94.264	rechazo motivo=Truncated
+base-bytes-95.264	rechazo motivo=Truncated
+base-bytes-96.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-bytes-97.264	rechazo motivo=Truncated
+base-bytes-98.264	rechazo motivo=Truncated
+base-bytes-99.264	rechazo motivo=Unsupported("B-slice_/_invalid_sub_mb_type")
+base-cabecera-1.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+base-cabecera-10.264	rechazo motivo=Truncated
+base-cabecera-100.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+base-cabecera-11.264	rechazo motivo=Truncated
+base-cabecera-12.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+base-cabecera-13.264	rechazo motivo=Truncated
+base-cabecera-14.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+base-cabecera-15.264	rechazo motivo=Truncated
+base-cabecera-16.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-cabecera-17.264	rechazo motivo=Truncated
+base-cabecera-18.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+base-cabecera-19.264	rechazo motivo=Truncated
+base-cabecera-2.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+base-cabecera-20.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+base-cabecera-21.264	rechazo motivo=Truncated
+base-cabecera-22.264	rechazo motivo=MissingParameterSet
+base-cabecera-23.264	rechazo motivo=Unsupported("invalid_disable_deblocking_filter_idc")
+base-cabecera-24.264	rechazo motivo=Truncated
+base-cabecera-25.264	rechazo motivo=Truncated
+base-cabecera-26.264	rechazo motivo=Truncated
+base-cabecera-27.264	rechazo motivo=Truncated
+base-cabecera-28.264	rechazo motivo=Unsupported("invalid_log2_max_frame_num")
+base-cabecera-29.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-cabecera-3.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+base-cabecera-30.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+base-cabecera-31.264	rechazo motivo=Truncated
+base-cabecera-32.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+base-cabecera-33.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+base-cabecera-34.264	rechazo motivo=Truncated
+base-cabecera-35.264	rechazo motivo=Truncated
+base-cabecera-36.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+base-cabecera-37.264	rechazo motivo=Truncated
+base-cabecera-38.264	rechazo motivo=Unsupported("deblocking_filter_offset_out_of_range")
+base-cabecera-39.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+base-cabecera-4.264	rechazo motivo=Truncated
+base-cabecera-40.264	rechazo motivo=Truncated
+base-cabecera-41.264	rechazo motivo=Truncated
+base-cabecera-42.264	rechazo motivo=Truncated
+base-cabecera-43.264	rechazo motivo=MissingParameterSet
+base-cabecera-44.264	rechazo motivo=Truncated
+base-cabecera-45.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+base-cabecera-46.264	rechazo motivo=Unsupported("invalid_pic_order_cnt_type")
+base-cabecera-47.264	rechazo motivo=Truncated
+base-cabecera-48.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+base-cabecera-49.264	rechazo motivo=Truncated
+base-cabecera-5.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+base-cabecera-50.264	rechazo motivo=MissingParameterSet
+base-cabecera-51.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+base-cabecera-52.264	rechazo motivo=Truncated
+base-cabecera-53.264	rechazo motivo=Truncated
+base-cabecera-54.264	rechazo motivo=MissingParameterSet
+base-cabecera-55.264	rechazo motivo=Truncated
+base-cabecera-56.264	rechazo motivo=Truncated
+base-cabecera-57.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+base-cabecera-58.264	rechazo motivo=Truncated
+base-cabecera-59.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-cabecera-6.264	rechazo motivo=Truncated
+base-cabecera-60.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+base-cabecera-61.264	rechazo motivo=Unsupported("invalid_disable_deblocking_filter_idc")
+base-cabecera-62.264	rechazo motivo=Truncated
+base-cabecera-63.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+base-cabecera-64.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+base-cabecera-65.264	rechazo motivo=Truncated
+base-cabecera-66.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+base-cabecera-67.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+base-cabecera-68.264	rechazo motivo=MissingParameterSet
+base-cabecera-69.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+base-cabecera-7.264	rechazo motivo=Truncated
+base-cabecera-70.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+base-cabecera-71.264	rechazo motivo=Unsupported("SP/SI_slices")
+base-cabecera-72.264	rechazo motivo=Truncated
+base-cabecera-73.264	rechazo motivo=MissingParameterSet
+base-cabecera-74.264	rechazo motivo=MissingParameterSet
+base-cabecera-75.264	rechazo motivo=Truncated
+base-cabecera-76.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+base-cabecera-77.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+base-cabecera-78.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+base-cabecera-79.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+base-cabecera-8.264	rechazo motivo=Truncated
+base-cabecera-80.264	rechazo motivo=Truncated
+base-cabecera-81.264	rechazo motivo=Truncated
+base-cabecera-82.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+base-cabecera-83.264	rechazo motivo=Truncated
+base-cabecera-84.264	rechazo motivo=Truncated
+base-cabecera-85.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+base-cabecera-86.264	rechazo motivo=Truncated
+base-cabecera-87.264	rechazo motivo=MissingParameterSet
+base-cabecera-88.264	rechazo motivo=Truncated
+base-cabecera-89.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+base-cabecera-9.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+base-cabecera-90.264	rechazo motivo=Unsupported("SP/SI_slices")
+base-cabecera-91.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+base-cabecera-92.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+base-cabecera-93.264	rechazo motivo=Truncated
+base-cabecera-94.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+base-cabecera-95.264	rechazo motivo=MissingParameterSet
+base-cabecera-96.264	rechazo motivo=Truncated
+base-cabecera-97.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+base-cabecera-98.264	rechazo motivo=Truncated
+base-cabecera-99.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+base-duplicar-1.264	rechazo motivo=Truncated
+base-duplicar-10.264	rechazo motivo=Truncated
+base-duplicar-100.264	rechazo motivo=Truncated
+base-duplicar-11.264	rechazo motivo=Truncated
+base-duplicar-12.264	rechazo motivo=Truncated
+base-duplicar-13.264	rechazo motivo=Truncated
+base-duplicar-14.264	rechazo motivo=Truncated
+base-duplicar-15.264	rechazo motivo=Truncated
+base-duplicar-16.264	rechazo motivo=Truncated
+base-duplicar-17.264	rechazo motivo=Truncated
+base-duplicar-18.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-duplicar-19.264	rechazo motivo=Truncated
+base-duplicar-2.264	rechazo motivo=Truncated
+base-duplicar-20.264	rechazo motivo=Unsupported("B-slice_/_invalid_sub_mb_type")
+base-duplicar-21.264	rechazo motivo=Truncated
+base-duplicar-22.264	rechazo motivo=Truncated
+base-duplicar-23.264	rechazo motivo=Truncated
+base-duplicar-24.264	rechazo motivo=Truncated
+base-duplicar-25.264	rechazo motivo=Truncated
+base-duplicar-26.264	ok fotogramas=30 320x172 huella=b8b773604478b8fc781d6647eb7bf3662780c00d55c01d51c63e8d27526a09a2
+base-duplicar-27.264	rechazo motivo=Truncated
+base-duplicar-28.264	rechazo motivo=Truncated
+base-duplicar-29.264	rechazo motivo=Truncated
+base-duplicar-3.264	rechazo motivo=Truncated
+base-duplicar-30.264	rechazo motivo=Unsupported("B-slice_/_invalid_sub_mb_type")
+base-duplicar-31.264	rechazo motivo=Truncated
+base-duplicar-32.264	rechazo motivo=Truncated
+base-duplicar-33.264	rechazo motivo=Truncated
+base-duplicar-34.264	rechazo motivo=Truncated
+base-duplicar-35.264	rechazo motivo=Truncated
+base-duplicar-36.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-duplicar-37.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-duplicar-38.264	rechazo motivo=Truncated
+base-duplicar-39.264	rechazo motivo=Truncated
+base-duplicar-4.264	rechazo motivo=Truncated
+base-duplicar-40.264	rechazo motivo=Truncated
+base-duplicar-41.264	rechazo motivo=Truncated
+base-duplicar-42.264	rechazo motivo=Truncated
+base-duplicar-43.264	rechazo motivo=Truncated
+base-duplicar-44.264	rechazo motivo=Truncated
+base-duplicar-45.264	rechazo motivo=Truncated
+base-duplicar-46.264	rechazo motivo=Truncated
+base-duplicar-47.264	ok fotogramas=31 320x172 huella=f71688423043b0ce5527cc7e8f5f249a319796ae9d2c87993e6ca0685a80bc6d
+base-duplicar-48.264	rechazo motivo=Truncated
+base-duplicar-49.264	rechazo motivo=Truncated
+base-duplicar-5.264	rechazo motivo=Truncated
+base-duplicar-50.264	rechazo motivo=Truncated
+base-duplicar-51.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-duplicar-52.264	rechazo motivo=Truncated
+base-duplicar-53.264	rechazo motivo=Unsupported("B-slice_/_invalid_sub_mb_type")
+base-duplicar-54.264	rechazo motivo=Truncated
+base-duplicar-55.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-duplicar-56.264	rechazo motivo=Truncated
+base-duplicar-57.264	rechazo motivo=Truncated
+base-duplicar-58.264	rechazo motivo=Truncated
+base-duplicar-59.264	rechazo motivo=Truncated
+base-duplicar-6.264	rechazo motivo=Truncated
+base-duplicar-60.264	rechazo motivo=Truncated
+base-duplicar-61.264	rechazo motivo=Unsupported("B-slice_/_invalid_sub_mb_type")
+base-duplicar-62.264	rechazo motivo=Truncated
+base-duplicar-63.264	rechazo motivo=Truncated
+base-duplicar-64.264	rechazo motivo=Truncated
+base-duplicar-65.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-duplicar-66.264	rechazo motivo=Unsupported("B-slice_/_invalid_sub_mb_type")
+base-duplicar-67.264	rechazo motivo=Truncated
+base-duplicar-68.264	rechazo motivo=Truncated
+base-duplicar-69.264	rechazo motivo=Truncated
+base-duplicar-7.264	rechazo motivo=Truncated
+base-duplicar-70.264	ok fotogramas=30 320x172 huella=168b28553df0c44a5f75f12a954c261899c17b7989209373c2d33464bc7002f2
+base-duplicar-71.264	rechazo motivo=Truncated
+base-duplicar-72.264	rechazo motivo=Truncated
+base-duplicar-73.264	rechazo motivo=Truncated
+base-duplicar-74.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-duplicar-75.264	rechazo motivo=Truncated
+base-duplicar-76.264	rechazo motivo=Truncated
+base-duplicar-77.264	rechazo motivo=Truncated
+base-duplicar-78.264	rechazo motivo=Truncated
+base-duplicar-79.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-duplicar-8.264	rechazo motivo=Truncated
+base-duplicar-80.264	rechazo motivo=Truncated
+base-duplicar-81.264	rechazo motivo=Truncated
+base-duplicar-82.264	rechazo motivo=Unsupported("B-slice_/_invalid_sub_mb_type")
+base-duplicar-83.264	rechazo motivo=Truncated
+base-duplicar-84.264	rechazo motivo=Truncated
+base-duplicar-85.264	rechazo motivo=Truncated
+base-duplicar-86.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+base-duplicar-87.264	rechazo motivo=Truncated
+base-duplicar-88.264	rechazo motivo=Truncated
+base-duplicar-89.264	rechazo motivo=Truncated
+base-duplicar-9.264	rechazo motivo=Truncated
+base-duplicar-90.264	rechazo motivo=Truncated
+base-duplicar-91.264	rechazo motivo=Truncated
+base-duplicar-92.264	rechazo motivo=Unsupported("B-slice_/_invalid_sub_mb_type")
+base-duplicar-93.264	rechazo motivo=Truncated
+base-duplicar-94.264	rechazo motivo=Truncated
+base-duplicar-95.264	rechazo motivo=Truncated
+base-duplicar-96.264	rechazo motivo=Unsupported("B-slice_/_invalid_sub_mb_type")
+base-duplicar-97.264	rechazo motivo=Truncated
+base-duplicar-98.264	rechazo motivo=Truncated
+base-duplicar-99.264	rechazo motivo=Truncated
+base-truncar-1.264	rechazo motivo=Truncated
+base-truncar-10.264	rechazo motivo=Truncated
+base-truncar-100.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+base-truncar-11.264	rechazo motivo=Truncated
+base-truncar-12.264	rechazo motivo=Truncated
+base-truncar-13.264	rechazo motivo=Truncated
+base-truncar-14.264	rechazo motivo=Truncated
+base-truncar-15.264	rechazo motivo=Truncated
+base-truncar-16.264	rechazo motivo=Truncated
+base-truncar-17.264	rechazo motivo=Truncated
+base-truncar-18.264	rechazo motivo=Truncated
+base-truncar-19.264	rechazo motivo=Truncated
+base-truncar-2.264	rechazo motivo=Truncated
+base-truncar-20.264	rechazo motivo=Truncated
+base-truncar-21.264	rechazo motivo=Truncated
+base-truncar-22.264	rechazo motivo=Truncated
+base-truncar-23.264	rechazo motivo=Truncated
+base-truncar-24.264	rechazo motivo=Truncated
+base-truncar-25.264	rechazo motivo=Truncated
+base-truncar-26.264	rechazo motivo=Truncated
+base-truncar-27.264	rechazo motivo=Truncated
+base-truncar-28.264	rechazo motivo=Truncated
+base-truncar-29.264	rechazo motivo=Truncated
+base-truncar-3.264	rechazo motivo=Truncated
+base-truncar-30.264	rechazo motivo=Truncated
+base-truncar-31.264	ok fotogramas=23 320x172 huella=ee87d3b40773b631e927c481083f537cb7b1a7e060d1803a54e0ec57c8c72c56
+base-truncar-32.264	rechazo motivo=Truncated
+base-truncar-33.264	rechazo motivo=Truncated
+base-truncar-34.264	rechazo motivo=Truncated
+base-truncar-35.264	rechazo motivo=Truncated
+base-truncar-36.264	rechazo motivo=Truncated
+base-truncar-37.264	rechazo motivo=Truncated
+base-truncar-38.264	rechazo motivo=Truncated
+base-truncar-39.264	rechazo motivo=Truncated
+base-truncar-4.264	rechazo motivo=Truncated
+base-truncar-40.264	rechazo motivo=Truncated
+base-truncar-41.264	rechazo motivo=Truncated
+base-truncar-42.264	rechazo motivo=Truncated
+base-truncar-43.264	rechazo motivo=Truncated
+base-truncar-44.264	rechazo motivo=Truncated
+base-truncar-45.264	rechazo motivo=Truncated
+base-truncar-46.264	rechazo motivo=Truncated
+base-truncar-47.264	rechazo motivo=Truncated
+base-truncar-48.264	rechazo motivo=Truncated
+base-truncar-49.264	rechazo motivo=Truncated
+base-truncar-5.264	rechazo motivo=Truncated
+base-truncar-50.264	rechazo motivo=Truncated
+base-truncar-51.264	rechazo motivo=Truncated
+base-truncar-52.264	rechazo motivo=Truncated
+base-truncar-53.264	rechazo motivo=Truncated
+base-truncar-54.264	rechazo motivo=Truncated
+base-truncar-55.264	rechazo motivo=Truncated
+base-truncar-56.264	rechazo motivo=Truncated
+base-truncar-57.264	rechazo motivo=Truncated
+base-truncar-58.264	ok fotogramas=2 320x172 huella=ee7e192498e4097dca852854065cda4063d48c4576759b6423ddcb6352bf2157
+base-truncar-59.264	ok fotogramas=13 320x172 huella=87fcda37b9a1a507895698db290fadde168ad94e579f3dfa34f8c2be6b416ac9
+base-truncar-6.264	rechazo motivo=Truncated
+base-truncar-60.264	rechazo motivo=Truncated
+base-truncar-61.264	rechazo motivo=Truncated
+base-truncar-62.264	rechazo motivo=Truncated
+base-truncar-63.264	rechazo motivo=Truncated
+base-truncar-64.264	rechazo motivo=Truncated
+base-truncar-65.264	rechazo motivo=Truncated
+base-truncar-66.264	rechazo motivo=Truncated
+base-truncar-67.264	rechazo motivo=Truncated
+base-truncar-68.264	rechazo motivo=Truncated
+base-truncar-69.264	rechazo motivo=Truncated
+base-truncar-7.264	rechazo motivo=Truncated
+base-truncar-70.264	rechazo motivo=Truncated
+base-truncar-71.264	rechazo motivo=Truncated
+base-truncar-72.264	rechazo motivo=Truncated
+base-truncar-73.264	rechazo motivo=Truncated
+base-truncar-74.264	rechazo motivo=Truncated
+base-truncar-75.264	rechazo motivo=Truncated
+base-truncar-76.264	ok fotogramas=27 320x172 huella=334a1754750242102c99077df780a98d825e580ffabcd3adc32a9530d968568f
+base-truncar-77.264	rechazo motivo=Truncated
+base-truncar-78.264	rechazo motivo=Truncated
+base-truncar-79.264	rechazo motivo=Truncated
+base-truncar-8.264	rechazo motivo=Truncated
+base-truncar-80.264	rechazo motivo=Truncated
+base-truncar-81.264	rechazo motivo=Truncated
+base-truncar-82.264	rechazo motivo=Truncated
+base-truncar-83.264	rechazo motivo=Truncated
+base-truncar-84.264	rechazo motivo=Truncated
+base-truncar-85.264	rechazo motivo=Truncated
+base-truncar-86.264	rechazo motivo=Truncated
+base-truncar-87.264	rechazo motivo=Truncated
+base-truncar-88.264	rechazo motivo=Truncated
+base-truncar-89.264	rechazo motivo=Truncated
+base-truncar-9.264	ok fotogramas=17 320x172 huella=c39020d7c1a2a037c4b2633d269bc2a5417dc6096f08bebe6c19278f3fc44a6e
+base-truncar-90.264	rechazo motivo=Truncated
+base-truncar-91.264	rechazo motivo=Truncated
+base-truncar-92.264	ok fotogramas=26 320x172 huella=8144e088bf0fa41b1468ba917916c243c5d08528b70df595c9f521f77a2fe6e1
+base-truncar-93.264	rechazo motivo=Truncated
+base-truncar-94.264	rechazo motivo=Truncated
+base-truncar-95.264	rechazo motivo=Truncated
+base-truncar-96.264	rechazo motivo=Truncated
+base-truncar-97.264	rechazo motivo=Truncated
+base-truncar-98.264	rechazo motivo=Truncated
+base-truncar-99.264	rechazo motivo=Truncated
+high-b-bytes-1.264	rechazo motivo=Truncated
+high-b-bytes-10.264	ok fotogramas=30 320x172 huella=a8466036e00f2f78acc9a2c0894747f7ad9c9ebf5c6c7d75b2a0c4007f35a622
+high-b-bytes-100.264	rechazo motivo=Truncated
+high-b-bytes-11.264	rechazo motivo=Truncated
+high-b-bytes-12.264	rechazo motivo=Truncated
+high-b-bytes-13.264	rechazo motivo=Truncated
+high-b-bytes-14.264	rechazo motivo=Truncated
+high-b-bytes-15.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-bytes-16.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-bytes-17.264	rechazo motivo=Truncated
+high-b-bytes-18.264	rechazo motivo=Truncated
+high-b-bytes-19.264	rechazo motivo=Truncated
+high-b-bytes-2.264	rechazo motivo=Truncated
+high-b-bytes-20.264	rechazo motivo=Truncated
+high-b-bytes-21.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-bytes-22.264	rechazo motivo=Truncated
+high-b-bytes-23.264	rechazo motivo=Truncated
+high-b-bytes-24.264	rechazo motivo=Truncated
+high-b-bytes-25.264	rechazo motivo=Truncated
+high-b-bytes-26.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-bytes-27.264	rechazo motivo=Truncated
+high-b-bytes-28.264	rechazo motivo=Truncated
+high-b-bytes-29.264	rechazo motivo=Truncated
+high-b-bytes-3.264	rechazo motivo=Truncated
+high-b-bytes-30.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-bytes-31.264	rechazo motivo=Truncated
+high-b-bytes-32.264	rechazo motivo=Truncated
+high-b-bytes-33.264	rechazo motivo=Truncated
+high-b-bytes-34.264	rechazo motivo=Truncated
+high-b-bytes-35.264	rechazo motivo=Truncated
+high-b-bytes-36.264	rechazo motivo=Truncated
+high-b-bytes-37.264	rechazo motivo=Truncated
+high-b-bytes-38.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-bytes-39.264	rechazo motivo=Truncated
+high-b-bytes-4.264	rechazo motivo=Truncated
+high-b-bytes-40.264	rechazo motivo=Truncated
+high-b-bytes-41.264	rechazo motivo=Truncated
+high-b-bytes-42.264	ok fotogramas=30 320x172 huella=bbac37bb95cc1dd96a50385301a6ed606c10bfdad92d6aec7ee340b73f2d9394
+high-b-bytes-43.264	rechazo motivo=Truncated
+high-b-bytes-44.264	rechazo motivo=Truncated
+high-b-bytes-45.264	rechazo motivo=Truncated
+high-b-bytes-46.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-bytes-47.264	rechazo motivo=Truncated
+high-b-bytes-48.264	rechazo motivo=Truncated
+high-b-bytes-49.264	rechazo motivo=Truncated
+high-b-bytes-5.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-bytes-50.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-bytes-51.264	ok fotogramas=30 320x172 huella=7c5ba64bb7a84145fa40a79bce5cea52e85fb53f549d3cf602fc6d179bbda437
+high-b-bytes-52.264	rechazo motivo=Truncated
+high-b-bytes-53.264	rechazo motivo=Truncated
+high-b-bytes-54.264	rechazo motivo=Truncated
+high-b-bytes-55.264	rechazo motivo=Truncated
+high-b-bytes-56.264	rechazo motivo=Truncated
+high-b-bytes-57.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-bytes-58.264	rechazo motivo=Truncated
+high-b-bytes-59.264	rechazo motivo=Truncated
+high-b-bytes-6.264	rechazo motivo=Truncated
+high-b-bytes-60.264	rechazo motivo=Truncated
+high-b-bytes-61.264	rechazo motivo=Truncated
+high-b-bytes-62.264	rechazo motivo=Truncated
+high-b-bytes-63.264	rechazo motivo=Truncated
+high-b-bytes-64.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-bytes-65.264	rechazo motivo=Truncated
+high-b-bytes-66.264	rechazo motivo=Truncated
+high-b-bytes-67.264	rechazo motivo=Truncated
+high-b-bytes-68.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-bytes-69.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-bytes-7.264	rechazo motivo=Truncated
+high-b-bytes-70.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-bytes-71.264	rechazo motivo=Truncated
+high-b-bytes-72.264	rechazo motivo=Truncated
+high-b-bytes-73.264	rechazo motivo=Truncated
+high-b-bytes-74.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-bytes-75.264	rechazo motivo=Truncated
+high-b-bytes-76.264	rechazo motivo=Truncated
+high-b-bytes-77.264	rechazo motivo=Truncated
+high-b-bytes-78.264	rechazo motivo=Truncated
+high-b-bytes-79.264	rechazo motivo=Truncated
+high-b-bytes-8.264	rechazo motivo=Truncated
+high-b-bytes-80.264	rechazo motivo=Truncated
+high-b-bytes-81.264	rechazo motivo=Truncated
+high-b-bytes-82.264	rechazo motivo=Truncated
+high-b-bytes-83.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-bytes-84.264	rechazo motivo=Truncated
+high-b-bytes-85.264	rechazo motivo=Truncated
+high-b-bytes-86.264	rechazo motivo=Truncated
+high-b-bytes-87.264	rechazo motivo=Truncated
+high-b-bytes-88.264	rechazo motivo=Truncated
+high-b-bytes-89.264	rechazo motivo=Truncated
+high-b-bytes-9.264	rechazo motivo=Truncated
+high-b-bytes-90.264	rechazo motivo=Truncated
+high-b-bytes-91.264	rechazo motivo=Truncated
+high-b-bytes-92.264	rechazo motivo=Truncated
+high-b-bytes-93.264	rechazo motivo=Truncated
+high-b-bytes-94.264	rechazo motivo=Truncated
+high-b-bytes-95.264	rechazo motivo=Truncated
+high-b-bytes-96.264	rechazo motivo=Truncated
+high-b-bytes-97.264	rechazo motivo=Truncated
+high-b-bytes-98.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-bytes-99.264	rechazo motivo=Truncated
+high-b-cabecera-1.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+high-b-cabecera-10.264	rechazo motivo=Unsupported("bit_depth_>_8")
+high-b-cabecera-100.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+high-b-cabecera-11.264	rechazo motivo=Unsupported("invalid_pic_order_cnt_type")
+high-b-cabecera-12.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-13.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+high-b-cabecera-14.264	rechazo motivo=Truncated
+high-b-cabecera-15.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-16.264	rechazo motivo=Unsupported("deblocking_filter_offset_out_of_range")
+high-b-cabecera-17.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-18.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-19.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-2.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-20.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-21.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+high-b-cabecera-22.264	rechazo motivo=MissingParameterSet
+high-b-cabecera-23.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+high-b-cabecera-24.264	rechazo motivo=Truncated
+high-b-cabecera-25.264	rechazo motivo=Unsupported("SP/SI_slices")
+high-b-cabecera-26.264	rechazo motivo=Truncated
+high-b-cabecera-27.264	rechazo motivo=Unsupported("deblocking_filter_offset_out_of_range")
+high-b-cabecera-28.264	rechazo motivo=Unsupported("non-4:2:0_chroma")
+high-b-cabecera-29.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-3.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-30.264	rechazo motivo=Unsupported("invalid_pic_order_cnt_type")
+high-b-cabecera-31.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+high-b-cabecera-32.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+high-b-cabecera-33.264	rechazo motivo=Truncated
+high-b-cabecera-34.264	rechazo motivo=Truncated
+high-b-cabecera-35.264	rechazo motivo=Unsupported("non-4:2:0_chroma")
+high-b-cabecera-36.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-37.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-38.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-39.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-4.264	rechazo motivo=Unsupported("invalid_cabac_init_idc")
+high-b-cabecera-40.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+high-b-cabecera-41.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-42.264	rechazo motivo=Truncated
+high-b-cabecera-43.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-44.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-45.264	rechazo motivo=Unsupported("invalid_pic_order_cnt_type")
+high-b-cabecera-46.264	rechazo motivo=Truncated
+high-b-cabecera-47.264	rechazo motivo=Unsupported("non-4:2:0_chroma")
+high-b-cabecera-48.264	rechazo motivo=Unsupported("invalid_pic_order_cnt_type")
+high-b-cabecera-49.264	rechazo motivo=Unsupported("invalid_weight_denom")
+high-b-cabecera-5.264	rechazo motivo=Unsupported("invalid_pic_order_cnt_type")
+high-b-cabecera-50.264	rechazo motivo=Truncated
+high-b-cabecera-51.264	rechazo motivo=Unsupported("SP/SI_slices")
+high-b-cabecera-52.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-53.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-54.264	rechazo motivo=Unsupported("invalid_log2_max_frame_num")
+high-b-cabecera-55.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+high-b-cabecera-56.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-57.264	rechazo motivo=MissingParameterSet
+high-b-cabecera-58.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+high-b-cabecera-59.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-6.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-60.264	rechazo motivo=Unsupported("invalid_log2_max_frame_num")
+high-b-cabecera-61.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+high-b-cabecera-62.264	rechazo motivo=Truncated
+high-b-cabecera-63.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+high-b-cabecera-64.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-65.264	rechazo motivo=Unsupported("non-4:2:0_chroma")
+high-b-cabecera-66.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-67.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-68.264	rechazo motivo=MissingParameterSet
+high-b-cabecera-69.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-7.264	rechazo motivo=Unsupported("P_Skip_without_reference")
+high-b-cabecera-70.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+high-b-cabecera-71.264	rechazo motivo=Unsupported("SP/SI_slices")
+high-b-cabecera-72.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-73.264	rechazo motivo=Unsupported("invalid_pic_order_cnt_type")
+high-b-cabecera-74.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-75.264	rechazo motivo=Unsupported("invalid_log2_max_pic_order_cnt_lsb")
+high-b-cabecera-76.264	rechazo motivo=Unsupported("invalid_pic_order_cnt_type")
+high-b-cabecera-77.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-78.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-79.264	rechazo motivo=Unsupported("invalid_log2_max_frame_num")
+high-b-cabecera-8.264	rechazo motivo=Unsupported("invalid_pic_order_cnt_type")
+high-b-cabecera-80.264	rechazo motivo=Truncated
+high-b-cabecera-81.264	rechazo motivo=Unsupported("invalid_pic_order_cnt_type")
+high-b-cabecera-82.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-83.264	rechazo motivo=Unsupported("deblocking_filter_offset_out_of_range")
+high-b-cabecera-84.264	rechazo motivo=Unsupported("non-4:2:0_chroma")
+high-b-cabecera-85.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-86.264	rechazo motivo=Unsupported("invalid_disable_deblocking_filter_idc")
+high-b-cabecera-87.264	rechazo motivo=Truncated
+high-b-cabecera-88.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+high-b-cabecera-89.264	rechazo motivo=Truncated
+high-b-cabecera-9.264	rechazo motivo=Unsupported("non-4:2:0_chroma")
+high-b-cabecera-90.264	rechazo motivo=Unsupported("SP/SI_slices")
+high-b-cabecera-91.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-92.264	rechazo motivo=Unsupported("non-4:2:0_chroma")
+high-b-cabecera-93.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-94.264	rechazo motivo=Unsupported("invalid_log2_max_pic_order_cnt_lsb")
+high-b-cabecera-95.264	rechazo motivo=Truncated
+high-b-cabecera-96.264	rechazo motivo=Truncated
+high-b-cabecera-97.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+high-b-cabecera-98.264	rechazo motivo=Truncated
+high-b-cabecera-99.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+high-b-duplicar-1.264	ok fotogramas=30 320x172 huella=584a140fd7d1e8250658f65349cb87ded4a7ffc266e913d7d55f78181edce00f
+high-b-duplicar-10.264	rechazo motivo=Truncated
+high-b-duplicar-100.264	rechazo motivo=Truncated
+high-b-duplicar-11.264	rechazo motivo=Truncated
+high-b-duplicar-12.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-duplicar-13.264	rechazo motivo=Truncated
+high-b-duplicar-14.264	rechazo motivo=Truncated
+high-b-duplicar-15.264	rechazo motivo=Truncated
+high-b-duplicar-16.264	rechazo motivo=Truncated
+high-b-duplicar-17.264	ok fotogramas=30 320x172 huella=44f684d9f95d553c64e6e0dbd902082d7eeb372454d0baa125863956bd55d24f
+high-b-duplicar-18.264	rechazo motivo=Truncated
+high-b-duplicar-19.264	ok fotogramas=30 320x172 huella=c7f84217cfe0d066a12979363d64c9fab95b15a815606689d2ec272536b0a84a
+high-b-duplicar-2.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+high-b-duplicar-20.264	ok fotogramas=31 320x172 huella=6958104f5bdc5828c4e795deddf11ea57459cf73bb01f6187b12ea04e6c11e07
+high-b-duplicar-21.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-duplicar-22.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-duplicar-23.264	ok fotogramas=30 320x172 huella=18248f933ea3434afe273fa3b23cbb072e27ff00667d9fc23e91eeb42af8c8fc
+high-b-duplicar-24.264	rechazo motivo=Truncated
+high-b-duplicar-25.264	rechazo motivo=Truncated
+high-b-duplicar-26.264	rechazo motivo=Truncated
+high-b-duplicar-27.264	rechazo motivo=Truncated
+high-b-duplicar-28.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-duplicar-29.264	rechazo motivo=Truncated
+high-b-duplicar-3.264	rechazo motivo=Truncated
+high-b-duplicar-30.264	ok fotogramas=30 320x172 huella=45b89ab663f8183a71a60424425b3187fd6625bb644415114c744063ba764f70
+high-b-duplicar-31.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-duplicar-32.264	ok fotogramas=30 320x172 huella=8d358416fcf25028ac40e10ab5df2aadc960d1edb9a65823aeef8c54fa39b115
+high-b-duplicar-33.264	rechazo motivo=Truncated
+high-b-duplicar-34.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-duplicar-35.264	rechazo motivo=Truncated
+high-b-duplicar-36.264	ok fotogramas=30 320x172 huella=f31c4889a3864284cbb1e3cfc7658dceb40c99c47d49a09c928264301af3a0f6
+high-b-duplicar-37.264	rechazo motivo=Truncated
+high-b-duplicar-38.264	rechazo motivo=Truncated
+high-b-duplicar-39.264	ok fotogramas=30 320x172 huella=70c82006f8f17f6b92b651b03bc454ad01aeec4d587f6242069781261c7423bd
+high-b-duplicar-4.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-duplicar-40.264	rechazo motivo=Truncated
+high-b-duplicar-41.264	ok fotogramas=30 320x172 huella=66495b5988a1361c50edae5337262d69c0d261da62568b31cae539943ac284d9
+high-b-duplicar-42.264	rechazo motivo=Truncated
+high-b-duplicar-43.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-duplicar-44.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-duplicar-45.264	rechazo motivo=Truncated
+high-b-duplicar-46.264	ok fotogramas=30 320x172 huella=51d0792dceb91db735b424d9f5870b2a63341b10aadebfc5912cc6b08735fc14
+high-b-duplicar-47.264	ok fotogramas=30 320x172 huella=3e4071d31eddf9a95a720cc90cd071f4107464dfef7f3be31018a9e3c40d2621
+high-b-duplicar-48.264	rechazo motivo=Truncated
+high-b-duplicar-49.264	ok fotogramas=30 320x172 huella=92c9ac5a69031c2e8949f11ea7c3147060917fc90398bd5030053b9766288b6c
+high-b-duplicar-5.264	ok fotogramas=31 320x172 huella=2afc315d45453eab81c43b953c4f80fb447bfc45a3a930a7165823e3f38d0cdf
+high-b-duplicar-50.264	ok fotogramas=31 320x172 huella=e5125e5c3be27a5b098ebb46c9274f9adacdc463f71a2c81f89852925d7b14a4
+high-b-duplicar-51.264	rechazo motivo=Truncated
+high-b-duplicar-52.264	ok fotogramas=30 320x172 huella=6649ebaadf6e275e37a28a49e512ffe09ccaaf77f5d2ebdcdc8010c3b87115b3
+high-b-duplicar-53.264	rechazo motivo=Truncated
+high-b-duplicar-54.264	ok fotogramas=30 320x172 huella=23dc68a7cf9fef45b7124faf0003c758407970a6f795bcdab7a57f9daab09e4b
+high-b-duplicar-55.264	ok fotogramas=32 320x172 huella=0f7d521554968e82066983349194fea5a7227a9084b528c375e724c51052226f
+high-b-duplicar-56.264	rechazo motivo=Truncated
+high-b-duplicar-57.264	ok fotogramas=30 320x172 huella=4c564caba4023d9fae2153855c10902b2f5d8d0f933ff2029853315be8e8d33a
+high-b-duplicar-58.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-duplicar-59.264	rechazo motivo=Truncated
+high-b-duplicar-6.264	ok fotogramas=30 320x172 huella=7b88f3eb34f810bd938d90f040f5f5a704d1967568e3a25dff202a935d8cdca3
+high-b-duplicar-60.264	rechazo motivo=Truncated
+high-b-duplicar-61.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-duplicar-62.264	ok fotogramas=30 320x172 huella=093dab28354b07c4158cad2e9491254695182e0255c109fafce1284a1bce0347
+high-b-duplicar-63.264	ok fotogramas=31 320x172 huella=a7b58b470678bd4ee80bbf019a22641eb1e4e6a0d1084055b1807e0f08a8ca68
+high-b-duplicar-64.264	rechazo motivo=Truncated
+high-b-duplicar-65.264	rechazo motivo=Truncated
+high-b-duplicar-66.264	ok fotogramas=30 320x172 huella=c265a1a66eb3f01452dba4e6abcc4c1b6e7ebd6a65f3442b87c7e035353719ea
+high-b-duplicar-67.264	ok fotogramas=30 320x172 huella=8108321307429ec5803001d83f8eb2d092a7f9f0b18497b77f945b5c0818089a
+high-b-duplicar-68.264	rechazo motivo=Truncated
+high-b-duplicar-69.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-duplicar-7.264	rechazo motivo=Truncated
+high-b-duplicar-70.264	rechazo motivo=Truncated
+high-b-duplicar-71.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-duplicar-72.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-duplicar-73.264	rechazo motivo=Truncated
+high-b-duplicar-74.264	ok fotogramas=32 320x172 huella=b706c499acbd117e5125ae208029623f1f1fb7fff0cd8c520fb57136083c9b47
+high-b-duplicar-75.264	rechazo motivo=Truncated
+high-b-duplicar-76.264	ok fotogramas=30 320x172 huella=87e875a3283ecb38e252134c40857f0d404d55bf9cf1fb20b31f551abd5436cc
+high-b-duplicar-77.264	rechazo motivo=Truncated
+high-b-duplicar-78.264	rechazo motivo=Truncated
+high-b-duplicar-79.264	rechazo motivo=Truncated
+high-b-duplicar-8.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-duplicar-80.264	rechazo motivo=Truncated
+high-b-duplicar-81.264	rechazo motivo=Truncated
+high-b-duplicar-82.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-duplicar-83.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-duplicar-84.264	ok fotogramas=30 320x172 huella=c0e055094850aed01aa73ebe442849235a22ae4f8181f92593042e8fd70f548b
+high-b-duplicar-85.264	ok fotogramas=30 320x172 huella=35cba84208566677322ac1b5ca7e55e4df5055ad0562d23c9a84853b6a89abd0
+high-b-duplicar-86.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-duplicar-87.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-duplicar-88.264	rechazo motivo=Truncated
+high-b-duplicar-89.264	rechazo motivo=Truncated
+high-b-duplicar-9.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-duplicar-90.264	rechazo motivo=Truncated
+high-b-duplicar-91.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-duplicar-92.264	rechazo motivo=Truncated
+high-b-duplicar-93.264	rechazo motivo=Truncated
+high-b-duplicar-94.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-duplicar-95.264	rechazo motivo=Truncated
+high-b-duplicar-96.264	rechazo motivo=Truncated
+high-b-duplicar-97.264	ok fotogramas=30 320x172 huella=4721da8700789612d9bb86a019ee7fa28699ab6f6ef17b7ddd2df3a148492f47
+high-b-duplicar-98.264	ok fotogramas=30 320x172 huella=d6cf518b4bdab1ea1a8fad096fd1a2d9e67bac9b229ac6f33d2b9b331d33d2b5
+high-b-duplicar-99.264	rechazo motivo=Inconsistent("mapa_de_POC")
+high-b-truncar-1.264	ok fotogramas=17 320x172 huella=d85ef9c554dc04cf29eab012e1c2abf4726e5fe196adf42961f8e4b1cbd057ed
+high-b-truncar-10.264	ok fotogramas=2 320x172 huella=9b9f3e790697e440d806dbf268dbb730431a464a48ac7a9966f1836f170adbbc
+high-b-truncar-100.264	ok fotogramas=11 320x172 huella=4544c3ff73c740be4c1173b89ee2606c13c1e0b37f6a53c09fd06a93e6ffa28e
+high-b-truncar-11.264	ok fotogramas=17 320x172 huella=3d773bae252ff76eaf27fea7a97bb1c8c678ea0ceb6045d7b7a54c1c24a9c65e
+high-b-truncar-12.264	ok fotogramas=7 320x172 huella=d698a42915dfc2de469fc027edd1d7d185849169b8e4225dd72ca75c7a056038
+high-b-truncar-13.264	ok fotogramas=25 320x172 huella=a1b42634a52290c31bfad38b0d2ef3fd92fed612e4a343f55ed955816d26df66
+high-b-truncar-14.264	ok fotogramas=17 320x172 huella=246a769de8d2e71bafe91140e108c4d7c7ccf1e186863f66a2ecdac384ce409d
+high-b-truncar-15.264	ok fotogramas=2 320x172 huella=47aa16f452e44a1165ad34be3cbe2da3af1029f8bd008c8722b78ecc7f50ffc3
+high-b-truncar-16.264	ok fotogramas=18 320x172 huella=3ae5f4ed937678d30890dd21f6d163f532def1b1471d9060578b202b8719510c
+high-b-truncar-17.264	ok fotogramas=11 320x172 huella=e1cf8bf989f499a212f1883734d6904a3c97e49304c8485fc4f0d805eeeda073
+high-b-truncar-18.264	ok fotogramas=29 320x172 huella=6aa3b944e8c687f6a5f4da51b6ebac4c15c4a514ba10ec3b87fa2d12a7412c8e
+high-b-truncar-19.264	ok fotogramas=17 320x172 huella=4736d3d76c9d74a01b269c46fd59c606b7501611d43db70ab232aebfc88acf60
+high-b-truncar-2.264	ok fotogramas=2 320x172 huella=d95f37114f2e86aee87dc6e7fabdbc817ea40904cee10dfae1a3f9638f7acf5e
+high-b-truncar-20.264	ok fotogramas=2 320x172 huella=180ec03216a95e4799cac759e2286dfd14bf03f779f8ce3b756834254aa17c7f
+high-b-truncar-21.264	ok fotogramas=22 320x172 huella=6ed11524cf2875b2e25dbdc359ae6c9d253a4f28f71c0c4cf6650431574e2d69
+high-b-truncar-22.264	ok fotogramas=15 320x172 huella=420e8f13bba47bf914822d7102aba623f0acbd1f695120c63484bc2df8d5d930
+high-b-truncar-23.264	ok fotogramas=2 320x172 huella=c1645f842bb61036fcab82c8af8a6d0ee3cff6faad72e0e70022d9d8ce33c2fa
+high-b-truncar-24.264	ok fotogramas=17 320x172 huella=ad0fff4a4199ef720d52064e5550f59328779737f018267b09193dc2a7e566b5
+high-b-truncar-25.264	ok fotogramas=3 320x172 huella=efad51f54aeabc6a875ad058f1d86b59ef00c58eec3e87d991c0b36f7d86b5ba
+high-b-truncar-26.264	ok fotogramas=25 320x172 huella=1bb9261ac03a3abdc7e7240348891cef74b7cdd7bd701c971d099c0083dc3d60
+high-b-truncar-27.264	ok fotogramas=17 320x172 huella=2d8941202ac8c952cf93133125e0893362f95461e961ff0b15e088522747240d
+high-b-truncar-28.264	ok fotogramas=2 320x172 huella=78ee9ccb2b28f621814894108b10be2f89fbe5129479e570ebf27691c2a95d11
+high-b-truncar-29.264	ok fotogramas=18 320x172 huella=d833ebbcb82b97a6c473490a59952727d35bbbb8e7533ddfe80a43646ad7f860
+high-b-truncar-3.264	ok fotogramas=18 320x172 huella=6a560f38f2f1b47156d2fe92662f1672d77fb68495ca3fbf94626629de59e979
+high-b-truncar-30.264	ok fotogramas=11 320x172 huella=baa71ba6c99a6ce816877a34b62fcb6cadfdf9a9139f2daf288e956853a6d53c
+high-b-truncar-31.264	ok fotogramas=28 320x172 huella=b143a94ca4729a4de5ee35d8517a5237f91b82f17927139add136bbeb4c2a851
+high-b-truncar-32.264	ok fotogramas=17 320x172 huella=210c0621fac2d28c1349541ad63fd89bda4de6741f923856f5c0284a569692cc
+high-b-truncar-33.264	ok fotogramas=2 320x172 huella=62ddc6b91a579e2eb7f8ce025ed7eac46171f597b8809aef2fb4a4d59c01ea32
+high-b-truncar-34.264	ok fotogramas=22 320x172 huella=bca70f159f08e1d8880aaee0478b6aa229a8b7a997e0515324cac7e9d93ec8c1
+high-b-truncar-35.264	ok fotogramas=14 320x172 huella=ac06cb1c6495f10316ebf750a285865e6b77516a00ccba220298207c4299f63b
+high-b-truncar-36.264	ok fotogramas=2 320x172 huella=a6db38fcebb5fe6253c5fc2c70cc9e280784dec5766146e6902fa5756211338e
+high-b-truncar-37.264	ok fotogramas=17 320x172 huella=d3f1933e7a30be6c738ca1967db49d3990c174fb53eb14e202809c67a4c9b0c9
+high-b-truncar-38.264	ok fotogramas=3 320x172 huella=859eb6c34ba593547e50bc2d438a254090faf4a77731ea19a86d9033e3d11b73
+high-b-truncar-39.264	ok fotogramas=25 320x172 huella=07f8bcfae66833f7e2c664249dc30501a9509204e6532f9ae2a3c5b843169971
+high-b-truncar-4.264	ok fotogramas=11 320x172 huella=9e403e097a42b7c3c704c0b86cfccce53d80a9bc94fe9e39780b0a9a0d633b59
+high-b-truncar-40.264	ok fotogramas=17 320x172 huella=950f195f2923227310ed01e4f3083ceb1aeaa143f5270417637bd9bc34f83ce6
+high-b-truncar-41.264	ok fotogramas=2 320x172 huella=a4114f0e576ec39c2c4f6e91d98377735c9d43ba2a083b97eca58f09008e880e
+high-b-truncar-42.264	ok fotogramas=18 320x172 huella=f69c31076b9465fb36bccffb5464bb41f5c21b7467004a504350cb02bed99606
+high-b-truncar-43.264	ok fotogramas=8 320x172 huella=145a5dc3938cc038649f8084004b2298ce3d09d92ff03a94f84bb6778cc9961f
+high-b-truncar-44.264	ok fotogramas=28 320x172 huella=591e0ca8d1600c9da1d29775c496af96a32e46c2fd8c713f7f8fb8c504f2a4b0
+high-b-truncar-45.264	ok fotogramas=17 320x172 huella=d704f70e26fa43e0289ebf52ee004156d281cf598cc6548d280ec64dc5feb314
+high-b-truncar-46.264	ok fotogramas=2 320x172 huella=796a8d00c9b1bcd0a326ce241d8efe286892e1dfc0aff63e09190b41c19a61e1
+high-b-truncar-47.264	ok fotogramas=22 320x172 huella=24ce4122af59f1362ce10574cba7ddf0b376e18864c391c836e024aacfd11252
+high-b-truncar-48.264	ok fotogramas=12 320x172 huella=09cbf695aed8af7a036bab31d6244f46beb29ffca8a23a1eac853b280372fd79
+high-b-truncar-49.264	ok fotogramas=2 320x172 huella=9d5e6f2363ed9462ebaeeda377d1605059f377bfc847aab74ed4f33b5917c495
+high-b-truncar-5.264	ok fotogramas=29 320x172 huella=8183c22e847a147b554a33a42bd3a1b3c70e06082cbb9cab508b12e7ac3288c2
+high-b-truncar-50.264	ok fotogramas=17 320x172 huella=71d6fba868e459545f407d7964fb42c1db3e136c32f8640840af539407312981
+high-b-truncar-51.264	ok fotogramas=3 320x172 huella=9f1564921aad168d50b3528af39ee7d6bfe29a45a7a58056cb5c85aec08e62cb
+high-b-truncar-52.264	ok fotogramas=25 320x172 huella=39ebd152d45c41fcb5ad3442999be99a6145d4ae1b3858cd006a42a3c41b0123
+high-b-truncar-53.264	ok fotogramas=17 320x172 huella=c3cc11ec016f50b6b3fceb1b977dc5fed657eb97099bcc4fb64b5b0ea17e0976
+high-b-truncar-54.264	ok fotogramas=2 320x172 huella=bc9cc541aa9136f976d4bef4f507c71eaf1086813d85836344b3cf52e9206701
+high-b-truncar-55.264	ok fotogramas=18 320x172 huella=8e574de5301201a9b8088d41dfe58b6ec0b4f00d4503cc38c5c1bd6a966e05d6
+high-b-truncar-56.264	ok fotogramas=8 320x172 huella=33a7af147f419b062d2dfbaa43f62a048c9160b8b0c2919641e01f7f8aa67553
+high-b-truncar-57.264	ok fotogramas=28 320x172 huella=bd2760ca12a6c624b86baa290b869dee946eceda762b02ec7cd89f520639474f
+high-b-truncar-58.264	ok fotogramas=17 320x172 huella=95c10d7d44f2e7195547ccc89dfeb87688beb20d0e8e0eef09a2840631de3f02
+high-b-truncar-59.264	ok fotogramas=2 320x172 huella=db8e9cdf47f6d38a759935cc2c67402b8182cbb7e1ea1219bd122222d6931d87
+high-b-truncar-6.264	ok fotogramas=17 320x172 huella=95eef7e41421a652cd63d54582a9f6606eecd654c35eb02e875a9ef85803b27d
+high-b-truncar-60.264	ok fotogramas=21 320x172 huella=005c94a1c0398a25f17e6b5b32976aaf32aa129980bf83063fa2922e760403c0
+high-b-truncar-61.264	ok fotogramas=12 320x172 huella=799346ec2aa726408a956d704a51a076cc59a0cbb70c3deb3aa945ad1f163a0f
+high-b-truncar-62.264	ok fotogramas=2 320x172 huella=d9108cf724167148d8cf30eb8a92d85232ff0d10af06329f4d1c56e37cbb610f
+high-b-truncar-63.264	ok fotogramas=17 320x172 huella=a621d34551f0e315880321788bb7ff7f6c516e1ed6366311c35c8d2128be4f31
+high-b-truncar-64.264	ok fotogramas=3 320x172 huella=8503351f74b1a9121d7a7f16894876bcb5b0ca90f9a7f55e3ad500b45169fbfd
+high-b-truncar-65.264	ok fotogramas=24 320x172 huella=894651eccbc8955618e7b81981913d6f641a71c75743cd1c981f37e11d706acd
+high-b-truncar-66.264	ok fotogramas=17 320x172 huella=92aeb29741d4e61a3f18a42c22f30db87fc27574f07f06490bfb9e447598fd61
+high-b-truncar-67.264	ok fotogramas=2 320x172 huella=b3438c9328f08e16fba818abc1dfa216663ab22265b039bea52a1403e1af13dc
+high-b-truncar-68.264	ok fotogramas=18 320x172 huella=a501a2b723f313d9765754baf4f8ea7fef7b06a05a6148b59265acc669299bbe
+high-b-truncar-69.264	ok fotogramas=7 320x172 huella=c567fa50c9c7f1b398d44b8af67c0dbca1f04b57d68f4f789e396c4a1629cd2a
+high-b-truncar-7.264	ok fotogramas=2 320x172 huella=2376d46a2bb4bf4f81b26f0abedf5acdd9dcee45b70da072b251111362dc8eb3
+high-b-truncar-70.264	ok fotogramas=27 320x172 huella=9e9ae6c502f5c2884ffc6630f3529c566f7cfd32988dc61893a45591fe7cfb6d
+high-b-truncar-71.264	ok fotogramas=17 320x172 huella=5504e9a30f8276afa67350ad9cba0946875120d77635517a74c7d4607ac1d7ef
+high-b-truncar-72.264	ok fotogramas=2 320x172 huella=dda8c329662276c326e8d24e36a3c3466fbf99d06b2789ad5cf68ed4a49897b4
+high-b-truncar-73.264	ok fotogramas=21 320x172 huella=a509a30d94c70652876b0f763df38cd8b8082916269e229c8e51608fdfd9a4f4
+high-b-truncar-74.264	ok fotogramas=11 320x172 huella=532fa6bbf008b1a2225b3fcd76a7a3069b0d150bf7fe761b02edbedb67a4b553
+high-b-truncar-75.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+high-b-truncar-76.264	ok fotogramas=17 320x172 huella=fa3e4c8ab879afd61f05f4b4c08c038222419af6435a39e1381956654fa84a0e
+high-b-truncar-77.264	ok fotogramas=2 320x172 huella=3f39f934d7d2a18aeac484202ae8cabfc8984769de2f6abd1953db33a868395f
+high-b-truncar-78.264	ok fotogramas=23 320x172 huella=9bf224e5eefe30a7b1d340cbc3ed2503225f7823be5f807741c1b197096d7c53
+high-b-truncar-79.264	ok fotogramas=17 320x172 huella=6e2741b478f385e1e2ece1da492b86e1c93dfeae1c29f2c70246a8e54b74a4d5
+high-b-truncar-8.264	ok fotogramas=22 320x172 huella=b91f2ac7c17950c78364c7649f61f8d7efcb053ddbe397ca32085a6be4ff36d7
+high-b-truncar-80.264	ok fotogramas=2 320x172 huella=3b8000d41b64fe3a808294967f8b9b06d027d7910e77422691a965a6cbf7af18
+high-b-truncar-81.264	ok fotogramas=18 320x172 huella=7ab90f4a4e71f906565025db3553d51e8072c1822cef6e3ec5f64da402d9ade9
+high-b-truncar-82.264	ok fotogramas=7 320x172 huella=6580f52598d9b8298d1c268aa9557efaabe49cbf503501c5a1b64015692befb1
+high-b-truncar-83.264	ok fotogramas=26 320x172 huella=f2bb67b1122f153e5919ead1a697f33b7b918f12aabe3077a31c7694fd6b79b7
+high-b-truncar-84.264	ok fotogramas=17 320x172 huella=f0186b4be417a06f87716b32218f4cfd21b00baebd5974dad45f5b64172f104f
+high-b-truncar-85.264	ok fotogramas=2 320x172 huella=fa93b27843a16b3b9f7e4cb1f29142305018e89c2825ad9080fdcbf997cbbb02
+high-b-truncar-86.264	ok fotogramas=19 320x172 huella=6e802d386c625f3b367fda08d37e8f637392be8ada5e43d879a92b44e66dcd3c
+high-b-truncar-87.264	ok fotogramas=11 320x172 huella=2fba5a6c524ec4067bc3b06b7cc3f58fc3e57917699a480a4891af23501c981f
+high-b-truncar-88.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+high-b-truncar-89.264	ok fotogramas=17 320x172 huella=615c12cda896e2f2ba523b748205cbd7da5c2cac4d4f3e9d2ad63137ff6126fe
+high-b-truncar-9.264	ok fotogramas=14 320x172 huella=934dfa4ce4c488089e3ecd8507966baaa4caee5197f7fff9749f98eefe5404d1
+high-b-truncar-90.264	ok fotogramas=2 320x172 huella=32b0002944e4d934d51dfed72cf005252b13ab3170d36499c7252e8132db4fda
+high-b-truncar-91.264	ok fotogramas=22 320x172 huella=dfd7a218bb5cbd25b6c1ce36815d1b14773d19c3c3e7df89ad4cb5c5ab3476ff
+high-b-truncar-92.264	ok fotogramas=16 320x172 huella=2272becf73f5b130112d0a24a7a2fa608120622de2bc8fe80b8edf15ccbf6b6b
+high-b-truncar-93.264	ok fotogramas=2 320x172 huella=eed281392fdcc59e380ed31e6e1e9907c51b6cf63c136a546e4e57772ad54eae
+high-b-truncar-94.264	ok fotogramas=17 320x172 huella=f3b64d334f7a46db6ea1317f0d24825e7a00d230e14bab516934fb18f83a9bc0
+high-b-truncar-95.264	ok fotogramas=7 320x172 huella=979ecc9e28dc01cae4b20a5571e97d76f925756531f3be24e065857ff540f4f8
+high-b-truncar-96.264	ok fotogramas=25 320x172 huella=b9bd6fb1b698d1e7847f66d9d427c8d81ba136db90d376182cabc392333c74f0
+high-b-truncar-97.264	ok fotogramas=17 320x172 huella=9945d761e45a3f3c3885fa86df5e78f6c97c0d43acad1d14482f28d226d47f0c
+high-b-truncar-98.264	ok fotogramas=2 320x172 huella=95e1a871e735bdc5b20c4e61bd5b4fc4dde9fb62c2e6e60a89585675bf2e3df9
+high-b-truncar-99.264	ok fotogramas=19 320x172 huella=b9904dad4e8f4ecf2c983ba988f992cba1c5f541f2952a23e41dae48a79af53c
+main-slices-bytes-1.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-10.264	rechazo motivo=Truncated
+main-slices-bytes-100.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-11.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-12.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-13.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-14.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-15.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-16.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-17.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-18.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-19.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-2.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-20.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-21.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-22.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-23.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-24.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-25.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-26.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-27.264	ok fotogramas=30 320x172 huella=966537d9b289a82455824fba01566be4657dbbb79a6fb001a23c3a0e5d5c24f0
+main-slices-bytes-28.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-29.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-3.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-30.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-31.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-32.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-33.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-34.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-35.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-36.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-37.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-38.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-39.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-4.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-40.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-41.264	ok fotogramas=30 320x172 huella=6dc382f1705590c4c417bcebcd87caaebf98d2ac1ea0d776f71b619a4479f17f
+main-slices-bytes-42.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-43.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-44.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-45.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-46.264	rechazo motivo=Truncated
+main-slices-bytes-47.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-48.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-49.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-5.264	ok fotogramas=30 320x172 huella=68ab200475d10a9a7fa5756098d046dfcf4df71091eeb3e34b19d71f76cd7ce4
+main-slices-bytes-50.264	rechazo motivo=Truncated
+main-slices-bytes-51.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-52.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-53.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-54.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-55.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-56.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-57.264	rechazo motivo=Unsupported("invalid_cabac_init_idc")
+main-slices-bytes-58.264	ok fotogramas=30 320x172 huella=95d25da5f4de9c25f4cf534afb1c47d9ec82e1a62567a242cd1870cf92445aee
+main-slices-bytes-59.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-6.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-60.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-61.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-62.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-63.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-64.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-65.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-66.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-67.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-68.264	ok fotogramas=30 320x172 huella=36699cd8653c94ebb43fa840ac788a326c43f2406867532c5918a9e8dbd80c5f
+main-slices-bytes-69.264	rechazo motivo=Inconsistent("mapa_de_POC")
+main-slices-bytes-7.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-70.264	ok fotogramas=30 320x172 huella=f2e565885db74d8abfd2ca749e528b9ef6949c79bc4be398e2e547aad257eb22
+main-slices-bytes-71.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-72.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-73.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-74.264	rechazo motivo=Truncated
+main-slices-bytes-75.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-76.264	rechazo motivo=Inconsistent("mapa_de_POC")
+main-slices-bytes-77.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-78.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-79.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-8.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-80.264	ok fotogramas=30 320x172 huella=e45316e318a0cff44f86831edad929bee3bf7206179c22e9e847aea9cd983acc
+main-slices-bytes-81.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-82.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-83.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-84.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-85.264	rechazo motivo=Inconsistent("mapa_de_POC")
+main-slices-bytes-86.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-87.264	rechazo motivo=Truncated
+main-slices-bytes-88.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-89.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-9.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-90.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-91.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-92.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-93.264	rechazo motivo=Truncated
+main-slices-bytes-94.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-95.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-96.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-97.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-bytes-98.264	rechazo motivo=Inconsistent("mapa_de_POC")
+main-slices-bytes-99.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-cabecera-1.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+main-slices-cabecera-10.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-cabecera-100.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+main-slices-cabecera-11.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+main-slices-cabecera-12.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+main-slices-cabecera-13.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+main-slices-cabecera-14.264	rechazo motivo=Unsupported("SP/SI_slices")
+main-slices-cabecera-15.264	rechazo motivo=Truncated
+main-slices-cabecera-16.264	rechazo motivo=MissingParameterSet
+main-slices-cabecera-17.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+main-slices-cabecera-18.264	rechazo motivo=MissingParameterSet
+main-slices-cabecera-19.264	rechazo motivo=Unsupported("invalid_weight_denom")
+main-slices-cabecera-2.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+main-slices-cabecera-20.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+main-slices-cabecera-21.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+main-slices-cabecera-22.264	rechazo motivo=MissingParameterSet
+main-slices-cabecera-23.264	rechazo motivo=Unsupported("invalid_disable_deblocking_filter_idc")
+main-slices-cabecera-24.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-cabecera-25.264	rechazo motivo=Truncated
+main-slices-cabecera-26.264	rechazo motivo=Truncated
+main-slices-cabecera-27.264	rechazo motivo=MissingParameterSet
+main-slices-cabecera-28.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-cabecera-29.264	rechazo motivo=Unsupported("invalid_weight_denom")
+main-slices-cabecera-3.264	rechazo motivo=MissingParameterSet
+main-slices-cabecera-30.264	rechazo motivo=MissingParameterSet
+main-slices-cabecera-31.264	rechazo motivo=MissingParameterSet
+main-slices-cabecera-32.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+main-slices-cabecera-33.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+main-slices-cabecera-34.264	rechazo motivo=Truncated
+main-slices-cabecera-35.264	rechazo motivo=Truncated
+main-slices-cabecera-36.264	rechazo motivo=Truncated
+main-slices-cabecera-37.264	rechazo motivo=Unsupported("invalid_weight_denom")
+main-slices-cabecera-38.264	rechazo motivo=Unsupported("SP/SI_slices")
+main-slices-cabecera-39.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+main-slices-cabecera-4.264	rechazo motivo=Unsupported("SP/SI_slices")
+main-slices-cabecera-40.264	rechazo motivo=MissingParameterSet
+main-slices-cabecera-41.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+main-slices-cabecera-42.264	rechazo motivo=Unsupported("invalid_disable_deblocking_filter_idc")
+main-slices-cabecera-43.264	rechazo motivo=MissingParameterSet
+main-slices-cabecera-44.264	rechazo motivo=Truncated
+main-slices-cabecera-45.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+main-slices-cabecera-46.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-cabecera-47.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-cabecera-48.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+main-slices-cabecera-49.264	rechazo motivo=Unsupported("SP/SI_slices")
+main-slices-cabecera-5.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+main-slices-cabecera-50.264	rechazo motivo=MissingParameterSet
+main-slices-cabecera-51.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+main-slices-cabecera-52.264	rechazo motivo=MissingParameterSet
+main-slices-cabecera-53.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-cabecera-54.264	rechazo motivo=MissingParameterSet
+main-slices-cabecera-55.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-cabecera-56.264	rechazo motivo=MissingParameterSet
+main-slices-cabecera-57.264	rechazo motivo=MissingParameterSet
+main-slices-cabecera-58.264	rechazo motivo=MissingParameterSet
+main-slices-cabecera-59.264	rechazo motivo=MissingParameterSet
+main-slices-cabecera-6.264	rechazo motivo=Truncated
+main-slices-cabecera-60.264	rechazo motivo=MissingParameterSet
+main-slices-cabecera-61.264	rechazo motivo=Unsupported("invalid_disable_deblocking_filter_idc")
+main-slices-cabecera-62.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-cabecera-63.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+main-slices-cabecera-64.264	rechazo motivo=MissingParameterSet
+main-slices-cabecera-65.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-cabecera-66.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+main-slices-cabecera-67.264	rechazo motivo=MissingParameterSet
+main-slices-cabecera-68.264	rechazo motivo=MissingParameterSet
+main-slices-cabecera-69.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+main-slices-cabecera-7.264	rechazo motivo=Truncated
+main-slices-cabecera-70.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+main-slices-cabecera-71.264	rechazo motivo=Unsupported("SP/SI_slices")
+main-slices-cabecera-72.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-cabecera-73.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+main-slices-cabecera-74.264	rechazo motivo=MissingParameterSet
+main-slices-cabecera-75.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+main-slices-cabecera-76.264	rechazo motivo=Truncated
+main-slices-cabecera-77.264	rechazo motivo=Unsupported("invalid_disable_deblocking_filter_idc")
+main-slices-cabecera-78.264	rechazo motivo=MissingParameterSet
+main-slices-cabecera-79.264	rechazo motivo=Unsupported("invalid_disable_deblocking_filter_idc")
+main-slices-cabecera-8.264	rechazo motivo=Truncated
+main-slices-cabecera-80.264	rechazo motivo=Unsupported("invalid_disable_deblocking_filter_idc")
+main-slices-cabecera-81.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-cabecera-82.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+main-slices-cabecera-83.264	rechazo motivo=Truncated
+main-slices-cabecera-84.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-cabecera-85.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+main-slices-cabecera-86.264	rechazo motivo=Unsupported("inter_without_reference")
+main-slices-cabecera-87.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-cabecera-88.264	rechazo motivo=MissingParameterSet
+main-slices-cabecera-89.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+main-slices-cabecera-9.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-cabecera-90.264	rechazo motivo=Unsupported("SP/SI_slices")
+main-slices-cabecera-91.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-cabecera-92.264	rechazo motivo=Unsupported("invalid_disable_deblocking_filter_idc")
+main-slices-cabecera-93.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-cabecera-94.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+main-slices-cabecera-95.264	rechazo motivo=MissingParameterSet
+main-slices-cabecera-96.264	rechazo motivo=Truncated
+main-slices-cabecera-97.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+main-slices-cabecera-98.264	rechazo motivo=Truncated
+main-slices-cabecera-99.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+main-slices-duplicar-1.264	rechazo motivo=Inconsistent("mapa_de_POC")
+main-slices-duplicar-10.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-100.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-11.264	rechazo motivo=Inconsistent("mapa_de_POC")
+main-slices-duplicar-12.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-13.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-14.264	ok fotogramas=30 320x172 huella=e78ea002085c2fb63d8e8a524b792eb2458918c33311702ecac6f2a192bb28db
+main-slices-duplicar-15.264	rechazo motivo=Truncated
+main-slices-duplicar-16.264	rechazo motivo=Truncated
+main-slices-duplicar-17.264	rechazo motivo=Inconsistent("mapa_de_POC")
+main-slices-duplicar-18.264	ok fotogramas=30 320x172 huella=e4ddee384476c98acd619fe7d9e3120b62810a3348f34f02cb234a208a4699bd
+main-slices-duplicar-19.264	ok fotogramas=30 320x172 huella=61cb457404b29d009efa8337705ec95f3c55112479ad0a98ebdc7009d9a840a3
+main-slices-duplicar-2.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-20.264	rechazo motivo=Inconsistent("mapa_de_POC")
+main-slices-duplicar-21.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-22.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-23.264	ok fotogramas=30 320x172 huella=b3119685ca976876eec04bbe63ed4d89e74d006f6dc04256ef179d55c997bfe6
+main-slices-duplicar-24.264	rechazo motivo=Inconsistent("mapa_de_POC")
+main-slices-duplicar-25.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-26.264	rechazo motivo=Truncated
+main-slices-duplicar-27.264	rechazo motivo=Inconsistent("mapa_de_POC")
+main-slices-duplicar-28.264	rechazo motivo=Truncated
+main-slices-duplicar-29.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-3.264	rechazo motivo=Unsupported("B_without_references")
+main-slices-duplicar-30.264	rechazo motivo=Inconsistent("mapa_de_POC")
+main-slices-duplicar-31.264	rechazo motivo=Unsupported("invalid_disable_deblocking_filter_idc")
+main-slices-duplicar-32.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-33.264	rechazo motivo=Inconsistent("mapa_de_POC")
+main-slices-duplicar-34.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-35.264	rechazo motivo=Truncated
+main-slices-duplicar-36.264	rechazo motivo=Truncated
+main-slices-duplicar-37.264	rechazo motivo=Truncated
+main-slices-duplicar-38.264	rechazo motivo=Inconsistent("mapa_de_POC")
+main-slices-duplicar-39.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-4.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-40.264	rechazo motivo=Inconsistent("mapa_de_POC")
+main-slices-duplicar-41.264	rechazo motivo=Truncated
+main-slices-duplicar-42.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-43.264	rechazo motivo=Inconsistent("mapa_de_POC")
+main-slices-duplicar-44.264	rechazo motivo=Truncated
+main-slices-duplicar-45.264	ok fotogramas=31 320x172 huella=318c03331fb5ee9d11334809e03810a005887c4a779af971354245ad56a64a26
+main-slices-duplicar-46.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-47.264	rechazo motivo=Truncated
+main-slices-duplicar-48.264	ok fotogramas=33 320x172 huella=643f45574415ebe295f9fd31bc4f3f206dcc43b62530b709ee4fed16b7b9bbbf
+main-slices-duplicar-49.264	rechazo motivo=Unsupported("invalid_weight_denom")
+main-slices-duplicar-5.264	rechazo motivo=Truncated
+main-slices-duplicar-50.264	rechazo motivo=Inconsistent("mapa_de_POC")
+main-slices-duplicar-51.264	ok fotogramas=30 320x172 huella=ddb53e794cb3a946bac6f48c8a6ab0f118777b4c70cded11ee7cc375ab6524dd
+main-slices-duplicar-52.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-53.264	ok fotogramas=30 320x172 huella=d1493e0d4a9b25a64925117ccd686f60fad2734631611cef1131dd951901119d
+main-slices-duplicar-54.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-55.264	rechazo motivo=Truncated
+main-slices-duplicar-56.264	rechazo motivo=Truncated
+main-slices-duplicar-57.264	rechazo motivo=Truncated
+main-slices-duplicar-58.264	rechazo motivo=Truncated
+main-slices-duplicar-59.264	rechazo motivo=Inconsistent("mapa_de_POC")
+main-slices-duplicar-6.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-60.264	ok fotogramas=30 320x172 huella=d2a57abc1ca9503b8e39c3c02ab6c41e0df92b4f91312553f4d53a32fc51d492
+main-slices-duplicar-61.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-62.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-63.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-64.264	rechazo motivo=Truncated
+main-slices-duplicar-65.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-66.264	rechazo motivo=Inconsistent("mapa_de_POC")
+main-slices-duplicar-67.264	ok fotogramas=30 320x172 huella=aaaaaaead6b51029314db157d0ab0d1790ab6f10ef4b2621d89cf2c7455190f1
+main-slices-duplicar-68.264	rechazo motivo=Truncated
+main-slices-duplicar-69.264	rechazo motivo=Truncated
+main-slices-duplicar-7.264	rechazo motivo=Truncated
+main-slices-duplicar-70.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-71.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-72.264	rechazo motivo=Inconsistent("mapa_de_POC")
+main-slices-duplicar-73.264	rechazo motivo=Truncated
+main-slices-duplicar-74.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-75.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-76.264	rechazo motivo=Truncated
+main-slices-duplicar-77.264	rechazo motivo=Truncated
+main-slices-duplicar-78.264	rechazo motivo=Truncated
+main-slices-duplicar-79.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-8.264	rechazo motivo=Truncated
+main-slices-duplicar-80.264	ok fotogramas=31 320x172 huella=c7742c9b8a98c0373b983cbc8cad418b2f938cb7a23effed0d4908525eb4cda0
+main-slices-duplicar-81.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-82.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-83.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-84.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-85.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-86.264	rechazo motivo=Inconsistent("mapa_de_POC")
+main-slices-duplicar-87.264	rechazo motivo=Truncated
+main-slices-duplicar-88.264	rechazo motivo=Truncated
+main-slices-duplicar-89.264	rechazo motivo=Truncated
+main-slices-duplicar-9.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-90.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-91.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-92.264	ok fotogramas=30 320x172 huella=4708f12db07b103653df22c0b9232b2125b6e90546bc92a831bb6d3f82c74b1c
+main-slices-duplicar-93.264	ok fotogramas=30 320x172 huella=db5e0d50fa6e02165ef0486689c7254f4a112a9fab6c937b535d53225d26bf96
+main-slices-duplicar-94.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-duplicar-95.264	rechazo motivo=Inconsistent("mapa_de_POC")
+main-slices-duplicar-96.264	rechazo motivo=Truncated
+main-slices-duplicar-97.264	rechazo motivo=Inconsistent("mapa_de_POC")
+main-slices-duplicar-98.264	rechazo motivo=Inconsistent("mapa_de_POC")
+main-slices-duplicar-99.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+main-slices-truncar-1.264	ok fotogramas=2 320x172 huella=b423732378a0c45878ebbf6e314b9cc82fdee3725732e8b85ecf4af6bb922341
+main-slices-truncar-10.264	ok fotogramas=12 320x172 huella=3c85afa3f005de2295153074c4194f8602bfccb5af45e88922f1e4082b4ec311
+main-slices-truncar-100.264	ok fotogramas=12 320x172 huella=810e777a46c7247f9daeee74ae26ec20d08f760b470e378ff08953dc0ee8bbc8
+main-slices-truncar-11.264	ok fotogramas=22 320x172 huella=2e397952a11d3dc357201efd391fc05127a30e2d4d748269ab0ec9a053c39e92
+main-slices-truncar-12.264	ok fotogramas=2 320x172 huella=4f8b8131aea39c860ff6f2ba9f51e9ff2a854f550ca8eb47b5328756667a39b1
+main-slices-truncar-13.264	ok fotogramas=12 320x172 huella=219657c2a4698f76834750918f256687032b269a36cf27e90ff4d86645a421eb
+main-slices-truncar-14.264	ok fotogramas=22 320x172 huella=719e26033ca0c7e5d6f8a709ac31ad15ab464aa79a2341d7f84b54aafb0a3033
+main-slices-truncar-15.264	ok fotogramas=6 320x172 huella=acabb017241939d9bcacab80e3c0ba5086c51f4214c4d9e7c99ae5864c52176a
+main-slices-truncar-16.264	ok fotogramas=16 320x172 huella=c791e8f338ad70748f628d4023bd50e774806d798bc30c5dbf40126534a38123
+main-slices-truncar-17.264	ok fotogramas=25 320x172 huella=f5c6d94daf5fa950b3996a015b1ed5225719770c5f58d466f35734257eceb70c
+main-slices-truncar-18.264	ok fotogramas=12 320x172 huella=86793c0e6f4d10f67584c95876b1ae9ccf086fbd5faad958f936d465523dec13
+main-slices-truncar-19.264	ok fotogramas=22 320x172 huella=425391eb32a019d4f1f2e6d6aa383ccbf33df88b064c65cc843d8d583d2610f6
+main-slices-truncar-2.264	ok fotogramas=12 320x172 huella=bec78b39bda6f6ab26a6062788863c97b4b075aac8e6035a1d55917259a2a266
+main-slices-truncar-20.264	ok fotogramas=1 320x172 huella=ee7bd4a21db70188505fed865dcfe6a20c8e89e52db8ec18df41a0c8c2cdd052
+main-slices-truncar-21.264	ok fotogramas=12 320x172 huella=67f141881df8ce2a41b980796afdada67d7f5679f48dc6c039ba5afe6209cb90
+main-slices-truncar-22.264	ok fotogramas=22 320x172 huella=a13b204aa6a8e96721aa787814a257a67ceefe54e2a2c1452cdeb7630a8cf3ea
+main-slices-truncar-23.264	ok fotogramas=2 320x172 huella=a4381d5f6c232a9f8440928189c6d49d1b92c45693828c9452f9578c2eb4f52e
+main-slices-truncar-24.264	ok fotogramas=13 320x172 huella=fcab42f3d2056938848cac7a5cf769a646c790720e705050e8b447e7389c384b
+main-slices-truncar-25.264	ok fotogramas=23 320x172 huella=65d39635fdee7c9c748a3474a9ed231551f2c5693c419d2e1708ea13b3d1e492
+main-slices-truncar-26.264	ok fotogramas=9 320x172 huella=238b3a9d251a8cd58daa9af94e5485c2c5715ba8aa52297efd6814ee69582ef1
+main-slices-truncar-27.264	ok fotogramas=19 320x172 huella=b935d91a2c493dbc814915a43b02ab4c70734cdfda38d34fb257aea37302639f
+main-slices-truncar-28.264	ok fotogramas=27 320x172 huella=003c99f04a5a6373b0676b568ed59b4e02d50c7abbd43ca095098c3f677dcbe1
+main-slices-truncar-29.264	ok fotogramas=12 320x172 huella=71c4c781b31496fc3b515872481fe4fa17c9b24457ae7cd90efc7ead12571d1a
+main-slices-truncar-3.264	ok fotogramas=22 320x172 huella=f593bab3e6b1977b6a07df0f2577b5c50e4d1db5e3335c07561f647e5a750260
+main-slices-truncar-30.264	ok fotogramas=22 320x172 huella=38ef5cb6110817c8600f1937ce446c9cded439ceb1b17b53af09b33421af149c
+main-slices-truncar-31.264	ok fotogramas=2 320x172 huella=27942a864f89153b7da15466b88035315304d875b8aa4fe768278b2026797fce
+main-slices-truncar-32.264	ok fotogramas=12 320x172 huella=e8bebecf821d06f233c35ab9a7aeb1a80c8be45d59a88cff6e29708e03d1d1aa
+main-slices-truncar-33.264	ok fotogramas=22 320x172 huella=23d44072ab1a8843fd450b5a1487c92df37fc219c28c353bb5848a474a37053b
+main-slices-truncar-34.264	ok fotogramas=2 320x172 huella=6c2c1d0086014663974c7d6523bb27e719bcd8d61734a7724d46b969adbb643d
+main-slices-truncar-35.264	ok fotogramas=16 320x172 huella=e9c955e8d8eda918601b6d11c7018b64dfcbe226d668aecbb8f1ddee07a27039
+main-slices-truncar-36.264	ok fotogramas=25 320x172 huella=89250bfdf6d51c668c8325fd63df0a477afe9f47c97f5e73ab519bc33b4e9b9f
+main-slices-truncar-37.264	ok fotogramas=7 320x172 huella=882d30e0e6c9c945c8ee2533d93cb1e617e1b6442f484dbbfe5ca9703fecf0af
+main-slices-truncar-38.264	ok fotogramas=19 320x172 huella=8ec4a75402723b1d658062fc304685564aaa832b17120f3d585755ee9fb6f43d
+main-slices-truncar-39.264	ok fotogramas=30 320x172 huella=af7c4e48fba00375e0cc8787aa02fe3a5872dd13dd62bd44217a1ce3c1884f40
+main-slices-truncar-4.264	ok fotogramas=2 320x172 huella=1e50b9e4468d5ab7252d0eeda9c4f3560adc95a2c5fef3a428fe14f2c4dc3cd9
+main-slices-truncar-40.264	ok fotogramas=12 320x172 huella=110d647b875ceb6fab67bf289855d6fc38548ea9deaddbc8bfefb634e5f857df
+main-slices-truncar-41.264	ok fotogramas=22 320x172 huella=852ccec775275d156dc4320aacda6c6d2e5bdedca97ba765b83864202578b971
+main-slices-truncar-42.264	ok fotogramas=2 320x172 huella=0dfd659dc1156015e9f643579b6d1e1af9626d985492179865f960df57b9e676
+main-slices-truncar-43.264	ok fotogramas=12 320x172 huella=aeab48f3ba4c173bf7c68afb7c63e034876c049ffe7a6d58efeab8171fe949a3
+main-slices-truncar-44.264	ok fotogramas=22 320x172 huella=82204fb4ccbe20541b7582eeaffc451ccdc51be657719000b6b1fc4ec3d8e7a9
+main-slices-truncar-45.264	ok fotogramas=2 320x172 huella=0268d419823d990e13c1f5bb4254c675f70afacfce00e5e1fe28b1b004d68cc5
+main-slices-truncar-46.264	rechazo motivo=Inconsistent("mapa_de_POC")
+main-slices-truncar-47.264	ok fotogramas=27 320x172 huella=0cc4335a938493628592283fd97a9fab0efde7fa1ff3eca2c7d11168ad8433bc
+main-slices-truncar-48.264	ok fotogramas=9 320x172 huella=a76779ee8cd16c1834cd6174f44030f89ae0754fa5ff4ff67d5d5b5b2a857725
+main-slices-truncar-49.264	ok fotogramas=19 320x172 huella=15d93ce893592093bdaf8964b476d49a91681e064e5c0beb15ca27052cd18b90
+main-slices-truncar-5.264	ok fotogramas=13 320x172 huella=d4b672a71182a74ce71e8dd3853a27d9269677c3ee1edd24dd54d402dedb73f0
+main-slices-truncar-50.264	ok fotogramas=2 320x172 huella=fe132f0321a41bd10c7e171e50523d07af6856ae19a2d82e4aacc048b38aeda1
+main-slices-truncar-51.264	ok fotogramas=12 320x172 huella=86d98714d86d6294ed3f57a57d8007648f9aac6d2aef90f2715ad67a908fa77c
+main-slices-truncar-52.264	ok fotogramas=22 320x172 huella=4a2aaf7aedc7031c2507231ac2068300819bc87d2b36c5177e7ad8836eb88656
+main-slices-truncar-53.264	ok fotogramas=2 320x172 huella=faf0a9efa17ce03b47ab5cc4973822fc465326c2905d2b065aea2a23e257be29
+main-slices-truncar-54.264	ok fotogramas=12 320x172 huella=f6d6e324082dc5e092af1ae3b81cacd9ab80e68bbe0b25b82d4a3c895e76d63d
+main-slices-truncar-55.264	ok fotogramas=25 320x172 huella=845ff0a8eb46177e6effa5031ed0a08f5e53f3fd7a0d3a33e52950baa8e0873c
+main-slices-truncar-56.264	ok fotogramas=6 320x172 huella=c135ca8b4b020d0fa98f74eef5d53fac0ba8e750f66590a95f5c9a0252c6f1e9
+main-slices-truncar-57.264	ok fotogramas=15 320x172 huella=6112df9488844cfa99a3f773759ceb90fcdc36498b733a49116f346f7ac2dc22
+main-slices-truncar-58.264	ok fotogramas=29 320x172 huella=cd91327f06a51bffc383f95df23a07b4e530880861a1d7cbd63361c65dd37253
+main-slices-truncar-59.264	ok fotogramas=12 320x172 huella=1c27af8e635fae53abaaa4a2e1ab86e7eb8c9322d0805992778a653f99d748a8
+main-slices-truncar-6.264	ok fotogramas=27 320x172 huella=7401eff53bc5c1767fb187ec438acaea9446b8e8bc4b667e6d2aec81e50cd598
+main-slices-truncar-60.264	ok fotogramas=22 320x172 huella=08fd0e08c76d952c3250ee16bcf9dd0580ac93cfa38c6621a94c3c8ef487b364
+main-slices-truncar-61.264	ok fotogramas=2 320x172 huella=82ef993db5cd5a1c19f414efafae30e8e308a77ec8b09c906cfd62fdf2bddb67
+main-slices-truncar-62.264	ok fotogramas=12 320x172 huella=9485e4a6b9d7332fcb341d00476215b76e581133681353bdb2cc62f6003722cb
+main-slices-truncar-63.264	ok fotogramas=22 320x172 huella=925e0894162b6b393342c1a0c47263d8d1e3e00fc6924d112a776982a0598ea8
+main-slices-truncar-64.264	ok fotogramas=2 320x172 huella=74239d58c1fc973452e4476c747f5311c6cce6014c33180c7fdd77412336e001
+main-slices-truncar-65.264	ok fotogramas=13 320x172 huella=3332ca3c1d3e40c53cfd098ae3c74d8b08e5e81c7f60aa162b0f6b744b03d39e
+main-slices-truncar-66.264	ok fotogramas=23 320x172 huella=fcc8b3b4fd531caecd98aef979132b7945bed2ce991a25416f2c2a6fd4436943
+main-slices-truncar-67.264	ok fotogramas=9 320x172 huella=47c457213bce8f6dba893391db053e869a28d92fe68f9dba9b16613e3d3141b2
+main-slices-truncar-68.264	rechazo motivo=Inconsistent("mapa_de_POC")
+main-slices-truncar-69.264	ok fotogramas=28 320x172 huella=9e1d3c65d05e5182f12292d4da06a8ba989b8902778f7292457c0c638aa4228d
+main-slices-truncar-7.264	rechazo motivo=Truncated
+main-slices-truncar-70.264	ok fotogramas=12 320x172 huella=c47e65928ad22c1b23ac3991da0eeaeadbae2078470b2f5dacaefb6d40fd08b1
+main-slices-truncar-71.264	ok fotogramas=22 320x172 huella=ae7a0461982812a17a9f4bc374d216dd6236948eeb2feb4a0167d7d57e33253f
+main-slices-truncar-72.264	ok fotogramas=2 320x172 huella=aff865e128fba848c3ed2baad50986c478afd49348f5e6f3712896f09b4b96a0
+main-slices-truncar-73.264	ok fotogramas=12 320x172 huella=cc90dc2def20b5820d5928c79ade6877eba5228737b4ee1db1329783ea77645e
+main-slices-truncar-74.264	ok fotogramas=22 320x172 huella=528a47c864beea0d4e1f87af0527946bb6696df1195ab74ba1e32356df7701b0
+main-slices-truncar-75.264	ok fotogramas=2 320x172 huella=5a57b2e0a03ec9f19ebd670b2259f37868b80b00f75357f941f0f87b8d0154f8
+main-slices-truncar-76.264	ok fotogramas=16 320x172 huella=f31b967e1982464719bafd2e6ec02f0ac8dafc271fb3a79ba1524f437e8162f8
+main-slices-truncar-77.264	ok fotogramas=25 320x172 huella=508b1e7d95871faffd5f8a2abde062dfdaeaaef1531f98f533e8ebb5547a890b
+main-slices-truncar-78.264	ok fotogramas=9 320x172 huella=03a3e18649750b1e6c9cad6901d4039c83a91fe81b39937be8f84e44bb26a3d8
+main-slices-truncar-79.264	ok fotogramas=21 320x172 huella=26f4cf63140424267cd28ccba009b87c94902d461c450ec0866963832946e38a
+main-slices-truncar-8.264	ok fotogramas=19 320x172 huella=0e8082d544b6c575c58a6ea28a36c3ac01c124deaaffa43dd705c7790b2902eb
+main-slices-truncar-80.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+main-slices-truncar-81.264	ok fotogramas=12 320x172 huella=b3594a73f263025f35e573fce5e752b0d61999360474e0d7d63e1670f67fbf19
+main-slices-truncar-82.264	ok fotogramas=22 320x172 huella=e53ca835e9c8a9acf2a04b64cb569121a891e6a08fcbc25c575a870df022c642
+main-slices-truncar-83.264	ok fotogramas=2 320x172 huella=4a95e9dbd55cb86032ef014fcb8b7758ac53ffd05b7550e9a909374f84c7a1ab
+main-slices-truncar-84.264	ok fotogramas=13 320x172 huella=b0a7e0faa6b506d34c4d67806e447eaf4afc509bb26b37845bf8d0ab0fd30145
+main-slices-truncar-85.264	ok fotogramas=23 320x172 huella=bd9ade15686403e0bfe7529e821cd42c572489375274b701f5ec34f9031d9ceb
+main-slices-truncar-86.264	ok fotogramas=3 320x172 huella=f4ea067efe8d613b7a427d8e045c4e6790a6b330382d8ef09be1c31777074f33
+main-slices-truncar-87.264	ok fotogramas=19 320x172 huella=b3bab0bd49b335e662c1ff5ec500591eedd83a5d23110268703889ca9e6781f2
+main-slices-truncar-88.264	ok fotogramas=27 320x172 huella=5fffc21ae6dc2024460a5dc240c0806a2d876a04203f26f6a5113470b6dcdb6c
+main-slices-truncar-89.264	ok fotogramas=11 320x172 huella=74ac4a582481c9260700a003858939684efb3a601ff948bc2e2df126dfcaa932
+main-slices-truncar-9.264	ok fotogramas=2 320x172 huella=0020c9f1065b33e3aec73d524e06d811907dcd12c969cc6c2d547862544ad8c5
+main-slices-truncar-90.264	ok fotogramas=22 320x172 huella=a7d9dbd6acc421b6366c76bc75d59b3aae25ea329a4b61ce7cfd6caf68cf5632
+main-slices-truncar-91.264	ok fotogramas=2 320x172 huella=b623fb14cbe6abc402cf830557962261db31d845345224c844af57d6b96f26e3
+main-slices-truncar-92.264	ok fotogramas=12 320x172 huella=a0f1dbd603c2b37038291d15cf6ce26f87dcda609b1f98b1dec364e281ce78ed
+main-slices-truncar-93.264	ok fotogramas=22 320x172 huella=a057bc0c86356acadf2f35461ac5b26b93a358d62151b58abe36f07431a7cfc9
+main-slices-truncar-94.264	ok fotogramas=2 320x172 huella=51a146bb4030ec9041e7e530427dfb59e52a38d2dd27474b1be135a619b4bfd3
+main-slices-truncar-95.264	ok fotogramas=12 320x172 huella=3dca5deb68678bd201127b201fbe144bcee7aeb74a7953006df6577af5fbec1a
+main-slices-truncar-96.264	ok fotogramas=25 320x172 huella=ca92a181ac16bd255e0d45a001807009533c3e3f61d898fdcc0f52c69ea54215
+main-slices-truncar-97.264	ok fotogramas=6 320x172 huella=5ef3133a40b5880942cc115446a14d393aa5f928ecbbdaffd34e61fb9b93c339
+main-slices-truncar-98.264	ok fotogramas=17 320x172 huella=8111e94d40ba39f5966ec44bac93046bb26df75f7188f16917c62fc4003caddf
+main-slices-truncar-99.264	rechazo motivo=Truncated
+orden-h264-bytes-1.264	ok fotogramas=10 32x32 huella=5b966bc5c1f0ca4336a4c1061c21222918238823d6db768abdc8bc12d9efc6b5
+orden-h264-bytes-10.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-100.264	rechazo motivo=MissingParameterSet
+orden-h264-bytes-11.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-12.264	ok fotogramas=9 32x32 huella=f1bd82c8a5a8a7263fc02fa92353ab95274f294625b42efebd609a50486774fd
+orden-h264-bytes-13.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-14.264	rechazo motivo=MissingParameterSet
+orden-h264-bytes-15.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+orden-h264-bytes-16.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+orden-h264-bytes-17.264	ok fotogramas=10 32x32 huella=624e4cbc4928fa4c7864ea8fa270a4b9bc721b72d61d6b2ebe12ab55688c403e
+orden-h264-bytes-18.264	rechazo motivo=Truncated
+orden-h264-bytes-19.264	rechazo motivo=MissingParameterSet
+orden-h264-bytes-2.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+orden-h264-bytes-20.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-21.264	ok fotogramas=10 32x32 huella=8d990df7eef46d8344239bce6779ca94c8810c79a0127c79b95b10f64e9da4d0
+orden-h264-bytes-22.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-23.264	rechazo motivo=MissingParameterSet
+orden-h264-bytes-24.264	ok fotogramas=10 32x32 huella=9518e181198342ee6c0b6c940d8259207889fe7317727c306c2331494a3c44b2
+orden-h264-bytes-25.264	rechazo motivo=Truncated
+orden-h264-bytes-26.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-27.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-28.264	rechazo motivo=Inconsistent("mapa_de_POC")
+orden-h264-bytes-29.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-3.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-30.264	ok fotogramas=8 32x32 huella=fafaa6a9bd5efc95de4ad5a8e1a2ce7d8c1c175e6c1007f7fbe34988264b667b
+orden-h264-bytes-31.264	ok fotogramas=10 32x32 huella=29c153fe51c8fc487e51e92292a50481c610c279efcfbff855a45180507c500e
+orden-h264-bytes-32.264	ok fotogramas=10 32x32 huella=d326a5239128a90e95dc924016bef25e00ae7413df512efcd673c20c39445b3d
+orden-h264-bytes-33.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+orden-h264-bytes-34.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-35.264	ok fotogramas=10 32x32 huella=94fb41f84dbcbdbb1407a40c13d9e0db8ed357f37279f219c667555a842fb15d
+orden-h264-bytes-36.264	ok fotogramas=8 32x32 huella=a151af303d97c702376c91b0bd0fd9a0c4358eb16e8715c97dfd31857a4488e8
+orden-h264-bytes-37.264	ok fotogramas=10 32x32 huella=25a1e9e102aab62fe6e99f196b717e88855691f5e5bf5dc8bd29ce6d900fa53e
+orden-h264-bytes-38.264	rechazo motivo=Unsupported("invalid_cabac_init_idc")
+orden-h264-bytes-39.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+orden-h264-bytes-4.264	rechazo motivo=MissingParameterSet
+orden-h264-bytes-40.264	rechazo motivo=Truncated
+orden-h264-bytes-41.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-42.264	rechazo motivo=Unsupported("invalid_disable_deblocking_filter_idc")
+orden-h264-bytes-43.264	rechazo motivo=Truncated
+orden-h264-bytes-44.264	ok fotogramas=10 32x32 huella=10365c1379503e031f80a193b352432eb466052535843fe784e243ed458f52e0
+orden-h264-bytes-45.264	rechazo motivo=Unsupported("invalid_cabac_init_idc")
+orden-h264-bytes-46.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-47.264	rechazo motivo=Truncated
+orden-h264-bytes-48.264	rechazo motivo=Truncated
+orden-h264-bytes-49.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-5.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-50.264	rechazo motivo=MissingParameterSet
+orden-h264-bytes-51.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-52.264	rechazo motivo=MissingParameterSet
+orden-h264-bytes-53.264	rechazo motivo=Unsupported("SP/SI_slices")
+orden-h264-bytes-54.264	ok fotogramas=9 32x32 huella=e8404b9f7dd3c67443dda3210d6d291ca6ea49e843bbc4b6d39067ab9600872a
+orden-h264-bytes-55.264	ok fotogramas=10 32x32 huella=2c9163666e9875400d0d570130678c723b9888806b6c06fc42140f3bcd8f84e6
+orden-h264-bytes-56.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-57.264	rechazo motivo=Unsupported("invalid_disable_deblocking_filter_idc")
+orden-h264-bytes-58.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-59.264	rechazo motivo=MissingParameterSet
+orden-h264-bytes-6.264	rechazo motivo=Truncated
+orden-h264-bytes-60.264	ok fotogramas=9 32x32 huella=10009dce0d9666da2425744728774d6aa69e7f76356f4930b5d77a2ebf812d04
+orden-h264-bytes-61.264	rechazo motivo=MissingParameterSet
+orden-h264-bytes-62.264	rechazo motivo=Truncated
+orden-h264-bytes-63.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-64.264	ok fotogramas=10 32x32 huella=0affc6e7a6158f9134439040f11ece7a8587cb44325e1bcc6177c81e15b4855b
+orden-h264-bytes-65.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+orden-h264-bytes-66.264	rechazo motivo=Inconsistent("mapa_de_POC")
+orden-h264-bytes-67.264	ok fotogramas=10 32x32 huella=e4164d9b7cb2889893e948e7c3467fe0dde82cb6281701749807f66dfe3ed5c9
+orden-h264-bytes-68.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-69.264	rechazo motivo=Unsupported("SP/SI_slices")
+orden-h264-bytes-7.264	rechazo motivo=Truncated
+orden-h264-bytes-70.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-71.264	rechazo motivo=Truncated
+orden-h264-bytes-72.264	rechazo motivo=Truncated
+orden-h264-bytes-73.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-74.264	rechazo motivo=Unsupported("inter_without_reference")
+orden-h264-bytes-75.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-76.264	rechazo motivo=MissingParameterSet
+orden-h264-bytes-77.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+orden-h264-bytes-78.264	rechazo motivo=Inconsistent("mapa_de_POC")
+orden-h264-bytes-79.264	rechazo motivo=Truncated
+orden-h264-bytes-8.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+orden-h264-bytes-80.264	rechazo motivo=Inconsistent("mapa_de_POC")
+orden-h264-bytes-81.264	ok fotogramas=9 32x32 huella=10009dce0d9666da2425744728774d6aa69e7f76356f4930b5d77a2ebf812d04
+orden-h264-bytes-82.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-83.264	ok fotogramas=10 32x32 huella=4b6fcff76d38a51ba5e55229d2232957e18380f5a9e704fde8e4922b2fa43427
+orden-h264-bytes-84.264	rechazo motivo=Truncated
+orden-h264-bytes-85.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-86.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-87.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-88.264	rechazo motivo=Unsupported("invalid_disable_deblocking_filter_idc")
+orden-h264-bytes-89.264	rechazo motivo=Truncated
+orden-h264-bytes-9.264	ok fotogramas=9 32x32 huella=7841144e0fc3a2dd5d304852aa4d63077b5faba5b0849fdd9416f9d9b4688dec
+orden-h264-bytes-90.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-91.264	ok fotogramas=10 32x32 huella=f2daa15549cdac49e131a65cd9e33216c794144b4c62ddbf7eda53fc756b2d48
+orden-h264-bytes-92.264	rechazo motivo=MissingParameterSet
+orden-h264-bytes-93.264	rechazo motivo=Unsupported("non-4:2:0_chroma")
+orden-h264-bytes-94.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-bytes-95.264	ok fotogramas=9 32x32 huella=2468d2635754c86637ce8a8c7df1e7594e5a7e4498707720ae156e68e6e7d8f7
+orden-h264-bytes-96.264	rechazo motivo=Inconsistent("mapa_de_POC")
+orden-h264-bytes-97.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+orden-h264-bytes-98.264	rechazo motivo=Unsupported("deblocking_filter_offset_out_of_range")
+orden-h264-bytes-99.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-cabecera-1.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-10.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-100.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-11.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-12.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-13.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+orden-h264-cabecera-14.264	rechazo motivo=Truncated
+orden-h264-cabecera-15.264	rechazo motivo=Unsupported("non-4:2:0_chroma")
+orden-h264-cabecera-16.264	rechazo motivo=Unsupported("inter_without_reference")
+orden-h264-cabecera-17.264	rechazo motivo=Unsupported("invalid_disable_deblocking_filter_idc")
+orden-h264-cabecera-18.264	rechazo motivo=Truncated
+orden-h264-cabecera-19.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+orden-h264-cabecera-2.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-20.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-21.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-22.264	rechazo motivo=MissingParameterSet
+orden-h264-cabecera-23.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-24.264	rechazo motivo=Unsupported("invalid_log2_max_frame_num")
+orden-h264-cabecera-25.264	rechazo motivo=Unsupported("non-4:2:0_chroma")
+orden-h264-cabecera-26.264	rechazo motivo=Unsupported("non-4:2:0_chroma")
+orden-h264-cabecera-27.264	rechazo motivo=Unsupported("inter_without_reference")
+orden-h264-cabecera-28.264	rechazo motivo=Truncated
+orden-h264-cabecera-29.264	rechazo motivo=Truncated
+orden-h264-cabecera-3.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-30.264	rechazo motivo=MissingParameterSet
+orden-h264-cabecera-31.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-32.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-33.264	rechazo motivo=Unsupported("non-4:2:0_chroma")
+orden-h264-cabecera-34.264	rechazo motivo=Unsupported("non-4:2:0_chroma")
+orden-h264-cabecera-35.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+orden-h264-cabecera-36.264	rechazo motivo=Unsupported("inter_without_reference")
+orden-h264-cabecera-37.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+orden-h264-cabecera-38.264	rechazo motivo=Unsupported("invalid_disable_deblocking_filter_idc")
+orden-h264-cabecera-39.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-4.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+orden-h264-cabecera-40.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-41.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+orden-h264-cabecera-42.264	rechazo motivo=Unsupported("invalid_log2_max_frame_num")
+orden-h264-cabecera-43.264	rechazo motivo=Unsupported("invalid_pic_order_cnt_type")
+orden-h264-cabecera-44.264	rechazo motivo=Unsupported("non-4:2:0_chroma")
+orden-h264-cabecera-45.264	rechazo motivo=Unsupported("non-4:2:0_chroma")
+orden-h264-cabecera-46.264	rechazo motivo=Unsupported("invalid_weight_denom")
+orden-h264-cabecera-47.264	rechazo motivo=Unsupported("invalid_disable_deblocking_filter_idc")
+orden-h264-cabecera-48.264	rechazo motivo=Truncated
+orden-h264-cabecera-49.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+orden-h264-cabecera-5.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-50.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-51.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-52.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-53.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-54.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+orden-h264-cabecera-55.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+orden-h264-cabecera-56.264	rechazo motivo=Truncated
+orden-h264-cabecera-57.264	rechazo motivo=MissingParameterSet
+orden-h264-cabecera-58.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-59.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-6.264	rechazo motivo=Unsupported("non-4:2:0_chroma")
+orden-h264-cabecera-60.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+orden-h264-cabecera-61.264	rechazo motivo=Unsupported("invalid_pic_order_cnt_type")
+orden-h264-cabecera-62.264	rechazo motivo=Unsupported("invalid_log2_max_frame_num")
+orden-h264-cabecera-63.264	rechazo motivo=Unsupported("non-4:2:0_chroma")
+orden-h264-cabecera-64.264	rechazo motivo=Unsupported("non-4:2:0_chroma")
+orden-h264-cabecera-65.264	rechazo motivo=Truncated
+orden-h264-cabecera-66.264	rechazo motivo=Truncated
+orden-h264-cabecera-67.264	rechazo motivo=Unsupported("P_Skip_without_reference")
+orden-h264-cabecera-68.264	rechazo motivo=MissingParameterSet
+orden-h264-cabecera-69.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-7.264	rechazo motivo=Unsupported("non-4:2:0_chroma")
+orden-h264-cabecera-70.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-71.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-72.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+orden-h264-cabecera-73.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+orden-h264-cabecera-74.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-75.264	rechazo motivo=Unsupported("non-4:2:0_chroma")
+orden-h264-cabecera-76.264	rechazo motivo=Unsupported("non-4:2:0_chroma")
+orden-h264-cabecera-77.264	rechazo motivo=Truncated
+orden-h264-cabecera-78.264	rechazo motivo=MissingParameterSet
+orden-h264-cabecera-79.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-8.264	rechazo motivo=Unsupported("inter_without_reference")
+orden-h264-cabecera-80.264	rechazo motivo=Unsupported("invalid_log2_max_frame_num")
+orden-h264-cabecera-81.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+orden-h264-cabecera-82.264	rechazo motivo=Unsupported("non-4:2:0_chroma")
+orden-h264-cabecera-83.264	rechazo motivo=Unsupported("non-4:2:0_chroma")
+orden-h264-cabecera-84.264	rechazo motivo=Unsupported("invalid_disable_deblocking_filter_idc")
+orden-h264-cabecera-85.264	rechazo motivo=Truncated
+orden-h264-cabecera-86.264	rechazo motivo=Unsupported("invalid_cabac_init_idc")
+orden-h264-cabecera-87.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+orden-h264-cabecera-88.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-89.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-9.264	rechazo motivo=Truncated
+orden-h264-cabecera-90.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+orden-h264-cabecera-91.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-92.264	rechazo motivo=MissingParameterSet
+orden-h264-cabecera-93.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-cabecera-94.264	rechazo motivo=Unsupported("non-4:2:0_chroma")
+orden-h264-cabecera-95.264	rechazo motivo=MissingParameterSet
+orden-h264-cabecera-96.264	rechazo motivo=Truncated
+orden-h264-cabecera-97.264	rechazo motivo=MissingParameterSet
+orden-h264-cabecera-98.264	rechazo motivo=Unsupported("SP/SI_slices")
+orden-h264-cabecera-99.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+orden-h264-duplicar-1.264	rechazo motivo=MissingParameterSet
+orden-h264-duplicar-10.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-duplicar-100.264	rechazo motivo=MissingParameterSet
+orden-h264-duplicar-11.264	rechazo motivo=Truncated
+orden-h264-duplicar-12.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-13.264	rechazo motivo=Unsupported("invalid_disable_deblocking_filter_idc")
+orden-h264-duplicar-14.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-15.264	rechazo motivo=MissingParameterSet
+orden-h264-duplicar-16.264	rechazo motivo=MissingParameterSet
+orden-h264-duplicar-17.264	rechazo motivo=MissingParameterSet
+orden-h264-duplicar-18.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-19.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-duplicar-2.264	rechazo motivo=MissingParameterSet
+orden-h264-duplicar-20.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-21.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-22.264	rechazo motivo=Truncated
+orden-h264-duplicar-23.264	rechazo motivo=MissingParameterSet
+orden-h264-duplicar-24.264	rechazo motivo=Truncated
+orden-h264-duplicar-25.264	rechazo motivo=MissingParameterSet
+orden-h264-duplicar-26.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-27.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-28.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-29.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-3.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-30.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-31.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-32.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-duplicar-33.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-34.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-35.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-36.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-37.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-38.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+orden-h264-duplicar-39.264	rechazo motivo=MissingParameterSet
+orden-h264-duplicar-4.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-40.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+orden-h264-duplicar-41.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-duplicar-42.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-43.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-44.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-45.264	ok fotogramas=20 32x32 huella=8f731f09aec5d4be88d13eeba4d4400d4866b8f8ca5fc4e256eb3f3375905e86
+orden-h264-duplicar-46.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-47.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-48.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-49.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+orden-h264-duplicar-5.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-50.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-51.264	ok fotogramas=19 32x32 huella=f0596ff271d20852012fc438d3909e868b4e3fd558641802efefa927dd3f0054
+orden-h264-duplicar-52.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-53.264	rechazo motivo=MissingParameterSet
+orden-h264-duplicar-54.264	rechazo motivo=MissingParameterSet
+orden-h264-duplicar-55.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-56.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-57.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-58.264	ok fotogramas=15 32x32 huella=7fbef724b78d9c53b67b8c969e75912ff0a0f88d28f604ecb9364199212d73d8
+orden-h264-duplicar-59.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-6.264	rechazo motivo=Truncated
+orden-h264-duplicar-60.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-61.264	rechazo motivo=MissingParameterSet
+orden-h264-duplicar-62.264	rechazo motivo=MissingParameterSet
+orden-h264-duplicar-63.264	rechazo motivo=Truncated
+orden-h264-duplicar-64.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-65.264	rechazo motivo=Truncated
+orden-h264-duplicar-66.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-67.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-duplicar-68.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-69.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-7.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-70.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-71.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-duplicar-72.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-73.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-74.264	rechazo motivo=Truncated
+orden-h264-duplicar-75.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-76.264	rechazo motivo=Truncated
+orden-h264-duplicar-77.264	rechazo motivo=MissingParameterSet
+orden-h264-duplicar-78.264	rechazo motivo=MissingParameterSet
+orden-h264-duplicar-79.264	rechazo motivo=Truncated
+orden-h264-duplicar-8.264	rechazo motivo=Inconsistent("mapa_de_POC")
+orden-h264-duplicar-80.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-duplicar-81.264	ok fotogramas=20 32x32 huella=198e35572590ac040749e0f0dedfc3a049b1625f3b2827c8a95501ba8d237804
+orden-h264-duplicar-82.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-83.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-84.264	rechazo motivo=MissingParameterSet
+orden-h264-duplicar-85.264	rechazo motivo=MissingParameterSet
+orden-h264-duplicar-86.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-duplicar-87.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-88.264	rechazo motivo=MissingParameterSet
+orden-h264-duplicar-89.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-9.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-90.264	rechazo motivo=Inconsistent("mapa_de_POC")
+orden-h264-duplicar-91.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-92.264	ok fotogramas=20 32x32 huella=198e35572590ac040749e0f0dedfc3a049b1625f3b2827c8a95501ba8d237804
+orden-h264-duplicar-93.264	ok fotogramas=10 32x32 huella=10bda18ffc3d6b24ee6c7ec0c806b058dc0953e7366e6c2ae28009db80d70bdf
+orden-h264-duplicar-94.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-95.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-96.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-97.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-98.264	ok fotogramas=20 32x32 huella=834ea816c9bff4471b2a12bd0220c98886823b49a1a68fd056b101d66ae4de17
+orden-h264-duplicar-99.264	rechazo motivo=Truncated
+orden-h264-truncar-1.264	ok fotogramas=5 32x32 huella=e8b285dc89a48d6fe4768a33fb35c8440f5b551b929d87d7365fc0b6fd53ae77
+orden-h264-truncar-10.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-100.264	rechazo motivo=Truncated
+orden-h264-truncar-11.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-12.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-13.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-14.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-15.264	rechazo motivo=Truncated
+orden-h264-truncar-16.264	ok fotogramas=1 32x32 huella=e1a1e39482965be1407c6a13bb9984b2d31390cbadbef2ec8c0fa501a49d8c53
+orden-h264-truncar-17.264	ok fotogramas=2 32x32 huella=37cfcf33ae203636dfe0cb25852963c4df38c75c14fd45d3c30bd2544119cba1
+orden-h264-truncar-18.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-19.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-2.264	ok fotogramas=6 32x32 huella=3de515270b9b2ba7d1b6a18a452e875b777a42979c6034ac23f383819aba6615
+orden-h264-truncar-20.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-21.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-22.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-23.264	ok fotogramas=7 32x32 huella=9fb337c3e332f0440035c9e4c14a3703c0b1baf028cb0313130e7f754ab206cc
+orden-h264-truncar-24.264	ok fotogramas=8 32x32 huella=62562b8685c3e7350627e6e0e370a8a598c57574a78c56f1e81cc35950d00b09
+orden-h264-truncar-25.264	ok fotogramas=8 32x32 huella=a49d4d6e94be929fd913c9f36888e67a065ba5fd8ac1f9077ae5b4315372b942
+orden-h264-truncar-26.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-27.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-28.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-29.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-3.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-30.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-31.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-32.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-33.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-34.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-35.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-36.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-37.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-38.264	ok fotogramas=2 32x32 huella=b96c0193c7e011fb989920a0947dea40525c2c2b48438085f9483b6b5e6c12e6
+orden-h264-truncar-39.264	rechazo motivo=Truncated
+orden-h264-truncar-4.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-40.264	rechazo motivo=Truncated
+orden-h264-truncar-41.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-42.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-43.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-44.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-45.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-46.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-47.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-48.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-49.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-5.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-50.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-51.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-52.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-53.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-54.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-55.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-56.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-57.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-58.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-59.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-6.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-60.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-61.264	ok fotogramas=5 32x32 huella=b802100ed2516f468a38878169efc4e6ebc86c8329b08b96ebf01b7474a42505
+orden-h264-truncar-62.264	ok fotogramas=6 32x32 huella=3de515270b9b2ba7d1b6a18a452e875b777a42979c6034ac23f383819aba6615
+orden-h264-truncar-63.264	ok fotogramas=7 32x32 huella=9fb337c3e332f0440035c9e4c14a3703c0b1baf028cb0313130e7f754ab206cc
+orden-h264-truncar-64.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-65.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-66.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-67.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-68.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-69.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-7.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-70.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-71.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-72.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-73.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-74.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-75.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-76.264	ok fotogramas=1 32x32 huella=24e5761167a078bb5a11c3d87d75243f152fd960fc42275b7c5a010159014a70
+orden-h264-truncar-77.264	ok fotogramas=2 32x32 huella=afabbb378154d097fff8ae825e5dbd989a0e1cd4527d83b694676208a8d166e4
+orden-h264-truncar-78.264	rechazo motivo=Truncated
+orden-h264-truncar-79.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-8.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-80.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-81.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-82.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-83.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-84.264	ok fotogramas=8 32x32 huella=0007a597c5e77c60e04dc0ff1ebc90e1582f60e93767afa214aff1d7d52f5f6e
+orden-h264-truncar-85.264	ok fotogramas=8 32x32 huella=a49d4d6e94be929fd913c9f36888e67a065ba5fd8ac1f9077ae5b4315372b942
+orden-h264-truncar-86.264	rechazo motivo=Truncated
+orden-h264-truncar-87.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-88.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-89.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-9.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-90.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-91.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-92.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-93.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-94.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-95.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-96.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-97.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-98.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+orden-h264-truncar-99.264	rechazo motivo=Truncated
+video-bytes-1.264	rechazo motivo=Truncated
+video-bytes-10.264	rechazo motivo=Truncated
+video-bytes-100.264	rechazo motivo=Truncated
+video-bytes-11.264	rechazo motivo=Truncated
+video-bytes-12.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+video-bytes-13.264	ok fotogramas=8 64x48 huella=4f6657d5ee037bc12ad0f5d60a4e15c80ac7de44798e213896b915344d41ce35
+video-bytes-14.264	rechazo motivo=Truncated
+video-bytes-15.264	rechazo motivo=Truncated
+video-bytes-16.264	rechazo motivo=Truncated
+video-bytes-17.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+video-bytes-18.264	rechazo motivo=Truncated
+video-bytes-19.264	rechazo motivo=Truncated
+video-bytes-2.264	rechazo motivo=Truncated
+video-bytes-20.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+video-bytes-21.264	rechazo motivo=Truncated
+video-bytes-22.264	ok fotogramas=10 64x48 huella=1698cd30ea3ce193fafcc25219f5a9325bd0b03989bf7b81343be71542fd4a0b
+video-bytes-23.264	rechazo motivo=Truncated
+video-bytes-24.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+video-bytes-25.264	rechazo motivo=Truncated
+video-bytes-26.264	rechazo motivo=Truncated
+video-bytes-27.264	rechazo motivo=Truncated
+video-bytes-28.264	rechazo motivo=MissingParameterSet
+video-bytes-29.264	ok fotogramas=10 64x48 huella=e55a1ba5843763d60be6ee551f548a1760f48ec11d626ff22ba930cf185b30a7
+video-bytes-3.264	rechazo motivo=Truncated
+video-bytes-30.264	rechazo motivo=Truncated
+video-bytes-31.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+video-bytes-32.264	rechazo motivo=Truncated
+video-bytes-33.264	rechazo motivo=Truncated
+video-bytes-34.264	rechazo motivo=Truncated
+video-bytes-35.264	rechazo motivo=Truncated
+video-bytes-36.264	rechazo motivo=Truncated
+video-bytes-37.264	rechazo motivo=Truncated
+video-bytes-38.264	rechazo motivo=Truncated
+video-bytes-39.264	rechazo motivo=Truncated
+video-bytes-4.264	rechazo motivo=Truncated
+video-bytes-40.264	rechazo motivo=Truncated
+video-bytes-41.264	ok fotogramas=10 64x48 huella=1698cd30ea3ce193fafcc25219f5a9325bd0b03989bf7b81343be71542fd4a0b
+video-bytes-42.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+video-bytes-43.264	rechazo motivo=Truncated
+video-bytes-44.264	rechazo motivo=MissingParameterSet
+video-bytes-45.264	rechazo motivo=Truncated
+video-bytes-46.264	rechazo motivo=Truncated
+video-bytes-47.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+video-bytes-48.264	rechazo motivo=Truncated
+video-bytes-49.264	rechazo motivo=Truncated
+video-bytes-5.264	ok fotogramas=10 64x48 huella=1698cd30ea3ce193fafcc25219f5a9325bd0b03989bf7b81343be71542fd4a0b
+video-bytes-50.264	rechazo motivo=Truncated
+video-bytes-51.264	rechazo motivo=Truncated
+video-bytes-52.264	rechazo motivo=Truncated
+video-bytes-53.264	rechazo motivo=Truncated
+video-bytes-54.264	rechazo motivo=Truncated
+video-bytes-55.264	rechazo motivo=Truncated
+video-bytes-56.264	rechazo motivo=Truncated
+video-bytes-57.264	rechazo motivo=Truncated
+video-bytes-58.264	rechazo motivo=Truncated
+video-bytes-59.264	rechazo motivo=MissingParameterSet
+video-bytes-6.264	rechazo motivo=Truncated
+video-bytes-60.264	rechazo motivo=Truncated
+video-bytes-61.264	rechazo motivo=Truncated
+video-bytes-62.264	rechazo motivo=Truncated
+video-bytes-63.264	ok fotogramas=10 64x48 huella=1698cd30ea3ce193fafcc25219f5a9325bd0b03989bf7b81343be71542fd4a0b
+video-bytes-64.264	rechazo motivo=Truncated
+video-bytes-65.264	rechazo motivo=Truncated
+video-bytes-66.264	rechazo motivo=Truncated
+video-bytes-67.264	rechazo motivo=Truncated
+video-bytes-68.264	rechazo motivo=Truncated
+video-bytes-69.264	rechazo motivo=MissingParameterSet
+video-bytes-7.264	rechazo motivo=Truncated
+video-bytes-70.264	rechazo motivo=Truncated
+video-bytes-71.264	rechazo motivo=Truncated
+video-bytes-72.264	rechazo motivo=Unsupported("inter_without_reference")
+video-bytes-73.264	rechazo motivo=Truncated
+video-bytes-74.264	rechazo motivo=MissingParameterSet
+video-bytes-75.264	rechazo motivo=Truncated
+video-bytes-76.264	rechazo motivo=Truncated
+video-bytes-77.264	rechazo motivo=Truncated
+video-bytes-78.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+video-bytes-79.264	rechazo motivo=Truncated
+video-bytes-8.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+video-bytes-80.264	rechazo motivo=Truncated
+video-bytes-81.264	rechazo motivo=Truncated
+video-bytes-82.264	ok fotogramas=10 64x48 huella=1698cd30ea3ce193fafcc25219f5a9325bd0b03989bf7b81343be71542fd4a0b
+video-bytes-83.264	rechazo motivo=Truncated
+video-bytes-84.264	rechazo motivo=Truncated
+video-bytes-85.264	rechazo motivo=Truncated
+video-bytes-86.264	rechazo motivo=Truncated
+video-bytes-87.264	rechazo motivo=Truncated
+video-bytes-88.264	rechazo motivo=Truncated
+video-bytes-89.264	rechazo motivo=MissingParameterSet
+video-bytes-9.264	rechazo motivo=Truncated
+video-bytes-90.264	rechazo motivo=Truncated
+video-bytes-91.264	rechazo motivo=Truncated
+video-bytes-92.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+video-bytes-93.264	rechazo motivo=Truncated
+video-bytes-94.264	rechazo motivo=Truncated
+video-bytes-95.264	rechazo motivo=Unsupported("inter_without_reference")
+video-bytes-96.264	rechazo motivo=Truncated
+video-bytes-97.264	rechazo motivo=Truncated
+video-bytes-98.264	rechazo motivo=Truncated
+video-bytes-99.264	ok fotogramas=10 64x48 huella=d75f724965cc65ac6850e4117fc6b227d9a7af712093616783630745428bf373
+video-cabecera-1.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+video-cabecera-10.264	rechazo motivo=Truncated
+video-cabecera-100.264	rechazo motivo=Unsupported("inter_without_reference")
+video-cabecera-11.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+video-cabecera-12.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+video-cabecera-13.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+video-cabecera-14.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+video-cabecera-15.264	rechazo motivo=Unsupported("invalid_pic_order_cnt_type")
+video-cabecera-16.264	rechazo motivo=Unsupported("inter_without_reference")
+video-cabecera-17.264	rechazo motivo=Unsupported("inter_without_reference")
+video-cabecera-18.264	rechazo motivo=Truncated
+video-cabecera-19.264	rechazo motivo=Unsupported("inter_without_reference")
+video-cabecera-2.264	rechazo motivo=Unsupported("slice_continues_a_missing_picture")
+video-cabecera-20.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+video-cabecera-21.264	rechazo motivo=Unsupported("B_without_references")
+video-cabecera-22.264	rechazo motivo=Truncated
+video-cabecera-23.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+video-cabecera-24.264	rechazo motivo=Truncated
+video-cabecera-25.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+video-cabecera-26.264	rechazo motivo=Unsupported("invalid_pic_order_cnt_type")
+video-cabecera-27.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+video-cabecera-28.264	rechazo motivo=Truncated
+video-cabecera-29.264	rechazo motivo=Truncated
+video-cabecera-3.264	rechazo motivo=MissingParameterSet
+video-cabecera-30.264	rechazo motivo=Unsupported("inter_without_reference")
+video-cabecera-31.264	rechazo motivo=Unsupported("deblocking_filter_offset_out_of_range")
+video-cabecera-32.264	rechazo motivo=Unsupported("deblocking_filter_offset_out_of_range")
+video-cabecera-33.264	rechazo motivo=Unsupported("invalid_pic_order_cnt_type")
+video-cabecera-34.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+video-cabecera-35.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+video-cabecera-36.264	rechazo motivo=Unsupported("inter_without_reference")
+video-cabecera-37.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+video-cabecera-38.264	rechazo motivo=Unsupported("deblocking_filter_offset_out_of_range")
+video-cabecera-39.264	rechazo motivo=Truncated
+video-cabecera-4.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+video-cabecera-40.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+video-cabecera-41.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+video-cabecera-42.264	rechazo motivo=MissingParameterSet
+video-cabecera-43.264	rechazo motivo=Truncated
+video-cabecera-44.264	rechazo motivo=Unsupported("invalid_pic_order_cnt_type")
+video-cabecera-45.264	rechazo motivo=Unsupported("frame_too_large")
+video-cabecera-46.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+video-cabecera-47.264	rechazo motivo=Unsupported("invalid_disable_deblocking_filter_idc")
+video-cabecera-48.264	rechazo motivo=Truncated
+video-cabecera-49.264	rechazo motivo=Unsupported("invalid_MMCO")
+video-cabecera-5.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+video-cabecera-50.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+video-cabecera-51.264	rechazo motivo=Unsupported("SP/SI_slices")
+video-cabecera-52.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+video-cabecera-53.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+video-cabecera-54.264	rechazo motivo=Truncated
+video-cabecera-55.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+video-cabecera-56.264	rechazo motivo=MissingParameterSet
+video-cabecera-57.264	rechazo motivo=MissingParameterSet
+video-cabecera-58.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+video-cabecera-59.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+video-cabecera-6.264	rechazo motivo=Unsupported("invalid_pic_order_cnt_type")
+video-cabecera-60.264	rechazo motivo=Unsupported("invalid_disable_deblocking_filter_idc")
+video-cabecera-61.264	rechazo motivo=Truncated
+video-cabecera-62.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+video-cabecera-63.264	rechazo motivo=Unsupported("frame_too_large")
+video-cabecera-64.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+video-cabecera-65.264	rechazo motivo=Truncated
+video-cabecera-66.264	rechazo motivo=Unsupported("deblocking_filter_offset_out_of_range")
+video-cabecera-67.264	rechazo motivo=Unsupported("inter_without_reference")
+video-cabecera-68.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+video-cabecera-69.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+video-cabecera-7.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+video-cabecera-70.264	rechazo motivo=MissingParameterSet
+video-cabecera-71.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+video-cabecera-72.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+video-cabecera-73.264	rechazo motivo=Unsupported("slice_groups_(FMO)")
+video-cabecera-74.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+video-cabecera-75.264	rechazo motivo=Unsupported("invalid_pic_order_cnt_type")
+video-cabecera-76.264	rechazo motivo=Unsupported("invalid_pic_order_cnt_type")
+video-cabecera-77.264	rechazo motivo=Truncated
+video-cabecera-78.264	rechazo motivo=MissingParameterSet
+video-cabecera-79.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+video-cabecera-8.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+video-cabecera-80.264	rechazo motivo=Truncated
+video-cabecera-81.264	rechazo motivo=Truncated
+video-cabecera-82.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+video-cabecera-83.264	rechazo motivo=Unsupported("invalid_log2_max_pic_order_cnt_lsb")
+video-cabecera-84.264	rechazo motivo=Unsupported("inter_without_reference")
+video-cabecera-85.264	rechazo motivo=Unsupported("inter_without_reference")
+video-cabecera-86.264	rechazo motivo=Unsupported("inter_without_reference")
+video-cabecera-87.264	rechazo motivo=Unsupported("invalid_ref_pic_list_modification")
+video-cabecera-88.264	rechazo motivo=MissingParameterSet
+video-cabecera-89.264	rechazo motivo=Unsupported("inter_without_reference")
+video-cabecera-9.264	rechazo motivo=Truncated
+video-cabecera-90.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+video-cabecera-91.264	rechazo motivo=Unsupported("invalid_weight_denom")
+video-cabecera-92.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+video-cabecera-93.264	rechazo motivo=Unsupported("interlace_/_field_coding")
+video-cabecera-94.264	rechazo motivo=Unsupported("invalid_pic_order_cnt_type")
+video-cabecera-95.264	rechazo motivo=Unsupported("crop_exceeds_frame")
+video-cabecera-96.264	rechazo motivo=Truncated
+video-cabecera-97.264	rechazo motivo=MissingParameterSet
+video-cabecera-98.264	rechazo motivo=MissingParameterSet
+video-cabecera-99.264	rechazo motivo=Truncated
+video-duplicar-1.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+video-duplicar-10.264	rechazo motivo=Truncated
+video-duplicar-100.264	rechazo motivo=Truncated
+video-duplicar-11.264	rechazo motivo=Truncated
+video-duplicar-12.264	ok fotogramas=20 64x48 huella=b0deefe9fadafd1def1537eb11f237f2d803dc5f1e64687dec1aabde9eb34989
+video-duplicar-13.264	rechazo motivo=Truncated
+video-duplicar-14.264	rechazo motivo=MissingParameterSet
+video-duplicar-15.264	rechazo motivo=Truncated
+video-duplicar-16.264	ok fotogramas=19 64x48 huella=fbaec28f0dd56e9e45490b9ae4ecd3511e0f56834cd07bb54ca7986e548ed70e
+video-duplicar-17.264	ok fotogramas=20 64x48 huella=b0deefe9fadafd1def1537eb11f237f2d803dc5f1e64687dec1aabde9eb34989
+video-duplicar-18.264	rechazo motivo=Truncated
+video-duplicar-19.264	ok fotogramas=10 64x48 huella=1698cd30ea3ce193fafcc25219f5a9325bd0b03989bf7b81343be71542fd4a0b
+video-duplicar-2.264	rechazo motivo=MissingParameterSet
+video-duplicar-20.264	rechazo motivo=Truncated
+video-duplicar-21.264	ok fotogramas=19 64x48 huella=bbdad62a39f5606ac8a3ced327d5200f61b880af408229e2312ca325a98b2761
+video-duplicar-22.264	rechazo motivo=Truncated
+video-duplicar-23.264	rechazo motivo=Truncated
+video-duplicar-24.264	rechazo motivo=MissingParameterSet
+video-duplicar-25.264	rechazo motivo=Truncated
+video-duplicar-26.264	ok fotogramas=10 64x48 huella=1698cd30ea3ce193fafcc25219f5a9325bd0b03989bf7b81343be71542fd4a0b
+video-duplicar-27.264	rechazo motivo=Truncated
+video-duplicar-28.264	rechazo motivo=Truncated
+video-duplicar-29.264	rechazo motivo=Truncated
+video-duplicar-3.264	rechazo motivo=Truncated
+video-duplicar-30.264	ok fotogramas=20 64x48 huella=b7c3be884aa23821be14cf08211bbb2e768a0f8c07b2705b0accc5ca5ee02572
+video-duplicar-31.264	ok fotogramas=10 64x48 huella=1698cd30ea3ce193fafcc25219f5a9325bd0b03989bf7b81343be71542fd4a0b
+video-duplicar-32.264	rechazo motivo=Truncated
+video-duplicar-33.264	rechazo motivo=Truncated
+video-duplicar-34.264	rechazo motivo=Truncated
+video-duplicar-35.264	rechazo motivo=Truncated
+video-duplicar-36.264	rechazo motivo=MissingParameterSet
+video-duplicar-37.264	rechazo motivo=Truncated
+video-duplicar-38.264	rechazo motivo=Truncated
+video-duplicar-39.264	rechazo motivo=Truncated
+video-duplicar-4.264	rechazo motivo=Truncated
+video-duplicar-40.264	rechazo motivo=Truncated
+video-duplicar-41.264	ok fotogramas=10 64x48 huella=1698cd30ea3ce193fafcc25219f5a9325bd0b03989bf7b81343be71542fd4a0b
+video-duplicar-42.264	rechazo motivo=Truncated
+video-duplicar-43.264	rechazo motivo=MissingParameterSet
+video-duplicar-44.264	rechazo motivo=Truncated
+video-duplicar-45.264	rechazo motivo=Truncated
+video-duplicar-46.264	rechazo motivo=Truncated
+video-duplicar-47.264	rechazo motivo=Truncated
+video-duplicar-48.264	rechazo motivo=Truncated
+video-duplicar-49.264	rechazo motivo=Truncated
+video-duplicar-5.264	rechazo motivo=Truncated
+video-duplicar-50.264	rechazo motivo=MissingParameterSet
+video-duplicar-51.264	rechazo motivo=Truncated
+video-duplicar-52.264	rechazo motivo=Truncated
+video-duplicar-53.264	rechazo motivo=Truncated
+video-duplicar-54.264	rechazo motivo=Truncated
+video-duplicar-55.264	rechazo motivo=MissingParameterSet
+video-duplicar-56.264	rechazo motivo=Truncated
+video-duplicar-57.264	rechazo motivo=Truncated
+video-duplicar-58.264	rechazo motivo=MissingParameterSet
+video-duplicar-59.264	rechazo motivo=Truncated
+video-duplicar-6.264	ok fotogramas=10 64x48 huella=094e2b2f8adcf7e29e32b118fbb4eac9f2b223babaf8c9267a65f68c61d861c6
+video-duplicar-60.264	rechazo motivo=MissingParameterSet
+video-duplicar-61.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+video-duplicar-62.264	rechazo motivo=Truncated
+video-duplicar-63.264	rechazo motivo=Truncated
+video-duplicar-64.264	rechazo motivo=Truncated
+video-duplicar-65.264	ok fotogramas=20 64x48 huella=b0deefe9fadafd1def1537eb11f237f2d803dc5f1e64687dec1aabde9eb34989
+video-duplicar-66.264	rechazo motivo=Truncated
+video-duplicar-67.264	ok fotogramas=10 64x48 huella=1698cd30ea3ce193fafcc25219f5a9325bd0b03989bf7b81343be71542fd4a0b
+video-duplicar-68.264	rechazo motivo=Truncated
+video-duplicar-69.264	rechazo motivo=Truncated
+video-duplicar-7.264	rechazo motivo=MissingParameterSet
+video-duplicar-70.264	rechazo motivo=Truncated
+video-duplicar-71.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+video-duplicar-72.264	rechazo motivo=MissingParameterSet
+video-duplicar-73.264	rechazo motivo=Truncated
+video-duplicar-74.264	ok fotogramas=18 64x48 huella=bca8cb241f70f00c8e5984ea9a2f7bdce00ce9e35224ccf38526ca4109b60f80
+video-duplicar-75.264	rechazo motivo=Truncated
+video-duplicar-76.264	rechazo motivo=Truncated
+video-duplicar-77.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+video-duplicar-78.264	rechazo motivo=Truncated
+video-duplicar-79.264	rechazo motivo=Truncated
+video-duplicar-8.264	rechazo motivo=Truncated
+video-duplicar-80.264	rechazo motivo=Truncated
+video-duplicar-81.264	rechazo motivo=Truncated
+video-duplicar-82.264	rechazo motivo=MissingParameterSet
+video-duplicar-83.264	rechazo motivo=Truncated
+video-duplicar-84.264	rechazo motivo=MissingParameterSet
+video-duplicar-85.264	rechazo motivo=Truncated
+video-duplicar-86.264	rechazo motivo=Truncated
+video-duplicar-87.264	rechazo motivo=Truncated
+video-duplicar-88.264	rechazo motivo=Truncated
+video-duplicar-89.264	rechazo motivo=MissingParameterSet
+video-duplicar-9.264	rechazo motivo=MissingParameterSet
+video-duplicar-90.264	rechazo motivo=Truncated
+video-duplicar-91.264	rechazo motivo=MissingParameterSet
+video-duplicar-92.264	rechazo motivo=Truncated
+video-duplicar-93.264	rechazo motivo=Truncated
+video-duplicar-94.264	rechazo motivo=Truncated
+video-duplicar-95.264	rechazo motivo=Unsupported("only_I_4x4_/_I_16x16_/_I_PCM_macroblocks")
+video-duplicar-96.264	ok fotogramas=11 64x48 huella=495fafb9e4999f8d3d9f25b595c6c88dfa0bbe399ff16cd343a920c21b5c4754
+video-duplicar-97.264	rechazo motivo=Truncated
+video-duplicar-98.264	rechazo motivo=MissingParameterSet
+video-duplicar-99.264	rechazo motivo=Truncated
+video-truncar-1.264	rechazo motivo=Truncated
+video-truncar-10.264	rechazo motivo=Truncated
+video-truncar-100.264	rechazo motivo=Truncated
+video-truncar-11.264	rechazo motivo=Truncated
+video-truncar-12.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-13.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-14.264	rechazo motivo=Truncated
+video-truncar-15.264	rechazo motivo=Truncated
+video-truncar-16.264	rechazo motivo=Truncated
+video-truncar-17.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-18.264	rechazo motivo=Truncated
+video-truncar-19.264	rechazo motivo=Truncated
+video-truncar-2.264	rechazo motivo=Truncated
+video-truncar-20.264	rechazo motivo=Truncated
+video-truncar-21.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-22.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-23.264	rechazo motivo=Truncated
+video-truncar-24.264	rechazo motivo=Truncated
+video-truncar-25.264	rechazo motivo=Truncated
+video-truncar-26.264	rechazo motivo=Truncated
+video-truncar-27.264	rechazo motivo=Truncated
+video-truncar-28.264	rechazo motivo=Truncated
+video-truncar-29.264	rechazo motivo=Truncated
+video-truncar-3.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-30.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-31.264	rechazo motivo=Truncated
+video-truncar-32.264	rechazo motivo=Truncated
+video-truncar-33.264	rechazo motivo=Truncated
+video-truncar-34.264	rechazo motivo=Truncated
+video-truncar-35.264	rechazo motivo=Truncated
+video-truncar-36.264	rechazo motivo=Truncated
+video-truncar-37.264	rechazo motivo=Truncated
+video-truncar-38.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-39.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-4.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-40.264	rechazo motivo=Truncated
+video-truncar-41.264	rechazo motivo=Truncated
+video-truncar-42.264	rechazo motivo=Truncated
+video-truncar-43.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-44.264	rechazo motivo=Truncated
+video-truncar-45.264	rechazo motivo=Truncated
+video-truncar-46.264	rechazo motivo=Truncated
+video-truncar-47.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-48.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-49.264	rechazo motivo=Truncated
+video-truncar-5.264	ok fotogramas=4 64x48 huella=aebd667eee1e1468de17d29dbfcbe4bdfa334a576dc766ff07602d7f9fb4d99c
+video-truncar-50.264	rechazo motivo=Truncated
+video-truncar-51.264	rechazo motivo=Truncated
+video-truncar-52.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-53.264	rechazo motivo=Truncated
+video-truncar-54.264	rechazo motivo=Truncated
+video-truncar-55.264	rechazo motivo=Truncated
+video-truncar-56.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-57.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-58.264	rechazo motivo=Truncated
+video-truncar-59.264	rechazo motivo=Truncated
+video-truncar-6.264	rechazo motivo=Truncated
+video-truncar-60.264	rechazo motivo=Truncated
+video-truncar-61.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-62.264	rechazo motivo=Truncated
+video-truncar-63.264	rechazo motivo=Truncated
+video-truncar-64.264	rechazo motivo=Truncated
+video-truncar-65.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-66.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-67.264	rechazo motivo=Truncated
+video-truncar-68.264	rechazo motivo=Truncated
+video-truncar-69.264	rechazo motivo=Truncated
+video-truncar-7.264	rechazo motivo=Truncated
+video-truncar-70.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-71.264	rechazo motivo=Truncated
+video-truncar-72.264	rechazo motivo=Truncated
+video-truncar-73.264	rechazo motivo=Truncated
+video-truncar-74.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-75.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-76.264	rechazo motivo=Truncated
+video-truncar-77.264	rechazo motivo=Truncated
+video-truncar-78.264	rechazo motivo=Truncated
+video-truncar-79.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-8.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-80.264	rechazo motivo=Truncated
+video-truncar-81.264	rechazo motivo=Truncated
+video-truncar-82.264	rechazo motivo=Truncated
+video-truncar-83.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-84.264	rechazo motivo=Truncated
+video-truncar-85.264	rechazo motivo=Truncated
+video-truncar-86.264	rechazo motivo=Truncated
+video-truncar-87.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-88.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-89.264	rechazo motivo=Truncated
+video-truncar-9.264	rechazo motivo=Truncated
+video-truncar-90.264	rechazo motivo=Truncated
+video-truncar-91.264	rechazo motivo=Truncated
+video-truncar-92.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-93.264	rechazo motivo=Truncated
+video-truncar-94.264	rechazo motivo=Truncated
+video-truncar-95.264	rechazo motivo=Truncated
+video-truncar-96.264	ok fotogramas=0 0x0 huella=e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+video-truncar-97.264	rechazo motivo=Truncated
+video-truncar-98.264	rechazo motivo=Truncated
+video-truncar-99.264	rechazo motivo=Truncated
