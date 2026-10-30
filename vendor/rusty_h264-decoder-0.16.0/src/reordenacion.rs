@@ -6,8 +6,12 @@
 //! sale la de menor POC, y una IDR o una `memory_management_control_operation` 5 vacían todo lo
 //! pendiente. Sin la cota, un grupo de imágenes largo retendría el vídeo entero en memoria.
 //!
-//! El módulo es completamente autónomo: el banco de evaluación del decodificador lo
-//! incluye tal cual (`#[path]`) para comprobarlo sobre la red de flujos de referencia.
+//! Módulo autónomo de reordenación exportado por la biblioteca para que cualquier consumidor
+//! pueda recuperar los fotogramas decodificados en orden estricto de reproducción (`PicOrderCnt`).
+
+#[cfg(test)]
+use alloc::vec;
+use alloc::vec::Vec;
 
 /// Máximo de imágenes del DPB en cualquier nivel (anexo A.3.1: `max_dec_frame_buffering` ≤ 16).
 pub const MAX_IMAGENES_DPB: usize = 16;
@@ -140,7 +144,11 @@ impl<T> OrdenPresentacionH264<T> {
     /// Empieza una unidad de acceso: si es una IDR (`es_idr`), devuelve todo lo pendiente de la
     /// secuencia anterior, en orden, y la siguiente imagen abre un búfer nuevo.
     pub fn empezar_unidad(&mut self, es_idr: bool) -> Vec<T> {
-        if es_idr { self.vaciar() } else { Vec::new() }
+        if es_idr {
+            self.vaciar()
+        } else {
+            Vec::new()
+        }
     }
 
     /// Añade una imagen decodificada de `ancho`×`alto` con su POC y su indicador de MMCO 5, y

@@ -15,9 +15,8 @@
 
 use sha2::{Digest, Sha256};
 
-// El búfer de reordenación de Crusty_H264: el modo `rusty-au` lo comprueba contra la red.
-#[path = "../vendor/rusty_h264-decoder-0.16.0/src/reordenacion.rs"]
-mod reordenacion_h264;
+// El búfer de reordenación de Crusty_H264 (exportado formalmente por la biblioteca).
+use rusty_h264_decoder::reordenacion as reordenacion_h264;
 use std::alloc::{GlobalAlloc, Layout, System};
 use std::io::Write;
 use std::sync::atomic::{AtomicUsize, Ordering};

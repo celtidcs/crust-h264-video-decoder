@@ -1,4 +1,4 @@
-﻿//! Inter prediction primitives: motion compensation and motion-vector
+//! Inter prediction primitives: motion compensation and motion-vector
 //! prediction. Shared by the encoder (reconstruction) and decoder so the two
 //! agree bit-for-bit. Motion vectors are in quarter-pel units; phase 4b uses
 //! the integer part only (full-pel), with the 6-tap/bilinear sub-pel filters
@@ -10,7 +10,7 @@ use alloc::vec::Vec;
 
 use crate::rango::FueraDeRango;
 
-/// Median of three values (`a + b + c âˆ’ min âˆ’ max`).
+/// Median of three values (`a + b + c − min − max`).
 #[inline]
 pub fn median3(a: i32, b: i32, c: i32) -> i32 {
     a + b + c - a.min(b).min(c) - a.max(b).max(c)
@@ -35,13 +35,13 @@ impl MvNeighbor {
     };
 }
 
-/// Median motion-vector prediction for a partition (spec Â§8.4.1.3.1), against
+/// Median motion-vector prediction for a partition (spec §8.4.1.3.1), against
 /// the current partition's reference `cur_ref`. `a`/`b`/`c` are the left, above,
 /// and above-right neighbors. If exactly one neighbor shares `cur_ref`, its MV is
 /// the predictor; otherwise the component-wise median is used.
 pub fn predict_mv(a: MvNeighbor, b: MvNeighbor, c: MvNeighbor, cur_ref: i32) -> (i32, i32) {
     // Per-neighbor (mv, refIdx): a usable inter neighbor keeps its mv+ref, else
-    // a zero MV with ref âˆ’1 (never matches a valid `cur_ref` â‰¥ 0).
+    // a zero MV with ref −1 (never matches a valid `cur_ref` ≥ 0).
     let resolve = |n: MvNeighbor| -> ((i32, i32), i32) {
         if n.available && n.ref_idx >= 0 {
             (n.mv, n.ref_idx)
@@ -75,10 +75,10 @@ pub fn predict_mv(a: MvNeighbor, b: MvNeighbor, c: MvNeighbor, cur_ref: i32) -> 
     }
 }
 
-/// Directional MV prediction for a sub-partition (spec Â§8.4.1.3.2) against the
-/// partition's reference `cur_ref`. `mode` is the inter `mb_type` (0 = 16Ã—16,
-/// 1 = 16Ã—8, 2 = 8Ã—16). 16Ã—8/8Ã—16 use a specific neighbor directly when it shares
-/// `cur_ref`; otherwise (and always for 16Ã—16) the median.
+/// Directional MV prediction for a sub-partition (spec §8.4.1.3.2) against the
+/// partition's reference `cur_ref`. `mode` is the inter `mb_type` (0 = 16×16,
+/// 1 = 16×8, 2 = 8×16). 16×8/8×16 use a specific neighbor directly when it shares
+/// `cur_ref`; otherwise (and always for 16×16) the median.
 pub fn predict_partition_mv(
     mode: u8,
     part: usize,
@@ -87,48 +87,48 @@ pub fn predict_partition_mv(
     c: MvNeighbor,
     cur_ref: i32,
 ) -> (i32, i32) {
-    // 16x16 (mode 0) has no directional shortcut and is the dominant shape â€”
+    // 16x16 (mode 0) has no directional shortcut and is the dominant shape —
     // leave before building the closure or entering the table.
     if mode == 0 {
         return predict_mv(a, b, c, cur_ref);
     }
     let m = |n: MvNeighbor| n.available && n.ref_idx == cur_ref;
     match (mode, part) {
-        (1, 0) if m(b) => b.mv, // 16Ã—8 top â†’ above
-        (1, 1) if m(a) => a.mv, // 16Ã—8 bottom â†’ left
-        (2, 0) if m(a) => a.mv, // 8Ã—16 left â†’ left
-        (2, 1) if m(c) => c.mv, // 8Ã—16 right â†’ above-right
+        (1, 0) if m(b) => b.mv, // 16×8 top → above
+        (1, 1) if m(a) => a.mv, // 16×8 bottom → left
+        (2, 0) if m(a) => a.mv, // 8×16 left → left
+        (2, 1) if m(c) => c.mv, // 8×16 right → above-right
         _ => predict_mv(a, b, c, cur_ref),
     }
 }
 
-/// Inter `mb_type` â†’ luma partition regions `(x, y, w, h)` in samples.
+/// Inter `mb_type` → luma partition regions `(x, y, w, h)` in samples.
 pub fn inter_partitions(mode: u8) -> &'static [(usize, usize, usize, usize)] {
     match mode {
         1 => &[(0, 0, 16, 8), (0, 8, 16, 8)], // P_16x8
         2 => &[(0, 0, 8, 16), (8, 0, 8, 16)], // P_8x16
-        // P_8x8: four 8Ã—8 sub-macroblocks in raster (decode_p8x8) order, each its
-        // own MV. (Sub-8Ã—8 shapes 8Ã—4/4Ã—8/4Ã—4 within an 8Ã—8 are a further split.)
+        // P_8x8: four 8×8 sub-macroblocks in raster (decode_p8x8) order, each its
+        // own MV. (Sub-8×8 shapes 8×4/4×8/4×4 within an 8×8 are a further split.)
         3 => &[(0, 0, 8, 8), (8, 0, 8, 8), (0, 8, 8, 8), (8, 8, 8, 8)],
         _ => &[(0, 0, 16, 16)], // P_L0_16x16
     }
 }
 
-/// Ãšltima coordenada vÃ¡lida de un eje de `n` muestras, para recortar contra el borde.
+/// Última coordenada válida de un eje de `n` muestras, para recortar contra el borde.
 ///
 /// # Errors
-/// `FueraDeRango` si el eje estÃ¡ vacÃ­o (`n == 0`): `clamp(0, -1)` entrarÃ­a en pÃ¡nico.
+/// `FueraDeRango` si el eje está vacío (`n == 0`): `clamp(0, -1)` entraría en pánico.
 #[inline]
 fn ultima(n: usize) -> Result<isize, FueraDeRango> {
     n.checked_sub(1)
         .and_then(|u| isize::try_from(u).ok())
-        .ok_or(FueraDeRango("plano de referencia vacÃ­o"))
+        .ok_or(FueraDeRango("plano de referencia vacío"))
 }
 
-/// Comprueba que `reference` es un plano no vacÃ­o que cubre `cw Ã— ch` muestras.
+/// Comprueba que `reference` es un plano no vacío que cubre `cw × ch` muestras.
 ///
 /// # Errors
-/// `FueraDeRango` si `cw` o `ch` es 0, si `cw Ã— ch` desborda o si el plano es mÃ¡s corto.
+/// `FueraDeRango` si `cw` o `ch` es 0, si `cw × ch` desborda o si el plano es más corto.
 #[inline]
 fn plano_cubre(reference: &[u8], cw: usize, ch: usize) -> Result<(), FueraDeRango> {
     match cw.checked_mul(ch) {
@@ -139,12 +139,12 @@ fn plano_cubre(reference: &[u8], cw: usize, ch: usize) -> Result<(), FueraDeRang
 
 /// Muestra de referencia con recorte al borde de la imagen.
 ///
-/// Un flujo malformado puede llegar aquÃ­ con `(cw, ch)` que no corresponden al plano
-/// recibido. Antes se leÃ­a entonces una muestra negra (`unwrap_or(0)`); ahora es un error
-/// (COR-3, devoluciÃ³n CODEX-COR3-MC1 de Codex).
+/// Un flujo malformado puede llegar aquí con `(cw, ch)` que no corresponden al plano
+/// recibido. Antes se leía entonces una muestra negra (`unwrap_or(0)`); ahora es un error
+/// (COR-3, devolución CODEX-COR3-MC1 de Codex).
 ///
 /// # Errors
-/// `FueraDeRango` si el plano estÃ¡ vacÃ­o o no cubre `cw Ã— ch`.
+/// `FueraDeRango` si el plano está vacío o no cubre `cw × ch`.
 #[inline]
 fn at(reference: &[u8], cw: usize, ch: usize, x: isize, y: isize) -> Result<i32, FueraDeRango> {
     plano_cubre(reference, cw, ch)?;
@@ -170,25 +170,25 @@ fn clip_u8(v: i32) -> i32 {
 // horizontal-then-vertical equals vertical-then-horizontal, and the clamped tile
 // reproduces `at()` exactly.
 
-/// Max luma interpolation tile: a 16Ã—16 block plus the 6-tap halo (2 left/up,
-/// 3 right/down) â†’ 21Ã—21.
+/// Max luma interpolation tile: a 16×16 block plus the 6-tap halo (2 left/up,
+/// 3 right/down) → 21×21.
 const LUMA_TILE: usize = 21;
 
 /// Per-thread scratch for the sub-pel MC path.
 ///
-/// These three buffers used to be created â€” and therefore **zero-initialised** â€”
+/// These three buffers used to be created — and therefore **zero-initialised** —
 /// inside every `mc_luma` call, and the tile was additionally returned *by value*.
 /// That is ~1.4 KB of `memset` plus a 441-byte move per call, paid identically
-/// whether the block is 16Ã—16 (256 useful samples) or 4Ã—4 (16). Profiling put
+/// whether the block is 16×16 (256 useful samples) or 4×4 (16). Profiling put
 /// `inter-mc` at 166 s of a 266 s quality-preset encode over 991 M calls, and a
-/// block-size sweep showed a 4Ã—4 sub-pel call costing *more* than a 16Ã—16 one
-/// (248 vs 172 ns) â€” i.e. the cost was the per-call buffers, not the filter.
+/// block-size sweep showed a 4×4 sub-pel call costing *more* than a 16×16 one
+/// (248 vs 172 ns) — i.e. the cost was the per-call buffers, not the filter.
 ///
 /// Hoisting them to thread-local scratch makes that setup once per thread instead
 /// of once per candidate. Byte-identical: both `luma_tile_into` paths write the
-/// whole `(bw+5)Ã—(bh+5)` region before it is read, and `a`/`b` are written over
+/// whole `(bw+5)×(bh+5)` region before it is read, and `a`/`b` are written over
 /// `bw*bh` samples by `luma_h`/`luma_v`/`luma_centre` before `pixel_avg`/`avg_full`
-/// read the same range â€” so the zero-fill was dead in every case.
+/// read the same range — so the zero-fill was dead in every case.
 pub struct McScratch {
     tile: [u8; LUMA_TILE * LUMA_TILE],
     a: [u8; 256],
@@ -198,7 +198,7 @@ pub struct McScratch {
 /// Runs `f` with the thread's MC scratch borrowed ONCE. Callers that issue many
 /// MC calls in a row (the bi-pred pair, the P-path rect ladder) hoist the
 /// TLS lookup + RefCell borrow out of the per-call path by taking this at
-/// region/MB scope and calling `mc_luma_padded_pre` inside â€” that fixed
+/// region/MB scope and calling `mc_luma_padded_pre` inside — that fixed
 /// per-call cost is paid twice per bi-pred region, ~1M sub-pel calls per clip.
 #[inline]
 pub fn with_mc_scratch<R>(f: impl FnOnce(&mut McScratch) -> R) -> R {
@@ -235,13 +235,13 @@ impl McScratchCell {
 #[cfg(not(feature = "std"))]
 static MC_SCRATCH: McScratchCell = McScratchCell;
 
-/// Extracts the `(bw+5)Ã—(bh+5)` reference neighbourhood around the full-pel origin
-/// `(ix0,iy0)` into `t`, clamping at the frame border â€” the edge-extended input
+/// Extracts the `(bw+5)×(bh+5)` reference neighbourhood around the full-pel origin
+/// `(ix0,iy0)` into `t`, clamping at the frame border — the edge-extended input
 /// openh264's kernels assume. The block's top-left sample lands at tile `(2,2)`.
 /// Returns the tile stride. Every sample in `[0, (bh+5)*ts)` is written.
 ///
 /// # Errors
-/// `FueraDeRango` si el plano estÃ¡ vacÃ­o o no cubre `cw Ã— ch` (antes, muestra negra).
+/// `FueraDeRango` si el plano está vacío o no cubre `cw × ch` (antes, muestra negra).
 fn luma_tile_into(
     t: &mut [u8],
     reference: &[u8],
@@ -250,9 +250,9 @@ fn luma_tile_into(
     (bw, bh): (usize, usize),
 ) -> Result<usize, FueraDeRango> {
     let ts = bw + 5;
-    // Interior fast path: the whole `(bw+5)Ã—(bh+5)` halo is inside the frame, so no
+    // Interior fast path: the whole `(bw+5)×(bh+5)` halo is inside the frame, so no
     // edge clamp is needed. Extract by contiguous row copies (a vectorized memcpy)
-    // â€” the unconditional per-pixel `clamp` on the slow path defeats
+    // — the unconditional per-pixel `clamp` on the slow path defeats
     // autovectorization even when (as here) it would always be a no-op.
     if ix0 - 2 >= 0
         && iy0 - 2 >= 0
@@ -281,7 +281,7 @@ fn luma_tile_into(
     Ok(ts)
 }
 
-/// Horizontal half-pel plane (`McHorVer20`): `clip((6tapâ‚• + 16) >> 5)`, block
+/// Horizontal half-pel plane (`McHorVer20`): `clip((6tapₕ + 16) >> 5)`, block
 /// shifted by `(dr, dc)` tile rows/cols.
 fn luma_h(t: &[u8], ts: usize, bw: usize, bh: usize, dr: usize, dc: usize, dst: &mut [u8]) {
     #[cfg(accel)]
@@ -300,15 +300,15 @@ fn luma_h(t: &[u8], ts: usize, bw: usize, bh: usize, dr: usize, dc: usize, dst: 
         }
     }
     // TWO SLICES PER ROW, and the geometry is why this works here and NOT in
-    // `luma_centre`. These six taps are HORIZONTAL â€” `t[p-2]` through `t[p+3]`
-    // lie in one contiguous run â€” so a single `bw + 5` slice covers every read
+    // `luma_centre`. These six taps are HORIZONTAL — `t[p-2]` through `t[p+3]`
+    // lie in one contiguous run — so a single `bw + 5` slice covers every read
     // the whole row makes. `luma_centre`'s taps stride by `ts`, six separate
     // runs, which is what made the identical-looking edit cost +9.3% there.
     for r in 0..bh {
         let base = (2 + r + dr) * ts + 2 + dc;
         let src = &t[base - 2..][..bw + 5];
         let drow = &mut dst[r * bw..][..bw];
-        // `windows(6)` yields a slice of EXACTLY six, so all six taps fold â€”
+        // `windows(6)` yields a slice of EXACTLY six, so all six taps fold —
         // `src[c] ..= src[c + 5]` still needed `c < bw` related to `bw + 5`.
         for (o, w) in drow.iter_mut().zip(src.windows(6)) {
             let f = w[0] as i32 - 5 * w[1] as i32 + 20 * w[2] as i32 + 20 * w[3] as i32
@@ -354,7 +354,7 @@ fn seis_filas(t: &[u8], inicio: usize, ts: usize, bw: usize) -> Result<[&[u8]; 6
     Ok([fila(0)?, fila(1)?, fila(2)?, fila(3)?, fila(4)?, fila(5)?])
 }
 
-/// Suma vertical de 6 tomas `a âˆ’ 5b + 20c + 20d âˆ’ 5e + f` de seis filas, columna a columna.
+/// Suma vertical de 6 tomas `a − 5b + 20c + 20d − 5e + f` de seis filas, columna a columna.
 #[inline]
 fn tomas_verticales(f: [&[u8]; 6]) -> impl Iterator<Item = i32> + '_ {
     f[0].iter()
@@ -370,7 +370,7 @@ fn tomas_verticales(f: [&[u8]; 6]) -> impl Iterator<Item = i32> + '_ {
         })
 }
 
-/// Vertical half-pel plane (`McHorVer02`): `clip((6tapáµ¥ + 16) >> 5)`.
+/// Vertical half-pel plane (`McHorVer02`): `clip((6tapᵥ + 16) >> 5)`.
 ///
 /// # Errors
 /// `FueraDeRango` si la tesela no contiene las tomas del bloque.
@@ -399,8 +399,8 @@ fn luma_v(
         }
     }
     // COR-3: las seis filas de tomas se toman una vez por fila de salida y se recorren con
-    // `zip`, sin Ã­ndice por muestra ni muestra inventada (el antiguo
-    // `t.get(q).unwrap_or(0)` leÃ­a una toma ausente como negra).
+    // `zip`, sin índice por muestra ni muestra inventada (el antiguo
+    // `t.get(q).unwrap_or(0)` leía una toma ausente como negra).
     for r in 0..bh {
         let inicio = (r + dr) * ts + 2 + dc;
         let filas = seis_filas(t, inicio, ts, bw)?;
@@ -413,7 +413,7 @@ fn luma_v(
 }
 
 /// Centre half-pel plane (`McHorVer22`): vertical 6-tap to 16-bit intermediates,
-/// then horizontal 6-tap â€” `clip((Â·+ 512) >> 10)`.
+/// then horizontal 6-tap — `clip((·+ 512) >> 10)`.
 ///
 /// # Errors
 /// `FueraDeRango` si la tesela no contiene las tomas del bloque.
@@ -437,11 +437,11 @@ fn luma_centre(
     // REFUTED, do not retry: row-slicing the six vertical taps (and `dst`)
     // removed ONE panic path of eight and cost +9.3% instructions (323 -> 353).
     // `bw`/`bh` are runtime values, so each slice length is a runtime bound the
-    // compiler cannot fold â€” six of them per row outweigh the per-sample checks
+    // compiler cannot fold — six of them per row outweigh the per-sample checks
     // they replace. Same shape as `weight_partition`'s inner rows (+28%).
-    // COR-3 (Crusty_H264): las tomas `t.get(q).unwrap_or(0)` por muestra leÃ­an una muestra
+    // COR-3 (Crusty_H264): las tomas `t.get(q).unwrap_or(0)` por muestra leían una muestra
     // ausente como negra. Ahora las seis filas se toman una vez por fila; el coste se
-    // mide en tiempo de decodificaciÃ³n de flujos completos (velocidad.py), no contando
+    // mide en tiempo de decodificación de flujos completos (velocidad.py), no contando
     // instrucciones.
     let mut itmp = [0i32; LUMA_TILE];
     for r in 0..bh {
@@ -450,7 +450,7 @@ fn luma_centre(
             *slot = f;
         }
         // The earlier refutation bundled SEVEN changes; this is the one of them
-        // that stands alone. The vertical-tap slices were the cost â€” the
+        // that stands alone. The vertical-tap slices were the cost — the
         // destination row is contiguous and independent of them.
         let drow = &mut dst[r * bw..][..bw];
         for (o, w) in drow.iter_mut().zip(itmp[..bw + 5].windows(6)) {
@@ -507,14 +507,14 @@ fn pixel_avg(a: &[u8], b: &[u8], bw: usize, bh: usize, dst: &mut [u8]) {
     // top of the asm half-pel kernels was a scalar runtime-width loop. The MC
     // census prices quarter-pel at ~68% of decoder MC cycles, and the eight
     // positions served here all end in this loop. `pavgb` computes
-    // `(a + b + 1) >> 1` exactly â€” byte-identical. The scalar loop stays as
+    // `(a + b + 1) >> 1` exactly — byte-identical. The scalar loop stays as
     // the non-accel path and the oracle.
     //
     // The TRUE block geometry is passed, never reconstructed from `n`: the
     // openh264 row loops are unrolled by more than one row, so a synthetic
-    // (16, n/16) shape with h < 4 over-runs the block â€” that was a real
+    // (16, n/16) shape with h < 4 over-runs the block — that was a real
     // SEGFAULT on every sub-8x8 stream (first cut of this dispatch, caught by
-    // the corpus gate). The kernels are exercised at every real (bw, bh â‰¥ 4)
+    // the corpus gate). The kernels are exercised at every real (bw, bh ≥ 4)
     // shape by `avg_full` already.
     #[cfg(accel)]
     if (bw == 16 || bw == 8 || bw == 4) && a.len() >= n && b.len() >= n && dst.len() >= n {
@@ -525,7 +525,7 @@ fn pixel_avg(a: &[u8], b: &[u8], bw: usize, bh: usize, dst: &mut [u8]) {
     // three INDEPENDENT slices, so every pixel carried three bounds checks; the
     // zip proves all three once for the whole block. (Contrast `luma_centre`,
     // where the same idea lost: there it would be six slices PER ROW against a
-    // runtime width â€” here it is three for the entire block.)
+    // runtime width — here it is three for the entire block.)
     for (d, (&x, &y)) in dst[..n].iter_mut().zip(a[..n].iter().zip(&b[..n])) {
         *d = ((x as i32 + y as i32 + 1) >> 1) as u8;
     }
@@ -544,7 +544,7 @@ fn avg_full(
     // long time; this average layered on top of them stayed a scalar per-pixel loop
     // with a runtime width. On real x264 streams ~85% of decoder MC cycles are
     // quarter-pel, so this loop was handing the kernel's win back on the large
-    // majority of MC. `pavgb` computes `(a + b + 1) >> 1` exactly â€” byte-identical.
+    // majority of MC. `pavgb` computes `(a + b + 1) >> 1` exactly — byte-identical.
     #[cfg(accel)]
     if bw == 16 || bw == 8 || bw == 4 {
         let base = (2 + dr) * ts + 2 + dc;
@@ -563,9 +563,9 @@ fn avg_full(
     }
 }
 
-/// One-filter qpel (`(1,0)/(3,0)/(0,1)/(0,3)`): fused half+avg when accel + wâˆˆ{8,16}.
+/// One-filter qpel (`(1,0)/(3,0)/(0,1)/(0,3)`): fused half+avg when accel + w∈{8,16}.
 /// `horiz`: horizontal 6-tap; else vertical. `fshift`: full-pel offset (0 or 1) in the
-/// filter axis (`fdc` for horiz, `fdr` for vert) â€” matches `avg_full`'s (0,1)/(1,0).
+/// filter axis (`fdc` for horiz, `fdr` for vert) — matches `avg_full`'s (0,1)/(1,0).
 fn qpel_one_filter(
     t: &[u8],
     ts: usize,
@@ -611,7 +611,7 @@ fn qpel_hv(
 ) -> Result<(), FueraDeRango> {
     #[cfg(accel)]
     if bw == 16 || bw == 8 {
-        // FULL fusion: both halves + avg in one kernel loop â€” no `a` staging,
+        // FULL fusion: both halves + avg in one kernel loop — no `a` staging,
         // no second kernel call (the previous two-step form, a ver02+avg kernel
         // reading back a staged half plane, was ripped once this landed).
         rusty_h264_accel::mc_hv_qpel(t, ts, out, bw, bh, hdr, hdc, vdr, vdc);
@@ -710,7 +710,7 @@ fn mc_luma_subpel(
 /// `hpel-filter` for the entire corpus.
 ///
 /// Naming follows the spec's sample grid at full-pel `G`:
-///   `h` = `b` (half-pel horizontal) Â· `v` = `h` (half-pel vertical) Â· `c` = `j` (centre)
+///   `h` = `b` (half-pel horizontal) · `v` = `h` (half-pel vertical) · `c` = `j` (centre)
 #[derive(Clone, Debug)]
 pub struct HpelPlanes {
     /// Edge-replicated FULL-pel plane. Needed as an operand for the quarter
@@ -731,14 +731,14 @@ pub struct HpelPlanes {
 
 /// Border added to every cached plane, in samples.
 ///
-/// Sized so a Â±24 motion search around any macroblock still lands inside: a 16-wide
+/// Sized so a ±24 motion search around any macroblock still lands inside: a 16-wide
 /// block at the right edge reaches `cw + 24`, and reading its `+1` neighbour needs
-/// `cw + 41` â‰¤ `cw + PAD`. Without a border the plane cache DECLINED every candidate
-/// whose vector left the picture â€” 62.5% of the remaining `mc_luma` fallbacks, at
+/// `cw + 41` ≤ `cw + PAD`. Without a border the plane cache DECLINED every candidate
+/// whose vector left the picture — 62.5% of the remaining `mc_luma` fallbacks, at
 /// ~195 ns against 33 ns for a plane read.
 ///
 /// SWEPT (foreman / bus / park_joy), because a bigger border is a
-/// TRADE â€” more candidates covered, but a larger working set (4 planes over
+/// TRADE — more candidates covered, but a larger working set (4 planes over
 /// `(cw+2P)(ch+2P)`) and a costlier per-frame build:
 ///
 /// | pad | foreman fallbacks | bus | park_joy | build (foreman) |
@@ -768,14 +768,14 @@ pub struct HpelPlanes {
 /// read.
 pub const HPEL_PAD: usize = 32;
 
-/// Builds the three half-pel planes for `reference` (`cw`Ã—`ch`, MB-aligned).
+/// Builds the three half-pel planes for `reference` (`cw`×`ch`, MB-aligned).
 ///
-/// Bit-exact with [`mc_luma`] by CONSTRUCTION: it walks the frame in the same 16Ã—16
+/// Bit-exact with [`mc_luma`] by CONSTRUCTION: it walks the frame in the same 16×16
 /// blocks, extracts the same clamped halo via [`luma_tile_into`], and runs the same
 /// `luma_h`/`luma_v`/`luma_centre` kernels. Each output sample depends only on the
 /// six clamped input samples around it, so the value is independent of which block
 /// computed it.
-/// Edge-replicates a `w`Ã—`h` plane into a `(w+2Â·pad)`Ã—`(h+2Â·pad)` padded copy â€”
+/// Edge-replicates a `w`×`h` plane into a `(w+2·pad)`×`(h+2·pad)` padded copy —
 /// openh264's `ExpandPicture`. `mc_luma` clamps each tap independently via `at()`,
 /// and clamping IS edge replication, so filtering the padded plane is bit-identical
 /// to the clamped-read original (the argument `build_hpel_planes` rests on; the
@@ -786,7 +786,7 @@ pub fn pad_plane(src: &[u8], w: usize, h: usize, pad: usize) -> Vec<u8> {
 
 /// `pad_plane` reusing a recycled buffer. Every byte of the padded plane is
 /// written by the row loop below (left fill + interior copy + right fill, all
-/// `ph` rows), so a RIGHT-SIZED recycled buffer needs no clearing at all â€” and,
+/// `ph` rows), so a RIGHT-SIZED recycled buffer needs no clearing at all — and,
 /// unlike a fresh `vec![0; n]` (whose zero pages are free but whose first
 /// touches page-fault), its pages are already mapped and warm. This is what the
 /// earlier pad_plane memset-elimination attempt (refuted, WHYS ledger) was
@@ -812,7 +812,7 @@ pub fn pad_plane_into(mut f: Vec<u8>, src: &[u8], w: usize, h: usize, pad: usize
     f
 }
 
-/// Construye la fuente acolchada y los tres planos de medio pÃ­xel de una referencia.
+/// Construye la fuente acolchada y los tres planos de medio píxel de una referencia.
 ///
 /// # Errors
 /// `FueraDeRango` si una tesela no contiene las tomas que necesita.
@@ -830,8 +830,8 @@ pub fn build_hpel_planes(
     let mut v = vec![0u8; pw * ph];
     let mut c = vec![0u8; pw * ph];
     // Dispatch ladder: the AVX2 FUSED single pass (side-by-side descent: the tile
-    // walk measured 8Ã— x264's hpel-filter, whose fused shape this kernel mirrors)
-    // â†’ tile walk. Both are byte-identical (`fused_hpel_builder_matches_tiles`,
+    // walk measured 8× x264's hpel-filter, whose fused shape this kernel mirrors)
+    // → tile walk. Both are byte-identical (`fused_hpel_builder_matches_tiles`,
     // `avx2_fused_matches_scalar_fused`); the choice is speed only.
     #[cfg(accel)]
     let done = rusty_h264_accel::hpel_fused(&f, pw, ph, &mut h, &mut v, &mut c);
@@ -854,8 +854,8 @@ pub fn build_hpel_planes(
     })
 }
 
-/// The ORIGINAL builder â€” walks 16Ã—16 tiles through `luma_tile_into` + the MC
-/// kernels. Es el camino sin el constructor AVX2 y el orÃ¡culo del constructor fusionado.
+/// The ORIGINAL builder — walks 16×16 tiles through `luma_tile_into` + the MC
+/// kernels. Es el camino sin el constructor AVX2 y el oráculo del constructor fusionado.
 fn build_hpel_tiles(
     f: &[u8],
     pw: usize,
@@ -901,15 +901,15 @@ fn build_hpel_tiles(
     Ok(())
 }
 
-/// Campaign 3 (lets-win-optimize.md): the FUSED single-pass builder â€” x264's
-/// `hpel_filter` shape. The tile walk re-extracts a `(16+5)Â²` halo per 16Ã—16 block
-/// (1.7Ã— redundant reads), re-runs per-tile dispatch, and copies each block out
+/// Campaign 3 (lets-win-optimize.md): the FUSED single-pass builder — x264's
+/// `hpel_filter` shape. The tile walk re-extracts a `(16+5)²` halo per 16×16 block
+/// (1.7× redundant reads), re-runs per-tile dispatch, and copies each block out
 /// three times; this pass reads each source row band once and writes H, V, C
 /// directly. BYTE-IDENTICAL to the tile builder: the same 6-tap integer formulas
-/// over the same clamped `f` samples (interior rows/cols never clamp; the Â±2/3
+/// over the same clamped `f` samples (interior rows/cols never clamp; the ±2/3
 /// borders of the padded plane clamp exactly like `luma_tile_into`'s halo does),
 /// and the centre's i32 vertical intermediates reproduce `luma_centre`'s order.
-/// Fijado por `fused_hpel_builder_matches_tiles`, la Ãºnica prueba que aÃºn lo usa.
+/// Fijado por `fused_hpel_builder_matches_tiles`, la única prueba que aún lo usa.
 #[cfg(test)]
 fn build_hpel_fused(f: &[u8], pw: usize, ph: usize, h: &mut [u8], v: &mut [u8], c: &mut [u8]) {
     let cl = |i: isize, hi: usize| i.clamp(0, hi as isize - 1) as usize;
@@ -917,7 +917,7 @@ fn build_hpel_fused(f: &[u8], pw: usize, ph: usize, h: &mut [u8], v: &mut [u8], 
     let mut vt_buf = vec![0i32; pw + 5]; // vertical 6-tap intermediates (unrounded)
     let mut hb_buf = vec![0u8; pw + 5]; // this row's source with clamped column halo
                                         // STATE THE LENGTH ONCE. Read back as `vt[x] ..= vt[x + 5]` for `x < pw`,
-                                        // which is in range by construction â€” but against a `Vec`'s runtime length
+                                        // which is in range by construction — but against a `Vec`'s runtime length
                                         // LLVM cannot see it, so all six taps checked on every column of every row.
                                         // Reborrowing at the literal `pw + 5` makes `x + 5 < pw + 5` provable.
     let vt = &mut vt_buf[..pw + 5];
@@ -931,11 +931,11 @@ fn build_hpel_fused(f: &[u8], pw: usize, ph: usize, h: &mut [u8], v: &mut [u8], 
             cl(y as isize + 2, ph) * pw,
             cl(y as isize + 3, ph) * pw,
         );
-        // Column-clamped borders (â‰¤5 samples each side); the interior runs with
-        // DIRECT indices â€” a per-element clamp in this loop defeats
-        // autovectorization and measured the whole builder 2.2Ã— slower.
+        // Column-clamped borders (≤5 samples each side); the interior runs with
+        // DIRECT indices — a per-element clamp in this loop defeats
+        // autovectorization and measured the whole builder 2.2× slower.
         // SIX SOURCE ROWS, bound once. The taps stride by `pw`, which is the
-        // geometry whose row-slicing was REFUTED in `luma_centre` (+9.3%) â€” but
+        // geometry whose row-slicing was REFUTED in `luma_centre` (+9.3%) — but
         // that runs at bw = 4, where six slices replace twenty-four checks. Here
         // `pw` is the frame width, so six slices replace ~6 * pw of them. Width
         // is the variable that refutation did not vary.
@@ -980,7 +980,7 @@ fn build_hpel_fused(f: &[u8], pw: usize, ph: usize, h: &mut [u8], v: &mut [u8], 
         let vrow = &mut v[y0..y0 + pw];
         let crow = &mut c[y0..y0 + pw];
         // `windows(6)` hands back a slice of EXACTLY six, so `w[0]..w[5]` are
-        // provable outright â€” the `vt[x] ..= vt[x + 5]` form needed LLVM to
+        // provable outright — the `vt[x] ..= vt[x + 5]` form needed LLVM to
         // relate `x < pw` to the buffer's length and it would not. `zip` bounds
         // the output row the same way.
         for (o, &t) in vrow.iter_mut().zip(&vt[2..]) {
@@ -999,11 +999,11 @@ fn build_hpel_fused(f: &[u8], pw: usize, ph: usize, h: &mut [u8], v: &mut [u8], 
     }
 }
 
-/// Descent C: the SINGLE-PLANE (half-pel) phases â€” (2,0)->h, (0,2)->v, (2,2)->c â€”
+/// Descent C: the SINGLE-PLANE (half-pel) phases — (2,0)->h, (0,2)->v, (2,2)->c —
 /// are already contiguous at plane stride, exactly like the interior full-pel case.
 /// Hand the consumer `(plane, base, stride)` so it can read them IN PLACE rather than
 /// copy 256 bytes into a temp first. Byte-identical to `hpel_block` by construction:
-/// same plane, same base, same samples â€” only the copy is elided.
+/// same plane, same base, same samples — only the copy is elided.
 /// Returns `None` for quarter-pel (a two-plane average, which must be materialized),
 /// for out-of-range coordinates, and whenever `hpel_block` would decline.
 #[inline]
@@ -1053,11 +1053,11 @@ pub fn hpel_ref(
     Some((plane, base, p.stride))
 }
 
-/// Par de operandos de plano y desplazamientos base para una posiciÃ³n de cuarto de pÃ­xel:
+/// Par de operandos de plano y desplazamientos base para una posición de cuarto de píxel:
 /// `(plano_a, base_a, plano_b, base_b, paso_fila)`.
 pub type ParReferenciasQpel<'a> = (&'a [u8], usize, &'a [u8], usize, usize);
 
-/// Challenge-1 A3: the QUARTER-pel companion of [`hpel_ref`] â€” resolves the two
+/// Challenge-1 A3: the QUARTER-pel companion of [`hpel_ref`] — resolves the two
 /// plane operands whose `(a+b+1)>>1` average IS the prediction, so the ME cost can
 /// be one fused avg+SATD kernel pass instead of materialize-256-bytes-then-SATD.
 /// Same bounds guard as [`hpel_block`] (identical accepted-candidate set); returns
@@ -1158,7 +1158,7 @@ pub fn hpel_block(
         (2, 2) => Some(&p.c),
         _ => None,
     };
-    // Descent C: single-plane (half-pel) reads are CONTIGUOUS AT PLANE STRIDE â€” they
+    // Descent C: single-plane (half-pel) reads are CONTIGUOUS AT PLANE STRIDE — they
     // could be SATD'd in place like the interior full-pel path instead of copied into
     // a temp. Count the split before building that path.
     if let Some(src) = single {
@@ -1169,13 +1169,13 @@ pub fn hpel_block(
     }
 
     // Quarter-pel: (a + b + 1) >> 1 of two planes. The operand table (the spec's
-    // `m`/`s` neighbour shifts) lives in ONE place â€” `hpel_qpel_refs` â€” so the
+    // `m`/`s` neighbour shifts) lives in ONE place — `hpel_qpel_refs` — so the
     // materializing path here and the fused avg+SATD path can never drift apart.
     let Some((pa, ba, pb, bb, qstride)) = hpel_qpel_refs(p, x0, y0, bw, bh, mvx, mvy) else {
         return false;
     };
-    // The asm read (inline-execution.md Â§11.6c) refuted "LLVM already gets this":
-    // all three `avg_rows` widths compile fully SCALAR â€” 0 `pavgb`, 0 xmm â€” while
+    // The asm read (inline-execution.md §11.6c) refuted "LLVM already gets this":
+    // all three `avg_rows` widths compile fully SCALAR — 0 `pavgb`, 0 xmm — while
     // `pixel_avg` is the SAME `(a+b+1)>>1` with SSE2/NEON arms and a differential
     // test. Compose, don't write: the kernel takes the accel build; `avg_rows`
     // stays below as the reachable scalar twin (non-accel builds and the oracle).
@@ -1213,10 +1213,10 @@ fn avg_rows<const BW: usize>(
     }
 }
 
-/// Quarter-pel motion compensation of a `bw`Ã—`bh` luma block (`McLuma_c`).
+/// Quarter-pel motion compensation of a `bw`×`bh` luma block (`McLuma_c`).
 ///
 /// # Errors
-/// `FueraDeRango` si el plano estÃ¡ vacÃ­o o no cubre `cw Ã— ch`.
+/// `FueraDeRango` si el plano está vacío o no cubre `cw × ch`.
 #[allow(clippy::too_many_arguments)]
 pub fn mc_luma(
     reference: &[u8],
@@ -1238,8 +1238,8 @@ pub fn mc_luma(
     let (fx, fy) = (mvx & 3, mvy & 3);
     // Descent E: time this call into its (size, phase) bucket. Guard drops at fn end.
     if fx == 0 && fy == 0 {
-        // Full-pel: a verbatim copy of the reference (`McCopy_c`). Interior â†’ a
-        // row-wise slice copy (auto-vectorized); edge â†’ per-pixel clamped.
+        // Full-pel: a verbatim copy of the reference (`McCopy_c`). Interior → a
+        // row-wise slice copy (auto-vectorized); edge → per-pixel clamped.
         if ix0 >= 0
             && iy0 >= 0
             && ix0 + bw as isize <= cw as isize
@@ -1247,7 +1247,7 @@ pub fn mc_luma(
             && reference.len() >= cw * ch
         {
             let (rx, ry) = (ix0 as usize, iy0 as usize);
-            // Fixed-size fast path for the full 16Ã—16 MB (the overwhelming common
+            // Fixed-size fast path for the full 16×16 MB (the overwhelming common
             // case). With `bw` a runtime parameter each `copy_from_slice(..bw)` is a
             // variable-length `memcpy` CALL per row (~38 ns / MB); const-16 slices
             // let LLVM emit inline 16-byte moves (~2 ns / MB). Byte-identical.
@@ -1284,12 +1284,12 @@ pub fn mc_luma(
     })
 }
 
-/// Eighth-pel bilinear motion compensation of a `bw`Ã—`bh` chroma block (spec
-/// Â§8.4.2.2.2). The chroma motion vector equals the luma MV; for 4:2:0 it is
+/// Eighth-pel bilinear motion compensation of a `bw`×`bh` chroma block (spec
+/// §8.4.2.2.2). The chroma motion vector equals the luma MV; for 4:2:0 it is
 /// interpreted at eighth-chroma-sample resolution.
 ///
 /// # Errors
-/// `FueraDeRango` si el plano estÃ¡ vacÃ­o o no cubre `cw Ã— ch` (antes, muestra negra).
+/// `FueraDeRango` si el plano está vacío o no cubre `cw × ch` (antes, muestra negra).
 #[allow(clippy::too_many_arguments)]
 pub fn mc_chroma(
     reference: &[u8],
@@ -1309,8 +1309,8 @@ pub fn mc_chroma(
         y0 as isize + (mvy >> 3) as isize,
     );
     let (fx, fy) = (mvx & 7, mvy & 7);
-    // Full-pel and fully inside the frame: `(64Â·a + 32) >> 6 == a`, a verbatim copy.
-    // Skip the per-pixel bilinear + 4Ã— clamped `at()`; copy row-wise. Bit-identical.
+    // Full-pel and fully inside the frame: `(64·a + 32) >> 6 == a`, a verbatim copy.
+    // Skip the per-pixel bilinear + 4× clamped `at()`; copy row-wise. Bit-identical.
     if fx == 0
         && fy == 0
         && ix0 >= 0
@@ -1320,8 +1320,8 @@ pub fn mc_chroma(
         && reference.len() >= cw * ch
     {
         let (rx, ry) = (ix0 as usize, iy0 as usize);
-        // Const-8 fast path for the full 8Ã—8 chroma block (skip / P_16x16 common
-        // case): fixed-size slices â†’ inline 8-byte moves, not a runtime-length
+        // Const-8 fast path for the full 8×8 chroma block (skip / P_16x16 common
+        // case): fixed-size slices → inline 8-byte moves, not a runtime-length
         // `memcpy` call per row. Byte-identical. See the luma twin in `mc_luma`.
         if bw == 8 && bh == 8 {
             for dy in 0..8 {
@@ -1336,11 +1336,11 @@ pub fn mc_chroma(
         }
         return Ok(());
     }
-    // Sub-pel (and full-pel edge): extract the clamped (bw+1)Ã—(bh+1) tile once â€”
-    // the edge-extended input `McChromaWithFragMv_c` reads â€” then the bilinear
-    // `AÂ·p + BÂ·pâ‚Šâ‚ + CÂ·pâ‚Šâ‚› + DÂ·pâ‚Šâ‚›â‚Šâ‚` (`g_kuiABCD` weights), `(Â·+32)>>6`. A chroma
-    // block is at most 8Ã—8 (half a 16Ã—16 MB), so a 9Ã—9 tile suffices. Bit-identical:
-    // the clamped tile reproduces `at()`, and full-pel weights give `(64Â·a+32)>>6==a`.
+    // Sub-pel (and full-pel edge): extract the clamped (bw+1)×(bh+1) tile once —
+    // the edge-extended input `McChromaWithFragMv_c` reads — then the bilinear
+    // `A·p + B·p₊₁ + C·p₊ₛ + D·p₊ₛ₊₁` (`g_kuiABCD` weights), `(·+32)>>6`. A chroma
+    // block is at most 8×8 (half a 16×16 MB), so a 9×9 tile suffices. Bit-identical:
+    // the clamped tile reproduces `at()`, and full-pel weights give `(64·a+32)>>6==a`.
     let ts = bw + 1;
     let mut t = [0u8; 9 * 9];
     // Interior fast path (see `luma_tile`): clamp-free contiguous row copies.
@@ -1369,7 +1369,7 @@ pub fn mc_chroma(
         }
     }
     let (wa, wb, wc, wd) = ((8 - fx) * (8 - fy), fx * (8 - fy), (8 - fx) * fy, fx * fy);
-    // 8-wide chroma (full-MB and 16Ã—16-partition chroma â€” the common case) â†’ the
+    // 8-wide chroma (full-MB and 16×16-partition chroma — the common case) → the
     // openh264 SSE2 bilinear over the same clamped tile. Width 2/4 stay scalar
     // (width-4 is only an MMX kernel; width 2 has none). Bit-identical.
     #[cfg(accel)]
@@ -1394,15 +1394,15 @@ pub fn mc_chroma(
 //
 // A reference plane is stored with a replicated-edge border (`PAD_L` luma /
 // `PAD_C` chroma pixels), the picture origin at `(pad, pad)` and `stride` = the
-// padded width. MC then reads the frame DIRECTLY at the MV offset â€” no per-call
-// clamped tile â€” because reads into the border hit valid replicated pixels. For
+// padded width. MC then reads the frame DIRECTLY at the MV offset — no per-call
+// clamped tile — because reads into the border hit valid replicated pixels. For
 // the rare MV whose 6-tap halo would exceed the border, we fall back to the
 // clamped tile (reading the padded interior), which is bit-identical to the
 // exact-frame path.
 //
 // STATUS: implemented + bit-exact (the `mc_*_padded_matches_exact` tests + a full
 // decoder wiring verified 35/35 corpus MATCH), but measured **~0** vs the tile
-// path on x86-64 â€” once `luma_tile`'s interior fast path made extraction a
+// path on x86-64 — once `luma_tile`'s interior fast path made extraction a
 // vectorized copy, the remaining win (skipping the copy) is offset by the
 // padded direct read's worse kernel cache locality (full-frame stride vs the
 // L1-resident tile) plus the per-frame expand/copy cost. Kept UNWIRED as a ready
@@ -1411,12 +1411,12 @@ pub fn mc_chroma(
 // `RefFrame` planes padded (`expand_plane` in `as_reference`) and call these
 // instead of `mc_luma`/`mc_chroma`.
 
-/// Luma reference border width (covers full-pel MVs to Â±30 px before fallback).
+/// Luma reference border width (covers full-pel MVs to ±30 px before fallback).
 pub const PAD_L: usize = 32;
 /// Chroma reference border width (= `PAD_L`/2, matching the half-rate chroma MV).
 pub const PAD_C: usize = 16;
 
-/// Fills the `pad`-wide replicated-edge border of a plane whose picture (`pwÃ—ph`)
+/// Fills the `pad`-wide replicated-edge border of a plane whose picture (`pw×ph`)
 /// sits at offset `(pad, pad)` with `stride`. Mirrors openh264 `ExpandPictureLuma_c`:
 /// left/right cols replicate the edge pixel; top/bottom rows replicate the (already
 /// edge-filled) first/last picture row, so the corners come out right.
@@ -1444,7 +1444,7 @@ pub fn expand_plane(buf: &mut [u8], stride: usize, pad: usize, pw: usize, ph: us
     }
 }
 
-/// CompensaciÃ³n de movimiento de luma sobre un plano acolchado.
+/// Compensación de movimiento de luma sobre un plano acolchado.
 ///
 /// # Errors
 /// `FueraDeRango` si el plano acolchado no contiene las muestras que lee el bloque.
@@ -1593,8 +1593,8 @@ pub fn mc_luma_padded_pre(
 /// Eighth-pel chroma MC reading a padded reference directly. Bit-identical to
 /// [`mc_chroma`] on the equivalent exact frame.
 /// U+V pair form of [`mc_chroma_padded`]: both chroma planes share EVERY piece
-/// of MC geometry (mv, frac weights, stride, coordinates, bounds) â€” only the
-/// plane base differs â€” so one setup + one range check serves two kernel
+/// of MC geometry (mv, frac weights, stride, coordinates, bounds) — only the
+/// plane base differs — so one setup + one range check serves two kernel
 /// invocations. Per-plane pixel math is byte-identical to two single calls.
 /// The extreme-MV clamp path is rare and stays on the single-plane fn.
 ///
@@ -1681,7 +1681,7 @@ pub fn mc_chroma_padded_pair(
     }
     for (pl, out) in [(pu, &mut *outu), (pv, &mut *outv)] {
         // TWO ROWS, `windows(2)`. The bilinear tap reads (c, c+1) on this row
-        // and the next â€” four separately checked whole-plane loads per
+        // and the next — four separately checked whole-plane loads per
         // sample. Each window is a slice of EXACTLY two, so all four fold.
         for r in 0..bh {
             let base = halo + r * stride;
@@ -1696,7 +1696,7 @@ pub fn mc_chroma_padded_pair(
     Ok(())
 }
 
-/// CompensaciÃ³n de movimiento de croma sobre un plano acolchado.
+/// Compensación de movimiento de croma sobre un plano acolchado.
 ///
 /// # Errors
 /// `FueraDeRango` si el plano acolchado no contiene las muestras que lee el bloque.
@@ -1744,8 +1744,8 @@ pub fn mc_chroma_padded(
         #[cfg(accel)]
         {
             // H-38: BOTH widths now take asm. The 4-wide path was missing, so every
-            // 8Ã—8 B-direct sub-block and sub-8Ã—8 partition fell to the scalar
-            // bilinear below â€” chroma MC then cost as much as luma on half the
+            // 8×8 B-direct sub-block and sub-8×8 partition fell to the scalar
+            // bilinear below — chroma MC then cost as much as luma on half the
             // pixels. Both kernels are pinned bit-identical to that scalar arm.
             let abcd = [wa as u8, wb as u8, wc as u8, wd as u8];
             if bw == 8 {
@@ -1766,7 +1766,7 @@ pub fn mc_chroma_padded(
             }
         }
         // TWO ROWS, `windows(2)`. The bilinear tap reads (c, c+1) on this row
-        // and the next â€” four separately checked whole-plane loads per
+        // and the next — four separately checked whole-plane loads per
         // sample. Each window is a slice of EXACTLY two, so all four fold.
         for r in 0..bh {
             let base = halo + r * stride;
@@ -1782,7 +1782,7 @@ pub fn mc_chroma_padded(
         }
         return Ok(());
     }
-    // Extreme MV: clamp the (bw+1)Â² halo to the real picture, read the padded interior.
+    // Extreme MV: clamp the (bw+1)² halo to the real picture, read the padded interior.
     let ts = bw + 1;
     let mut t = [0u8; 9 * 9];
     for ty in 0..bh + 1 {

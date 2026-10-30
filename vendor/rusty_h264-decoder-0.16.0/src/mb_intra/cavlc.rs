@@ -1,4 +1,4 @@
-﻿//! DecodificaciÃ³n de sintaxis intra en CAVLC (Â§7.3.5).
+//! Decodificación de sintaxis intra en CAVLC (§7.3.5).
 
 use rusty_h264_common::cavlc::{decode_residual_block_into, read_cbp_intra};
 use rusty_h264_common::predict::{I16Mode, CHROMA_4X4_SCAN_XY, LUMA_4X4_SCAN_XY};
@@ -9,20 +9,20 @@ use super::modo_intra_desde_rem;
 use crate::error::MbError;
 use crate::mb16::FrameDecoder;
 
-/// Cabecera sintÃ¡ctica compartida por los macrobloques intra en CAVLC.
+/// Cabecera sintáctica compartida por los macrobloques intra en CAVLC.
 pub(crate) struct CabeceraIntraCavlc {
-    /// Modo de predicciÃ³n intra para crominancia (`intra_chroma_pred_mode`).
+    /// Modo de predicción intra para crominancia (`intra_chroma_pred_mode`).
     pub(crate) chroma_mode: u8,
-    /// PatrÃ³n de bloques codificados para luminancia (mÃ¡scara de 4 bits).
+    /// Patrón de bloques codificados para luminancia (máscara de 4 bits).
     pub(crate) cbp_luma: u32,
-    /// PatrÃ³n de bloques codificados para crominancia (0 = ninguno, 1 = solo DC, 2 = DC y AC).
+    /// Patrón de bloques codificados para crominancia (0 = ninguno, 1 = solo DC, 2 = DC y AC).
     pub(crate) cbp_chroma: u32,
-    /// ParÃ¡metro de cuantizaciÃ³n resultante tras aplicar el delta del macrobloque (`QPy`).
+    /// Parámetro de cuantización resultante tras aplicar el delta del macrobloque (`QPy`).
     pub(crate) qp: u8,
 }
 
 impl FrameDecoder {
-    /// Reconstruye un macrobloque `I_PCM` (muestras directas de 8 bits sin predicciÃ³n ni cuantizaciÃ³n).
+    /// Reconstruye un macrobloque `I_PCM` (muestras directas de 8 bits sin predicción ni cuantización).
     pub(crate) fn decode_ipcm(
         &mut self,
         r: &mut BitReader,
@@ -71,7 +71,7 @@ impl FrameDecoder {
         Ok(())
     }
 
-    /// Lee la cabecera intra compartida en CAVLC (`chroma_mode`, `cbp` y actualizaciÃ³n de QP).
+    /// Lee la cabecera intra compartida en CAVLC (`chroma_mode`, `cbp` y actualización de QP).
     pub(crate) fn leer_cabecera_intra_cavlc(
         &mut self,
         r: &mut BitReader,
@@ -408,7 +408,7 @@ impl FrameDecoder {
         Ok(())
     }
 
-    /// Decodifica un macrobloque intra segÃºn su `mb_type` CAVLC (`I_4x4`, `I_16x16` o `I_PCM`).
+    /// Decodifica un macrobloque intra según su `mb_type` CAVLC (`I_4x4`, `I_16x16` o `I_PCM`).
     pub(crate) fn decode_intra_mb(
         &mut self,
         r: &mut BitReader,

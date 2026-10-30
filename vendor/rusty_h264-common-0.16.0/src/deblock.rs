@@ -1,10 +1,10 @@
-﻿//! In-loop deblocking filter (spec Â§8.7), all-intra case.
+//! In-loop deblocking filter (spec §8.7), all-intra case.
 //!
 //! Smooths block-edge discontinuities on the reconstructed frame. Because intra
 //! prediction uses *pre*-deblocking samples, this runs as a post-pass over the
 //! fully-reconstructed frame: macroblocks in raster order, vertical edges then
 //! horizontal, filtered in place. For an all-intra picture the boundary
-//! strength is positional â€” 4 on macroblock edges, 3 on internal 4Ã—4 edges.
+//! strength is positional — 4 on macroblock edges, 3 on internal 4×4 edges.
 
 #[allow(unused_imports)]
 use alloc::vec;
@@ -12,7 +12,7 @@ use alloc::vec::Vec;
 
 use crate::rango::FueraDeRango;
 
-/// `Î±` threshold indexed by `indexA` (= clipped QP), spec Table 8-16.
+/// `α` threshold indexed by `indexA` (= clipped QP), spec Table 8-16.
 #[rustfmt::skip]
 const ALPHA: [i32; 52] = [
     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -20,7 +20,7 @@ const ALPHA: [i32; 52] = [
     32,36,40,45,50,56,63,71,80,90,101,113,127,144,162,182,203,226,255,255,
 ];
 
-/// `Î²` threshold indexed by `indexB`.
+/// `β` threshold indexed by `indexB`.
 #[rustfmt::skip]
 const BETA: [i32; 52] = [
     0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -28,7 +28,7 @@ const BETA: [i32; 52] = [
     9,9,10,10,11,11,12,12,13,13,14,14,15,15,16,16,17,17,18,18,
 ];
 
-/// `tc0` indexed by `[indexA][bS-1]` for bS âˆˆ {1,2,3}.
+/// `tc0` indexed by `[indexA][bS-1]` for bS ∈ {1,2,3}.
 #[rustfmt::skip]
 const TC0: [[i32; 3]; 52] = [
     [0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],
@@ -41,7 +41,7 @@ const TC0: [[i32; 3]; 52] = [
 ];
 
 // The scalar per-line filters below are the `#[cfg(not(accel))]` production
-// path in `filter_frame_rows` (default-features build â€” no SIMD crate). Under
+// path in `filter_frame_rows` (default-features build — no SIMD crate). Under
 // the accel cfg they compile out entirely, so don't let an --all-features
 // dead-code pass fool you into deleting them (it did, once).
 #[cfg(not(accel))]
@@ -126,7 +126,7 @@ fn filter_luma_line(plane: &mut [u8], line: &Line, bs: i32, alpha: i32, beta: i3
 
 /// [`filter_luma_line`] specialized for VERTICAL edges (`step == 1`): the
 /// eight samples `p3..p0|q0..q3` are the CONSECUTIVE bytes around `base`, so
-/// one fixed-extent window (`&mut x[a..][..8]` â€” the shape whose length LLVM
+/// one fixed-extent window (`&mut x[a..][..8]` — the shape whose length LLVM
 /// keeps literal) replaces eight checked strided indexings. Bit-identical to
 /// the strided form by `contig_line_filters_match_strided`, which keeps the
 /// strided original (still the horizontal-path production code) as the oracle.
@@ -179,7 +179,7 @@ fn filter_luma_line_contig(
     }
 }
 
-/// [`filter_chroma_line`] specialized for VERTICAL edges â€” the 4-byte twin of
+/// [`filter_chroma_line`] specialized for VERTICAL edges — the 4-byte twin of
 /// [`filter_luma_line_contig`], same oracle test.
 #[cfg(not(accel))]
 fn filter_chroma_line_contig(
@@ -230,11 +230,11 @@ fn filter_chroma_line(plane: &mut [u8], line: &Line, bs: i32, alpha: i32, beta: 
     }
 }
 
-/// `FilterOffsetA` y `FilterOffsetB` de un macrobloque (UIT-T H.264, Â§7.4.3): el doble de
+/// `FilterOffsetA` y `FilterOffsetB` de un macrobloque (UIT-T H.264, §7.4.3): el doble de
 /// `slice_alpha_c0_offset_div2` y `slice_beta_offset_div2` del corte al que pertenece.
 ///
-/// Invariante: ambos valores estÃ¡n en `[-LIMITE, LIMITE]`; solo [`Self::nuevo`] los construye.
-/// Caben en `i8`, asÃ­ que la tabla de una imagen ocupa dos bytes por macrobloque.
+/// Invariante: ambos valores están en `[-LIMITE, LIMITE]`; solo [`Self::nuevo`] los construye.
+/// Caben en `i8`, así que la tabla de una imagen ocupa dos bytes por macrobloque.
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct DesplazamientosFiltro {
     a: i8,
@@ -242,16 +242,16 @@ pub struct DesplazamientosFiltro {
 }
 
 impl DesplazamientosFiltro {
-    /// Valor absoluto mÃ¡ximo de `FilterOffsetA`/`FilterOffsetB`: los `*_offset_div2` van de âˆ’6 a
-    /// 6 (Â§7.4.3) y se multiplican por dos.
+    /// Valor absoluto máximo de `FilterOffsetA`/`FilterOffsetB`: los `*_offset_div2` van de −6 a
+    /// 6 (§7.4.3) y se multiplican por dos.
     pub const LIMITE: i32 = 12;
 
-    /// Sin desplazamiento: lo que infiere Â§7.4.3 cuando el corte no los transmite.
+    /// Sin desplazamiento: lo que infiere §7.4.3 cuando el corte no los transmite.
     pub const CERO: Self = Self { a: 0, b: 0 };
 
-    /// Construye el par si ambos valores estÃ¡n en `[-LIMITE, LIMITE]`.
+    /// Construye el par si ambos valores están en `[-LIMITE, LIMITE]`.
     ///
-    /// Devuelve `None` si alguno se sale: el llamador decide quÃ© error de su capa le corresponde.
+    /// Devuelve `None` si alguno se sale: el llamador decide qué error de su capa le corresponde.
     #[must_use]
     pub fn nuevo(a: i32, b: i32) -> Option<Self> {
         let en_rango = |v: i32| {
@@ -265,20 +265,20 @@ impl DesplazamientosFiltro {
         })
     }
 
-    /// `FilterOffsetA`: desplaza `indexA` (umbral Î± y `tC0`).
+    /// `FilterOffsetA`: desplaza `indexA` (umbral α y `tC0`).
     #[must_use]
     pub fn a(self) -> i32 {
         i32::from(self.a)
     }
 
-    /// `FilterOffsetB`: desplaza `indexB` (umbral Î²).
+    /// `FilterOffsetB`: desplaza `indexB` (umbral β).
     #[must_use]
     pub fn b(self) -> i32 {
         i32::from(self.b)
     }
 }
 
-/// Per-4Ã—4-block macroblock info driving boundary-strength derivation.
+/// Per-4×4-block macroblock info driving boundary-strength derivation.
 pub struct BlockInfo<'a> {
     /// `true` if the block is **inter**-coded (an intra block is `!inter`). Taking
     /// the caller's existing inter mask avoids allocating an inverted intra mask
@@ -288,10 +288,10 @@ pub struct BlockInfo<'a> {
     pub nnz: &'a [u8],
     /// List-0 block motion vector (quarter-pel); ignored for intra.
     pub mv: &'a [(i32, i32)],
-    /// List-0 reference *picture identity* (a stable per-picture id â€” PicOrderCnt
+    /// List-0 reference *picture identity* (a stable per-picture id — PicOrderCnt
     /// for the decoder, ref index for the encoder; `i32::MIN` = unused/intra).
     /// Boundary strength compares the *set* of reference pictures, so the same
-    /// picture used via different lists matches (spec Â§8.7.2.1).
+    /// picture used via different lists matches (spec §8.7.2.1).
     pub ref_id: &'a [i32],
     /// List-1 motion + reference identity for B blocks (`ref_id1 = i32::MIN`
     /// everywhere for P/I, so the extra slot is a no-op there).
@@ -300,15 +300,15 @@ pub struct BlockInfo<'a> {
     /// Block-grid width (`mb_w * 4`).
     pub w4: usize,
     /// Per-macroblock `transform_size_8x8_flag` (length `mb_w * mb_h`). When set,
-    /// the macroblock's internal 4Ã—4 luma edges (sample columns/rows 4 and 12)
-    /// are *not* transform boundaries and must not be filtered (spec Â§8.7).
+    /// the macroblock's internal 4×4 luma edges (sample columns/rows 4 and 12)
+    /// are *not* transform boundaries and must not be filtered (spec §8.7).
     pub t8x8: &'a [bool],
     /// Boundary strengths already derived by the caller, one entry per macroblock
     /// in raster order. Empty = derive them here (the decoder path).
     pub bs: &'a [MbBs],
-    /// OPTIONAL referenceâ†’identity maps (Brick: WHYS Part 15 item 2). When
+    /// OPTIONAL reference→identity maps (Brick: WHYS Part 15 item 2). When
     /// non-empty, `ref_id`/`ref_id1` hold RAW per-block reference INDICES
-    /// (negative = none) and these â‰¤16-entry tables map index â†’ picture
+    /// (negative = none) and these ≤16-entry tables map index → picture
     /// identity (POC). This lets the decoder pass its `ref_idx` grids directly
     /// instead of materializing two frame-wide pre-mapped `Vec<i32>` shims
     /// (230-460 KB + 57,600 mapped elements per frame). Empty = `ref_id`
@@ -320,7 +320,7 @@ pub struct BlockInfo<'a> {
     /// blind gather+derive runs for that macroblock.
     ///
     /// SAFETY-BY-DESIGN: an unclassified macroblock costs SPEED, never
-    /// correctness. That inversion is deliberate â€” the alternative design, where
+    /// correctness. That inversion is deliberate — the alternative design, where
     /// the producer must hit every macroblock exit point or strengths silently go
     /// wrong, is exactly the failure `MbBs::UNSET` exists to guard against.
     ///
@@ -331,12 +331,12 @@ pub struct BlockInfo<'a> {
     pub kind: &'a [u8],
     /// Desplazamientos del filtro de cada macrobloque en orden de barrido (longitud
     /// `mb_w * mb_h`), tomados de SU corte: cada borde se filtra con los del macrobloque que
-    /// contiene `q0` (Â§8.7.2). Solo los leen las funciones que filtran; la derivaciÃ³n de `bS`
-    /// los ignora y admite una tabla vacÃ­a.
+    /// contiene `q0` (§8.7.2). Solo los leen las funciones que filtran; la derivación de `bS`
+    /// los ignora y admite una tabla vacía.
     pub desplazamientos: &'a [DesplazamientosFiltro],
 }
 
-/// Not classified â€” take the blind path. Any value outside `0..=3` behaves this way.
+/// Not classified — take the blind path. Any value outside `0..=3` behaves this way.
 pub const MB_KIND_UNSET: u8 = 255;
 pub const MB_KIND_INTRA: u8 = 0;
 pub const MB_KIND_SKIP: u8 = 1;
@@ -372,7 +372,7 @@ pub struct MbBs {
 impl MbBs {
     /// "Not yet derived". The macroblock loop has several exits (free skip,
     /// greedy skip, coded) and every one must store its strengths; missing one
-    /// leaves zeros, silently disabling deblocking for that macroblock â€” which is
+    /// leaves zeros, silently disabling deblocking for that macroblock — which is
     /// exactly the bug the byte-identical gate caught during bring-up.
     pub const UNSET: MbBs = MbBs {
         v: [[0xFF; 4]; 4],
@@ -383,7 +383,7 @@ impl MbBs {
 /// Sentinel for an unused reference slot.
 const NO_REF: i32 = i32::MIN;
 
-/// One 4Ã—4 block's deblocking state, gathered into a per-macroblock tile.
+/// One 4×4 block's deblocking state, gathered into a per-macroblock tile.
 ///
 /// The frame-wide `inter`/`nnz`/`mv`/`ref_id` arrays are indexed `by * w4 + bx`,
 /// so deriving boundary strengths straight from them costs ~290 scattered loads
@@ -395,7 +395,7 @@ const NO_REF: i32 = i32::MIN;
 #[derive(Clone, Copy, Default)]
 struct Blk {
     inter: bool,
-    /// `nnz != 0` â€” the count itself never matters, only whether it is non-zero.
+    /// `nnz != 0` — the count itself never matters, only whether it is non-zero.
     nz: bool,
     ref_id: i32,
     mvx: i32,
@@ -408,7 +408,7 @@ struct Blk {
 }
 
 /// `core::array::from_fn` para cuatro elementos cuyo productor puede fallar: la
-/// tabla, o el primer error (ningÃºn elemento se inventa).
+/// tabla, o el primer error (ningún elemento se inventa).
 ///
 /// # Errors
 /// El primer `Err` que devuelva `f`.
@@ -422,7 +422,7 @@ fn intentar_4<T: Copy + Default, E>(mut f: impl FnMut(usize) -> Result<T, E>) ->
 }
 
 impl Blk {
-    /// REFUTED THREE WAYS â€” do NOT try to fold these checks again. The six
+    /// REFUTED THREE WAYS — do NOT try to fold these checks again. The six
     /// grids below are separate slices at one index, 33 panic paths, the densest
     /// cluster in either crate. Every technique that removes them costs MORE than
     /// they do, because `gather_tile` calls this 24 times per macroblock and any
@@ -440,13 +440,13 @@ impl Blk {
     /// AoS layout (one array of block records instead of six parallel grids)
     /// could change it, and that is a data-structure change, not a fold.
     ///
-    /// COR-3 (Crusty_H264, acordado con el verificador): los `unwrap_or` de arriba hacÃ­an que
-    /// un bloque ausente se leyera como Â«intra, sin coeficientes, sin movimientoÂ»: un
+    /// COR-3 (Crusty_H264, acordado con el verificador): los `unwrap_or` de arriba hacían que
+    /// un bloque ausente se leyera como «intra, sin coeficientes, sin movimiento»: un
     /// bloque inventado. Ahora es `FueraDeRango`; su coste se mide en tiempo de
-    /// decodificaciÃ³n de flujos completos (velocidad.py), no contando instrucciones.
+    /// decodificación de flujos completos (velocidad.py), no contando instrucciones.
     ///
     /// # Errors
-    /// `FueraDeRango` si alguna rejilla no cubre el Ã­ndice `i`.
+    /// `FueraDeRango` si alguna rejilla no cubre el índice `i`.
     #[inline]
     fn load(info: &BlockInfo, i: usize) -> Result<Self, FueraDeRango> {
         let (mvx, mvy) = *info.mv.get(i).ok_or(FueraDeRango("mv"))?;
@@ -470,7 +470,7 @@ impl Blk {
         })
     }
 
-    /// Whether two blocks are identical for flat-inter purposes (both lists â€”
+    /// Whether two blocks are identical for flat-inter purposes (both lists —
     /// on P tiles the list-1 fields are uniformly `NO_REF`/0, so the extra
     /// compares are always-true and the P behaviour is unchanged).
     #[inline]
@@ -484,11 +484,11 @@ impl Blk {
     }
 }
 
-/// The bS==1 motion test on tile entries â€” mirrors [`BlockInfo::inter_bs1`]
+/// The bS==1 motion test on tile entries — mirrors [`BlockInfo::inter_bs1`]
 /// exactly (its oracle), including the two-slot B rule, but reads registers
 /// instead of strided frame arrays. The single-list fast path fires whenever
 /// neither side carries a List-1 slot: all of P, and B edges between uni-L0
-/// blocks (equivalent to the general rule at n<=1 â€” a differing ref covers the
+/// blocks (equivalent to the general rule at n<=1 — a differing ref covers the
 /// differing-slot-count case, two unused slots give false).
 #[inline]
 fn bs1_tile(p: &Blk, q: &Blk) -> bool {
@@ -542,7 +542,7 @@ fn bs1_tile(p: &Blk, q: &Blk) -> bool {
     }
 }
 
-/// Boundary strength from tile entries (spec Â§8.7.2.1).
+/// Boundary strength from tile entries (spec §8.7.2.1).
 /// Branchless for the same reason as [`BlockInfo::bs_branchless`], but now with
 /// every operand already in a register rather than behind a strided load.
 /// Production derives intra strengths separately and calls [`bs_inter`]; this
@@ -562,7 +562,7 @@ fn bs_tile(p: &Blk, q: &Blk, mb_edge: bool) -> i32 {
     }
 }
 
-/// Boundary strength for an edge where BOTH sides are inter â€” the only case left
+/// Boundary strength for an edge where BOTH sides are inter — the only case left
 /// once the per-macroblock intra fills in [`derive_mb_bs`] have run. It can never
 /// return 3 or 4, which is precisely why x264's `deblock_strength` kernel is
 /// branch-light enough to vectorise: the intra strengths are not its job.
@@ -577,17 +577,17 @@ fn bs_inter(p: &Blk, q: &Blk) -> i32 {
     }
 }
 
-/// Derive one macroblock's 32 boundary strengths (2 directions Ã— 4 edge groups Ã—
+/// Derive one macroblock's 32 boundary strengths (2 directions × 4 edge groups ×
 /// 4 segments), x264-style.
 ///
 /// The structural point: `mb_type` is a per-MACROBLOCK syntax element, so a
 /// macroblock is wholly intra or wholly inter and intra-ness is not a per-edge
-/// property. That turns the two expensive cases into constant fills â€”
-///   * intra macroblock â†’ internal edges are the constant 3, its own macroblock
+/// property. That turns the two expensive cases into constant fills —
+///   * intra macroblock → internal edges are the constant 3, its own macroblock
 ///     edges the constant 4;
-///   * flat inter (skip) macroblock â†’ every internal strength is 0;
+///   * flat inter (skip) macroblock → every internal strength is 0;
 ///
-/// â€” and leaves [`bs_inter`] for the rest. Pinned by `derive_matches_per_edge`.
+/// — and leaves [`bs_inter`] for the rest. Pinned by `derive_matches_per_edge`.
 #[inline]
 fn derive_mb_bs(
     tile: &Tile,
@@ -621,7 +621,7 @@ fn derive_mb_bs(
         return; // all zero by construction (no coefficients, one shared ref+mv)
     }
     for be in 1..4usize {
-        // An 8Ã—8-transform macroblock has no transform boundary at 4Ã—4 edges 1/3.
+        // An 8×8-transform macroblock has no transform boundary at 4×4 edges 1/3.
         if mb_t8 && (be == 1 || be == 3) {
             continue;
         }
@@ -656,10 +656,10 @@ pub enum MbKind {
     /// Intra: internal strengths are the constant 3, its own macroblock edges 4.
     /// Needs NO block reads at all.
     Intra,
-    /// Skip â€” no coefficients, one shared reference and motion vector â€” so every
+    /// Skip — no coefficients, one shared reference and motion vector — so every
     /// internal strength is 0 and only the two macroblock edges are derived.
     Skip,
-    /// Coded inter with a SINGLE partition (P_L0_16x16 â€” the fast preset's only
+    /// Coded inter with a SINGLE partition (P_L0_16x16 — the fast preset's only
     /// inter mode). All 16 blocks share one reference and motion vector, so no
     /// internal edge can reach strength 1: internal strengths depend on
     /// coefficients alone, and the derivation reads 16 nnz bytes instead of
@@ -711,7 +711,7 @@ pub fn derive_mb_kind_into(
     bs_v: &mut [[i32; 4]; 4],
     bs_h: &mut [[i32; 4]; 4],
 ) -> Result<(), FueraDeRango> {
-    // Direct i32 writes â€” no MbBs staging + 32 u8â†’i32 casts.
+    // Direct i32 writes — no MbBs staging + 32 u8→i32 casts.
     *bs_v = [[0; 4]; 4];
     *bs_h = [[0; 4]; 4];
     let (bx0, by0) = (mb_x * 4, mb_y * 4);
@@ -796,7 +796,7 @@ pub fn derive_mb_kind_into(
     Ok(())
 }
 
-/// Intensidades de borde de un macrobloque de clase conocida (versiÃ³n que devuelve el registro).
+/// Intensidades de borde de un macrobloque de clase conocida (versión que devuelve el registro).
 ///
 /// # Errors
 /// `FueraDeRango` si las rejillas de `info` o sus mapas de POC no cubren el macrobloque.
@@ -833,7 +833,7 @@ pub fn derive_mb_kind(
             let mut m = MbBs::default();
             // Internal edges: uniform motion means only coefficients can raise a
             // strength, and then only to 2.
-            // FOUR ROW SLICES â€” the exact twin of `derive_mb_kind_into`'s
+            // FOUR ROW SLICES — the exact twin of `derive_mb_kind_into`'s
             // InterUniform arm (16 panics to 0, -22% instructions there). The
             // internal edges read only this macroblock's own sixteen nnz cells,
             // as four contiguous runs of four, but did it as forty-eight
@@ -877,13 +877,13 @@ pub fn derive_mb_kind(
     })
 }
 
-/// Derive one macroblock's boundary strengths from the block grids â€” the entry
+/// Derive one macroblock's boundary strengths from the block grids — the entry
 /// point for computing them during ENCODE.
 ///
 /// `info.ref_id` may carry the encoder's raw reference indices (negative for
 /// intra) rather than the `NO_REF` sentinel: reference identity is only ever
 /// compared between two INTER blocks, which always hold a valid index.
-/// PACKED per-macroblock boundary-strength inputs â€” the x264-shaped layout.
+/// PACKED per-macroblock boundary-strength inputs — the x264-shaped layout.
 ///
 /// Everything one macroblock's derivation needs for its own 16 blocks, contiguous,
 /// in raster order (`k = row * 4 + col`). This is the layout `deblock_strength_avx2`
@@ -898,11 +898,11 @@ pub fn derive_mb_kind(
 ///
 /// Read that second row carefully, because it REFUTED the original justification for
 /// this work. The whole derivation costs ~400 ns/MB in context, so eliminating the
-/// gather buys only ~19 ns/MB â€” about 5% of the derivation, ~1% of decode. **The
+/// gather buys only ~19 ns/MB — about 5% of the derivation, ~1% of decode. **The
 /// derivation is COMPUTE-bound, not gather-bound**: ~370 ns/MB is the 32 per-edge
 /// `bs_inter` evaluations themselves (32 edges x ~20-30 cycles ~= 210-320 ns @ 3 GHz,
 /// which matches). So this layout does NOT pay for itself as a memory optimisation.
-/// It exists to make the ARITHMETIC vectorisable â€” `nnz` collapses to shift-and-or on
+/// It exists to make the ARITHMETIC vectorisable — `nnz` collapses to shift-and-or on
 /// a 16-bit mask, and the motion test becomes i16 subtract/abs/compare across 16
 /// lanes. That distinction decides whether the SIMD stage is worth building, and it
 /// is the good case: this codebase's flat SIMD results were all memory-bound kernels,
@@ -936,7 +936,7 @@ pub struct MbPack {
     pub ref1: [i32; 16],
     /// Reference PICTURE IDENTITY per block (`NO_REF` = intra/unused). Kept i32
     /// because the decoder supplies a POC, which must stay comparable across slices
-    /// whose reference lists differ â€” a `ref_idx` would compare equal across slices
+    /// whose reference lists differ — a `ref_idx` would compare equal across slices
     /// that mean different pictures.
     pub ref_id: [i32; 16],
 }
@@ -944,7 +944,7 @@ pub struct MbPack {
 impl BlockInfo<'_> {
     /// Block `i`'s List-0 reference identity, applying the optional index map.
     /// Fallible grid accessors for the BLIND (non-tile) derivation arm. The
-    /// decoder never enters it â€” the packed tile path owns every frame â€” so the
+    /// decoder never enters it — the packed tile path owns every frame — so the
     /// cost of a conditional move here is irrelevant, while the panic paths were
     /// not. A missing block reads as intra with no motion, which is the maximum
     /// boundary strength and therefore the conservative answer.
@@ -983,7 +983,7 @@ impl BlockInfo<'_> {
     ///
     /// # Errors
     /// `FueraDeRango` si `ref_id` no cubre `i` o el mapa de POC no cubre
-    /// el Ã­ndice de referencia guardado ahÃ­.
+    /// el índice de referencia guardado ahí.
     #[inline]
     fn rid_at(&self, i: usize) -> Result<i32, FueraDeRango> {
         let r = *self.ref_id.get(i).ok_or(FueraDeRango("ref_id"))?;
@@ -994,7 +994,7 @@ impl BlockInfo<'_> {
     ///
     /// # Errors
     /// `FueraDeRango` si `ref_id1` no cubre `i` o el mapa de POC no cubre
-    /// el Ã­ndice de referencia guardado ahÃ­.
+    /// el índice de referencia guardado ahí.
     #[inline]
     fn rid1_at(&self, i: usize) -> Result<i32, FueraDeRango> {
         let r = *self.ref_id1.get(i).ok_or(FueraDeRango("ref_id1"))?;
@@ -1034,7 +1034,7 @@ pub fn pack_frame(info: &BlockInfo, mb_w: usize, mb_h: usize) -> Result<Vec<MbPa
 }
 
 /// [`pack_frame`] into a RECYCLED buffer (Brick: WHYS Part 15 item 1). A fresh
-/// `Vec<MbPack>` was ~1.1 MB allocated + first-touch-faulted EVERY frame â€” the
+/// `Vec<MbPack>` was ~1.1 MB allocated + first-touch-faulted EVERY frame — the
 /// same per-frame-materialization mechanism the banked GridPool brick removed.
 /// Each record is built in a local and pushed, so a reused allocation is never
 /// pre-filled: one write per byte, no defaults pass, no page faults.
@@ -1058,7 +1058,7 @@ pub fn pack_frame_into(
     Ok(())
 }
 
-/// One macroblock's packed record â€” the unit of both `pack_frame_into` and the
+/// One macroblock's packed record — the unit of both `pack_frame_into` and the
 /// rolling-window precompute pass.
 /// Reference index -> picture identity, with the map presence hoisted OUT.
 /// `BlockInfo::rid`/`rid1` re-ask `poc.is_empty()` on every call, i.e. 16 times
@@ -1066,9 +1066,9 @@ pub fn pack_frame_into(
 /// resolved once by the caller. Byte-identical to `rid`/`rid1`.
 ///
 /// # Errors
-/// `FueraDeRango` si un Ã­ndice no negativo no estÃ¡ en el mapa de POC. El llamador pasa el
-/// mapa del corte dueÃ±o del bloque, asÃ­ que en un flujo vÃ¡lido siempre estÃ¡; un Ã­ndice
-/// negativo es Â«sin referenciaÂ» (`NO_REF`), no un error.
+/// `FueraDeRango` si un índice no negativo no está en el mapa de POC. El llamador pasa el
+/// mapa del corte dueño del bloque, así que en un flujo válido siempre está; un índice
+/// negativo es «sin referencia» (`NO_REF`), no un error.
 #[inline]
 fn map_ref(mapped: bool, poc: &[i32], r: i32) -> Result<i32, FueraDeRango> {
     match usize::try_from(r) {
@@ -1151,8 +1151,8 @@ pub fn pack_mb(
 ///
 /// The frame-buffer pipeline was: pack ALL 3600 records into a ~1.1 MB Vec,
 /// then a second interleaved loop re-reads them (plus a per-MB gate ladder) to
-/// derive strengths. Here each record is DERIVED the moment it is built â€”
-/// while it and its left/top neighbours are L1-hot â€” and only `2 Ã— mb_w`
+/// derive strengths. Here each record is DERIVED the moment it is built —
+/// while it and its left/top neighbours are L1-hot — and only `2 × mb_w`
 /// records (~50 KB at 720p) ever exist. Output is one `MbBs` (32 B) per
 /// macroblock, which `filter_frame` consumes over its existing PRECOMPUTED
 /// path, collapsing the per-MB derivation machinery in the hot loop entirely.
@@ -1165,8 +1165,8 @@ pub fn pack_mb(
 ///
 /// # Errors
 /// `FueraDeRango` si las rejillas de `info` o sus mapas de POC no cubren la imagen.
-/// Un `t8x8` vacÃ­o significa Â«ningÃºn macrobloque usa la transformada 8Ã—8Â»; uno no vacÃ­o
-/// y mÃ¡s corto que `mb_w Ã— mb_h` es error.
+/// Un `t8x8` vacío significa «ningún macrobloque usa la transformada 8×8»; uno no vacío
+/// y más corto que `mb_w × mb_h` es error.
 pub fn precompute_bs_frame(
     info: &BlockInfo,
     mb_w: usize,
@@ -1235,11 +1235,11 @@ impl PackScratch {
 #[cfg(not(feature = "std"))]
 static PACK_SCRATCH: PackScratch = PackScratch;
 
-/// THE KERNEL INTERFACE â€” the whole motion half of the derivation as two bitmasks.
+/// THE KERNEL INTERFACE — the whole motion half of the derivation as two bitmasks.
 ///
 /// `bit k` of the returned pair answers "does block `k` differ in motion from its
 /// LEFT neighbour block `k-1`" and "...from its ABOVE neighbour block `k-4`", using
-/// the Â§8.7.2.1 rule that `bs_inter` applies per edge:
+/// the §8.7.2.1 rule that `bs_inter` applies per edge:
 ///
 /// ```text
 ///   differs(a,b) = ref[a] != ref[b]  ||  (ref[a] != NO_REF && (|dmvx| >= 4 || |dmvy| >= 4))
@@ -1247,13 +1247,13 @@ static PACK_SCRATCH: PackScratch = PackScratch;
 ///
 /// Bits at `k % 4 == 0` (left) and `k < 4` (up) are DON'T-CARE: those edges are
 /// macroblock edges, derived separately against the neighbouring record. That is not
-/// an accident of convenience â€” it is what makes the SIMD twin cheap, because the
+/// an accident of convenience — it is what makes the SIMD twin cheap, because the
 /// lane positions a within-128-bit-lane shift corrupts are exactly those positions.
 ///
 /// Collapsing the derivation to masks is the point of the packed layout: the 24
 /// internal edges stop being 24 branchy `bs_inter` calls and become bit tests against
 /// these masks OR'd with `nnz_mask`, which is the form `deblock_strength_avx2` works in.
-/// Scalar twin of the uniform-motion test â€” the oracle, and the path on any CPU
+/// Scalar twin of the uniform-motion test — the oracle, and the path on any CPU
 /// without AVX2. Short-circuits, which is why the SIMD twin's win concentrates on
 /// UNIFORM macroblocks (where this walks all 15 comparisons).
 #[inline]
@@ -1304,7 +1304,7 @@ pub fn bs_motion_masks_scalar(p: &MbPack) -> (u16, u16) {
 /// Dispatcher: the AVX2 twin when the CPU has it, the scalar oracle otherwise.
 ///
 /// The scalar version stays the default on any non-AVX2 CPU and remains the
-/// reference the SIMD twin is gated against â€” it is never deleted.
+/// reference the SIMD twin is gated against — it is never deleted.
 #[inline]
 pub fn bs_motion_masks(p: &MbPack) -> (u16, u16) {
     #[cfg(all(target_arch = "x86_64", feature = "asm"))]
@@ -1314,7 +1314,7 @@ pub fn bs_motion_masks(p: &MbPack) -> (u16, u16) {
             return m;
         }
     } else {
-        // TWO-LIST kernel (WHYS Part 16's named lever): the Â§8.7.2.1
+        // TWO-LIST kernel (WHYS Part 16's named lever): the §8.7.2.1
         // set-matching rule vectorized, so B macroblocks with List-1 slots no
         // longer fall to the scalar per-edge walk. Gated bit-exact against the
         // scalar twin by `bs_motion_masks_two_list_matches_scalar` (accel).
@@ -1327,7 +1327,7 @@ pub fn bs_motion_masks(p: &MbPack) -> (u16, u16) {
     bs_motion_masks_scalar(p)
 }
 
-/// The Â§8.7.2.1 motion test over packed operands â€” the EXACT twin of `bs1_tile`,
+/// The §8.7.2.1 motion test over packed operands — the EXACT twin of `bs1_tile`,
 /// including the two-list set-matching rule (which is order-independent: a block pair
 /// whose two reference pictures match after a SWAP is not "different motion").
 ///
@@ -1417,7 +1417,7 @@ fn pk_nz(p: &MbPack, k: usize) -> bool {
     (p.nnz_mask >> k) & 1 != 0
 }
 
-/// `bs_inter` over packed operands â€” both sides inter, so 3 and 4 are unreachable.
+/// `bs_inter` over packed operands — both sides inter, so 3 and 4 are unreachable.
 /// Mirrors `bs1_tile`'s single-list fast path exactly.
 #[inline]
 fn pk_bs_inter(p: &MbPack, pk: usize, q: &MbPack, qk: usize) -> i32 {
@@ -1430,7 +1430,7 @@ fn pk_bs_inter(p: &MbPack, pk: usize, q: &MbPack, qk: usize) -> i32 {
     pk_differs(p, pk, q, qk) as i32
 }
 
-/// Derive one macroblock's strengths from PACKED records â€” the byte-identical twin of
+/// Derive one macroblock's strengths from PACKED records — the byte-identical twin of
 /// `derive_mb_bs`, pinned against it by `packed_matches_tile`.
 pub fn derive_mb_packed(
     packs: &[MbPack],
@@ -1457,7 +1457,7 @@ pub fn derive_mb_packed(
 }
 
 /// The record-based core of [`derive_mb_packed`]: derive one macroblock's
-/// strengths from ITS OWN record plus the left/top neighbours' â€” the shape the
+/// strengths from ITS OWN record plus the left/top neighbours' — the shape the
 /// rolling-window precompute pass ([`precompute_bs_frame`]) needs, where only
 /// two rows of records exist at a time.
 pub fn derive_mb_records(
@@ -1471,14 +1471,14 @@ pub fn derive_mb_records(
     let cur_intra = !cur.inter;
 
     // Both predicates from the packed record: uniform motion needs no neighbour, and
-    // "no coefficients" is `nnz_mask == 0` â€” a single register test replacing a
+    // "no coefficients" is `nnz_mask == 0` — a single register test replacing a
     // 16-block walk.
     //
     // REFUTED (WHYS Part 16, z=-2.11 REGRESSION, reverted): deriving uniformity
     // from `bs_motion_masks` to save "the second kernel call". The two calls are
     // ASYMMETRIC: this one is a cheap AVX2 compare-to-block-0 that handles
     // two-list B data in vector code, while the masks kernel falls to the SCALAR
-    // set-matching walk whenever `l1_used != 0` â€” most B inter MBs. The
+    // set-matching walk whenever `l1_used != 0` — most B inter MBs. The
     // population reaching this function on B frames is uniform-heavy, so the
     // "fusion" replaced their one cheap vector call with an expensive scalar
     // walk. Do not retry without making the masks kernel two-list-capable first.
@@ -1558,9 +1558,9 @@ pub fn derive_mb_records(
 ///   uniform_motion = b0.inter AND every block { inter AND same_motion(b0) }
 ///   flat_inter     = uniform_motion AND no block carries coefficients
 /// ```
-/// They used to be two independent 16-block scans â€” and the `uniform_motion` one
+/// They used to be two independent 16-block scans — and the `uniform_motion` one
 /// ran BEFORE `derive_mb_bs`'s `if flat_inter { return }` early-out, so every Skip
-/// macroblock paid a full 16-block Ã— 6-compare motion scan whose result was then
+/// macroblock paid a full 16-block × 6-compare motion scan whose result was then
 /// discarded. The MB-kind census measures Skip at 36.4% (CAVLC) / 65.0% (main) /
 /// 57.8% (high) of macroblocks, so that dead scan ran on most of the corpus.
 ///
@@ -1570,7 +1570,7 @@ pub fn derive_mb_records(
 fn scan_uniform_flat(tile: &Tile) -> (bool, bool) {
     let b0 = &tile[1][1];
     if !b0.inter {
-        return (false, false); // intra MB â€” neither predicate applies
+        return (false, false); // intra MB — neither predicate applies
     }
     let mut any_nz = false;
     for row in &tile[1..5] {
@@ -1584,7 +1584,7 @@ fn scan_uniform_flat(tile: &Tile) -> (bool, bool) {
     (true, !any_nz)
 }
 
-/// La rama anterior a la fusiÃ³n, conservada tal cual como orÃ¡culo de `scan_uniform_flat`.
+/// La rama anterior a la fusión, conservada tal cual como oráculo de `scan_uniform_flat`.
 #[cfg(test)]
 fn scan_two_pass(tile: &Tile) -> (bool, bool) {
     let b0 = &tile[1][1];
@@ -1629,8 +1629,8 @@ pub fn derive_mb(
     })
 }
 
-/// The 5Ã—5 neighbourhood an MB's edges can reach: row/col 0 are the top and left
-/// neighbour blocks, rows/cols 1..=4 the MB's own 4Ã—4 grid. Entries outside the
+/// The 5×5 neighbourhood an MB's edges can reach: row/col 0 are the top and left
+/// neighbour blocks, rows/cols 1..=4 the MB's own 4×4 grid. Entries outside the
 /// picture stay `Default` and are never read (the frame-edge groups are skipped).
 type Tile = [[Blk; 5]; 5];
 
@@ -1661,7 +1661,7 @@ fn gather_tile(info: &BlockInfo, mb_x: usize, mb_y: usize) -> Result<Tile, Fuera
             t[0][c + 1] = Blk::load(info, row + c)?;
         }
     }
-    // `mb_type` is a per-macroblock syntax element, so every 4Ã—4 block of a
+    // `mb_type` is a per-macroblock syntax element, so every 4×4 block of a
     // macroblock shares its intra/inter status. `derive_mb_bs` depends on this to
     // replace per-edge intra tests with per-macroblock constant fills.
     debug_assert!(
@@ -1675,7 +1675,7 @@ fn gather_tile(info: &BlockInfo, mb_x: usize, mb_y: usize) -> Result<Tile, Fuera
 /// deblocking stage 1.4-1.7x faster but does NOT reduce total encode time: the
 /// block grids were never cold (~90 KB at CIF, L2-resident), so the derivation
 /// costs the same in a streaming pass, and the encode loop's contended working
-/// set makes it cost MORE there â€” measured, the loop grew about twice the
+/// set makes it cost MORE there — measured, the loop grew about twice the
 /// derivation's own cost. Kept behind this switch with its tests, because the
 /// machinery is what a future commit-time derivation (values still in registers,
 /// no grid re-read) would build on.
@@ -1693,8 +1693,8 @@ pub fn set_precomputed_bs(on: bool) {
     BS_PRECOMP.store(on as u8, core::sync::atomic::Ordering::Relaxed);
 }
 
-/// DerivaciÃ³n por borde directamente sobre las tablas de la imagen: el ORÃCULO contra el
-/// que se prueba la tesela (`tile_matches_frame_indexing`, `bs_arms_agree`). En producciÃ³n
+/// Derivación por borde directamente sobre las tablas de la imagen: el ORÁCULO contra el
+/// que se prueba la tesela (`tile_matches_frame_indexing`, `bs_arms_agree`). En producción
 /// solo se deriva por la tesela o por las intensidades precalculadas.
 #[cfg(test)]
 impl BlockInfo<'_> {
@@ -1704,12 +1704,12 @@ impl BlockInfo<'_> {
     }
 
     /// Boundary strength between left/above block `p` and current block `q`
-    /// (spec Â§8.7.2.1). `mb_edge` is true on macroblock boundaries.
+    /// (spec §8.7.2.1). `mb_edge` is true on macroblock boundaries.
     ///
     /// Written branchlessly on purpose. Real content mixes intra/inter, coded and
     /// uncoded blocks, and per-block motion, so the natural short-circuit form
-    /// (`if intra â€¦ else if nnz â€¦ else if motion â€¦`) mispredicts on nearly every
-    /// 4Ã—4 edge: the anatomy bench measures the identical code at ~240 ns/MB on
+    /// (`if intra … else if nnz … else if motion …`) mispredicts on nearly every
+    /// 4×4 edge: the anatomy bench measures the identical code at ~240 ns/MB on
     /// uniform data and ~515 ns/MB once the block state varies, which is the
     /// whole of our gap to x264 here (x264 derives bS with a branchless SIMD
     /// kernel). Evaluating all three candidates costs a few extra loads and beats
@@ -1720,8 +1720,8 @@ impl BlockInfo<'_> {
     }
 
     /// The original short-circuit form, kept as the A/B arm and the fallback.
-    /// Misma salida que [`Self::bs_branchless`] por construcciÃ³n; hoy solo es el
-    /// orÃ¡culo de las pruebas.
+    /// Misma salida que [`Self::bs_branchless`] por construcción; hoy solo es el
+    /// oráculo de las pruebas.
     fn bs_branchy(&self, p: usize, q: usize, mb_edge: bool) -> i32 {
         if !self.inter_at(p) || !self.inter_at(q) {
             if mb_edge {
@@ -1756,10 +1756,10 @@ impl BlockInfo<'_> {
 
     /// Whether two residual-free inter blocks get boundary strength 1: they use
     /// different reference pictures, a different number of motion vectors, or a
-    /// motion vector differs by â‰¥ 1 full sample (matched by reference picture, so
-    /// the same picture in different lists is recognised). Spec Â§8.7.2.1.
+    /// motion vector differs by ≥ 1 full sample (matched by reference picture, so
+    /// the same picture in different lists is recognised). Spec §8.7.2.1.
     fn inter_bs1(&self, p: usize, q: usize) -> bool {
-        // Single-list fast path (P and I slices â€” `ref_id1` empty). This is the
+        // Single-list fast path (P and I slices — `ref_id1` empty). This is the
         // overwhelmingly common case, and it collapses to two comparisons: the
         // general path below builds a two-slot [(ref, mv); 2] array per side and
         // matches on the slot count, which the anatomy bench showed dominates
@@ -1775,8 +1775,8 @@ impl BlockInfo<'_> {
             let (a, b) = (self.mv_at(p), self.mv_at(q));
             let f4 = |d: i32| (d.wrapping_add(3) as u32) >= 7;
             let far = f4(a.0 - b.0) | f4(a.1 - b.1);
-            // Differing refs â‡’ bS 1 (this also covers "one slot used, one not",
-            // the general path's differing-count case). Both unused â‡’ 0.
+            // Differing refs ⇒ bS 1 (this also covers "one slot used, one not",
+            // the general path's differing-count case). Both unused ⇒ 0.
             return (rp != rq) | ((rp != NO_REF) & far);
         }
         // (reference id, motion vector) for each used prediction slot.
@@ -1787,7 +1787,7 @@ impl BlockInfo<'_> {
                 v[n] = (self.ref_at(i), self.mv_at(i));
                 n += 1;
             }
-            // `ref_id1` may be empty (P frames have no List-1 â€” the caller skips
+            // `ref_id1` may be empty (P frames have no List-1 — the caller skips
             // building it, since every entry would be NO_REF anyway).
             if !self.ref_id1.is_empty() && self.ref1_at(i) != NO_REF {
                 v[n] = (self.ref1_at(i), self.mv1_at(i));
@@ -1833,8 +1833,8 @@ impl BlockInfo<'_> {
 /// is the (constant) luma QP, `qpc` the chroma QP, and `info` supplies the
 /// per-block state used to derive boundary strengths (for an all-intra frame
 /// this reduces to the fixed 4/3 strengths).
-/// Edge thresholds `(Î±, Î², tc0[bS-1])` for a given averaged QP and the slice's
-/// filter offsets (spec Â§8.7.2.2): Î±/tc0 indexed by `indexA`, Î² by `indexB`.
+/// Edge thresholds `(α, β, tc0[bS-1])` for a given averaged QP and the slice's
+/// filter offsets (spec §8.7.2.2): α/tc0 indexed by `indexA`, β by `indexB`.
 #[inline]
 fn thresholds(qpav: i32, offset_a: i32, offset_b: i32) -> (i32, i32, [i32; 3]) {
     // MEASUREMENT ONLY (env-gated): counts REAL invocations, so the per-MB
@@ -1844,7 +1844,7 @@ fn thresholds(qpav: i32, offset_a: i32, offset_b: i32) -> (i32, i32, [i32; 3]) {
     (ALPHA[ia], BETA[ib], TC0[ia])
 }
 
-/// Aplica el filtro de desbloqueo a toda la imagen (Â§8.7).
+/// Aplica el filtro de desbloqueo a toda la imagen (§8.7).
 ///
 /// # Errors
 /// `FueraDeRango` si las rejillas de `info` o sus mapas de POC no cubren la imagen.
@@ -1861,7 +1861,7 @@ pub fn filter_frame(
     offset_b: i32,
     info: &BlockInfo,
 ) -> Result<(), FueraDeRango> {
-    // El codificador usa un Ãºnico par por imagen: se reparte aquÃ­ a todos sus macrobloques.
+    // El codificador usa un único par por imagen: se reparte aquí a todos sus macrobloques.
     let par = DesplazamientosFiltro::nuevo(offset_a, offset_b)
         .ok_or(FueraDeRango("desplazamientos del filtro"))?;
     let desplazamientos = vec![par; mb_w * mb_h];
@@ -1923,7 +1923,7 @@ fn derive_mb_general(
     let packed_mb = packs.filter(|_| fast_kind.is_none());
     // MATERIALISE THE TILE ONLY ON THE BLIND PATH. Writing
     // `else { Default::default() }` here cost an 800-byte zero-init of the
-    // 5x5 `Tile` on every CLASSIFIED macroblock â€” i.e. this brick removed a
+    // 5x5 `Tile` on every CLASSIFIED macroblock — i.e. this brick removed a
     // gather and added ~4 GB of memset, and measured 1.2-17.0% SLOWER in
     // 4/4 pairs. `Option` keeps the fast path free of it entirely.
     let tile = if blind_tile {
@@ -1932,7 +1932,7 @@ fn derive_mb_general(
         None
     };
 
-    // ONE walk yields both predicates â€” see `scan_uniform_flat`. The
+    // ONE walk yields both predicates — see `scan_uniform_flat`. The
     // non-tile arm has no `uniform_motion` consumer (it derives per-edge
     // off the frame arrays), so it keeps returning `flat_inter` alone.
     let mut uniform_motion = false;
@@ -1942,12 +1942,12 @@ fn derive_mb_general(
             // strength is 0 by construction.
             MbKind::Skip => true,
             // CAUGHT BY THE ORACLE: a single-partition inter macroblock
-            // with NO coefficients is flat too â€” uniform motion means the
+            // with NO coefficients is flat too — uniform motion means the
             // blind predicate reduces to exactly "no block has nnz".
             // Hardcoding `false` here was pixel-identical (the strengths
             // are all 0 either way) but made the consuming loops walk the
             // internal edge groups instead of skipping them, throwing away
-            // part of the win. 16 contiguous nnz bytes â€” the same data
+            // part of the win. 16 contiguous nnz bytes — the same data
             // `derive_mb_kind` already reads for this class.
             MbKind::InterUniform => {
                 // Row slices: one range check per ROW instead of one per block.
@@ -1984,7 +1984,7 @@ fn derive_mb_general(
     } else if let Some(k) = fast_kind {
         // Write i32 strengths straight into the consuming arrays. Going via
         // `derive_mb_kind`'s packed `MbBs` cost 32 u8->i32 stores per
-        // classified macroblock that the blind path never pays â€” pure
+        // classified macroblock that the blind path never pays — pure
         // addition on the path that is supposed to be cheaper.
         derive_mb_kind_into(info, mb_x, mb_y, k, bs_v, bs_h)?;
     } else if blind_tile {
@@ -2003,7 +2003,7 @@ fn derive_mb_general(
     Ok(flat_inter)
 }
 
-/// [`filter_frame`] restricted to macroblock rows `rows` â€” the row-interleave
+/// [`filter_frame`] restricted to macroblock rows `rows` — the row-interleave
 /// campaign's unit (docs/row-interleave-plan.md R3): the decoder filters row
 /// `r` the moment it finishes decoding, spec raster order preserved exactly.
 /// Filter rows with the boundary strengths ALREADY PRECOMPUTED in `info.bs`.

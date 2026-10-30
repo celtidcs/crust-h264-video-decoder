@@ -4,7 +4,7 @@ version = 4
 
 [[package]]
 name = "banco_h264"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "openh264",
  "rusty_h264-decoder",
