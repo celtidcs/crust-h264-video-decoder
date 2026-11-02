@@ -1,6 +1,6 @@
 # Crusty_H264 — Decodificador H.264 Seguro, Conforme y Puro en Rust
 
-Bienvenido al repositorio oficial de **Crusty_H264**, la implementación moderna, auditada y 100% en Rust seguro (`#![forbid(unsafe_code)]`) del estándar de compresión de vídeo H.264 / AVC (ISO/IEC 14496-10 / UIT-T H.264).
+Bienvenido al repositorio oficial de **Crusty_H264**, la implementación moderna y auditada en Rust, sin `unsafe` en su propio código (`#![forbid(unsafe_code)]`), del estándar de compresión de vídeo H.264 / AVC (ISO/IEC 14496-10 / UIT-T H.264).
 
 ## Sobre Celtilander
 
@@ -28,7 +28,7 @@ Saludos a todo el mundo.
 En el ecosistema informático contemporáneo, los decodificadores multimedia programados en C y C++ representan históricamente uno de los vectores más críticos de vulnerabilidad y explotación remota (desbordamientos de búfer, desreferencias de punteros nulos, carreras de memoria y uso tras liberación).
 
 **Crusty_H264** nace como una alternativa de ingeniería rigurosa, orientada a ofrecer:
-1. **Seguridad Absoluta de Memoria**: Eliminación total de FFI, código C legado y bloques inseguros (`unsafe: 0`).
+1. **Seguridad de Memoria**: Las dos bibliotecas del decodificador no contienen bloques `unsafe` (`#![forbid(unsafe_code)]`, que el compilador hace cumplir) ni llamadas FFI a C. Las dependencias de bajo nivel `wide`, `safe_arch` y `bytemuck` sí usan `unsafe` internamente, y la feature opcional `asm` añade `rusty_h264-accel` (intrínsecos SIMD). El banco de evaluación compila Cisco OpenH264 (C y ensamblador) solo como oráculo de comparación.
 2. **Fidelidad y Conformidad Normativa**: Resolución milimétrica de las discrepancias del estándar UIT-T H.264, validada bit a bit contra oráculos orquestados con FFmpeg y la suite de pruebas oficial de la UIT-T.
 3. **Arquitectura Limpia y Modular (SOLID)**: Reestructuración integral de componentes monolíticos en módulos atómicos de responsabilidad única.
 4. **Cota Estricta de Recursos**: Búfer de reordenación de imágenes decodificadas (DPB) adaptativo según el nivel del estándar, imposibilitando el consumo desmedido de memoria RAM ante vídeos hostiles o con grupos de imágenes extensos.
@@ -57,7 +57,7 @@ El proyecto se distribuye en dos componentes centrales y un banco de evaluación
 
 ```text
 crusty_h264/
-├── Cargo.toml                              # Manifiesto raíz y orquestación del workspace
+├── Cargo.toml                              # Paquete del banco; redirige a vendor/ con [patch]
 ├── vendor/
 │   ├── rusty_h264-common-0.16.0/           # Primitivas matemáticas, predicción, transformadas y DCT
 │   └── rusty_h264-decoder-0.16.0/          # Motor de decodificación H.264 y reordenación DPB

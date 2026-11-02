@@ -4,6 +4,14 @@ Este documento recoge de forma cronológica la evolución del decodificador, doc
 
 ---
 
+## v0.1.2 (en preparación)
+
+- **Pruebas en un clon limpio**: las pruebas de integración de `rusty_h264-decoder` (`filtro_por_corte`, `mslice_reorden`, `mslice_idc2`, `ipcm_cabac`) incrustan siete salidas de referencia `tests/{cabac,cortes}_data/*_ref.yuv` que la regla `*.yuv` de `.gitignore` excluía; en un clon de v0.1.0 o v0.1.1 esas pruebas no compilaban. Ahora se versionan, y `*.yuv` y `*.264` se declaran binarios en `.gitattributes` para que git no altere sus bytes.
+- **Documentación**: comentarios y documentos sin referencias al proceso interno de desarrollo; se precisa que la ausencia de `unsafe` cubre el código propio de las bibliotecas y se declaran las dependencias que usan `unsafe` (`wide`, `safe_arch`, `bytemuck` y, con la feature `asm`, `rusty_h264-accel`).
+- **Verificación**: `cargo test --all-features`, `cargo clippy --all-targets --all-features -- -D warnings`, `cargo fmt --check` y `cargo audit` en verde en Linux y Windows desde un `git archive` limpio (common: 99 pruebas; decoder: 70).
+
+---
+
 ## 2026-10-30 — Versión v0.1.1: Saneamiento Integral de Codificación UTF-8 / BOM y Exportación de Reordenación
 
 - **Motivo y Detección**: Hallazgos comunicados mediante auditoría cruzada externa:

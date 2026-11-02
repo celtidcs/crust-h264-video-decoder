@@ -70,7 +70,7 @@ El decodificador **Crusty_H264** ofrece una cobertura exhaustiva del estándar H
 
 ## 4. Rendimiento y Comparativa Multirresolución (720p, Full HD 1080p, 4K)
 
-Las pruebas sistemáticas ejecutadas sobre secuencias del banco de velocidad (`vel/`) demuestran que la implementación 100% en Rust seguro (`#![forbid(unsafe_code)]`) de **Crusty_H264** ofrece un rendimiento parejo o superior frente al decodificador en C/C++ y ensamblador de Cisco OpenH264:
+Las pruebas sistemáticas ejecutadas sobre secuencias del banco de velocidad (`vel/`) demuestran que la implementación en Rust sin `unsafe` propio (`#![forbid(unsafe_code)]`, compilada sin la feature `asm`) de **Crusty_H264** ofrece un rendimiento parejo o superior frente al decodificador en C/C++ y ensamblador de Cisco OpenH264:
 
 | Secuencia | Resolución | Perfil / Herramientas | Fotogramas | Crusty_H264 (Safe Rust) | Cisco OpenH264 (C/ASM) | Razón Crusty / Cisco | Rendimiento Crusty |
 |---|---|---|---|---|---|---|---|

@@ -7,7 +7,7 @@ El diseño de **Crusty_H264** responde a una necesidad primordial: construir un 
 Los cuatro pilares arquitectónicos que gobiernan el código son:
 
 1. **Inmunidad de Memoria por Construcción**:
-   Todo el código de producción en los dos crates (`common` y `decoder`) aplica `#![forbid(unsafe_code)]`. No existen bloques `unsafe`, ni punteros crudos sin encapsular, ni llamadas FFI hacia librerías externas en C.
+   Todo el código de producción en los dos crates (`common` y `decoder`) aplica `#![forbid(unsafe_code)]`. No existen bloques `unsafe`, ni punteros crudos sin encapsular, ni llamadas FFI hacia librerías externas en C. La garantía cubre el código propio de los dos crates, no sus dependencias: `wide`, `safe_arch` y `bytemuck` usan `unsafe` internamente, y la feature `asm` (activada por defecto en `rusty_h264-decoder`, desactivada en el banco) incorpora `rusty_h264-accel`, cuyos intrínsecos SIMD son `unsafe`.
 
 2. **Modularidad SOLID y Separación de Responsabilidades**:
    El código original concentraba la decodificación de macrobloques en archivos gigantescos de más de 8.500 líneas (como `mb16.rs`). La serie de refactorización nuclear (`NUC`) descompuso este monolito en submódulos especializados donde cada uno tiene una única responsabilidad matemática o de flujo.
