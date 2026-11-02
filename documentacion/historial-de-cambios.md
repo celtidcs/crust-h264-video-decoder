@@ -4,11 +4,12 @@ Este documento recoge de forma cronológica la evolución del decodificador, doc
 
 ---
 
-## v0.1.2 (en preparación)
+## 2026-11-02 — Versión v0.1.2: Pruebas Verificables desde un Clon Limpio y Crates Propios
 
 - **Pruebas en un clon limpio**: las pruebas de integración de `rusty_h264-decoder` (`filtro_por_corte`, `mslice_reorden`, `mslice_idc2`, `ipcm_cabac`) incrustan siete salidas de referencia `tests/{cabac,cortes}_data/*_ref.yuv` que la regla `*.yuv` de `.gitignore` excluía; en un clon de v0.1.0 o v0.1.1 esas pruebas no compilaban. Ahora se versionan, y `*.yuv` y `*.264` se declaran binarios en `.gitattributes` para que git no altere sus bytes.
 - **Documentación**: comentarios y documentos sin referencias al proceso interno de desarrollo; se precisa que la ausencia de `unsafe` cubre el código propio de las bibliotecas y se declaran las dependencias que usan `unsafe` (`wide`, `safe_arch`, `bytemuck` y, con la feature `asm`, `rusty_h264-accel`).
 - **Crates propios para crates.io (sin publicar)**: `vendor/rusty_h264-decoder-0.16.0` pasa a `crates/crusty_h264` (biblioteca `crusty_h264`) y `vendor/rusty_h264-common-0.16.0` a `crates/crusty_h264-common`, ambos en la versión 0.1.2 y con crédito a Mata Network como autor original. Las features `asm` (núcleos SIMD de `rusty_h264-accel`) y `global-alloc` (asignador global `rusty_alloc-api`) dejan de estar activadas por defecto. **Cambio incompatible para quien dependía de las rutas o nombres anteriores**: `rusty_h264_decoder::` pasa a ser `crusty_h264::`.
+- **Red de equivalencia REF-1**: la línea base `red/linea-base.tsv` no incluía tres flujos reales añadidos a `vel/` (`cavlc720`, `safari1080`, `safari1080p`), por lo que `scripts/red.py comprobar` no podía pasar desde un clon limpio. Se completan; la red da ahora 2.132/2.132 desde `git archive`, y la salida decodificada es idéntica antes y después del renombrado de los crates.
 - **Verificación**: `cargo test --all-features`, `cargo clippy --all-targets --all-features -- -D warnings`, `cargo fmt --check` y `cargo audit` en verde en Linux y Windows desde un `git archive` limpio (common: 99 pruebas; decoder: 70).
 
 ---
