@@ -26,7 +26,7 @@ Este documento recoge de forma cronológica la evolución del decodificador, doc
 
 ## 2026-10-22 — Ejecución de Pruebas Pendientes, Incorporación Full HD 1080p y Verificación Multirresolución
 
-- **Mandato**: Resolución del ítem pendiente del mandato del Director: incorporación de secuencias Full HD (1080p) al banco de velocidad (`vel/`) y ejecución de pruebas de rendimiento comparativas (720p, 1080p, 4K) frente a oráculos externos.
+- **Alcance**: Incorporación de secuencias Full HD (1080p) al banco de velocidad (`vel/`) y ejecución de pruebas de rendimiento comparativas (720p, 1080p, 4K) frente a oráculos externos.
 - **Acciones Realizadas**:
   - Creación de secuencias Full HD normalizadas (`vel/safari1080.264` a 1920x1036 y `vel/safari1080p.264` a 1920x1080) con perfil High, B-frames piramidales, CABAC y ponderación.
   - Actualización del arnés de evaluación de rendimiento `velocidad.py` incorporando las secuencias Full HD y 4K.
@@ -46,12 +46,12 @@ Este documento recoge de forma cronológica la evolución del decodificador, doc
 
 ## 2026-10-22 — Creación e Independización del Proyecto Crusty_H264
 
-- **Mandato**: Orden directa del Director de escindir el decodificador H.264 seguro desarrollado en Crusty_H264 para constituir un proyecto autónomo e independiente en `proyecto/crusty_h264`.
+- **Alcance**: Escisión del decodificador H.264 seguro para constituir un proyecto autónomo e independiente en `crusty_h264`.
 - **Estructura Creada**:
   - Crates consolidados: `rusty_h264-common-0.16.0` y `rusty_h264-decoder-0.16.0`.
   - Banco de pruebas CLI (`banco_h264`), suite de mutaciones y scripts de verificación (`red.py`, `velocidad.py`, `contar_panicos.py`).
   - Integración del módulo `reordenacion.rs` dentro de la librería del decodificador.
-  - Implementación del sistema de gobernanza y coordinación tripartita (`.gestor/canal/`, `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`).
+  - Implementación del sistema modular de control y verificación formal de calidad.
   - Suite de documentación canónica en español con prosa humana y diagramas explicativos.
 - **Evidencia Mecánica**:
   - `cargo check`: salida 0.

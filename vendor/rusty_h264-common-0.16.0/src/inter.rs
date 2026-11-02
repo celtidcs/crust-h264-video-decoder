@@ -141,7 +141,7 @@ fn plano_cubre(reference: &[u8], cw: usize, ch: usize) -> Result<(), FueraDeRang
 ///
 /// Un flujo malformado puede llegar aquí con `(cw, ch)` que no corresponden al plano
 /// recibido. Antes se leía entonces una muestra negra (`unwrap_or(0)`); ahora es un error
-/// (COR-3, devolución CODEX-COR3-MC1 de Codex).
+/// (control de límites en compensación de movimiento).
 ///
 /// # Errors
 /// `FueraDeRango` si el plano está vacío o no cubre `cw × ch`.

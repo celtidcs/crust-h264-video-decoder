@@ -1,4 +1,4 @@
-"""Medición de velocidad del decodificador rusty (Claude, COR-3; Codex pide medir antes de optimizar).
+"""Medición de velocidad del decodificador rusty (medición previa a optimización).
 
 Uso: python velocidad.py <banco_A.exe> [<banco_B.exe>] [--veces N]
 Decodifica cada flujo de vel/ N veces por banco, ALTERNANDO A y B (A B B A ...) para repartir el

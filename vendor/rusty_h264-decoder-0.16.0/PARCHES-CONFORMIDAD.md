@@ -34,7 +34,7 @@ sale idéntico a la reconstrucción oficial después, y el resto de la batería 
 7. **Esquina de la predicción intra 8×8** (`mb16.rs`, `gather_i8`). La muestra p[−1,−1] solo se
    daba por disponible si también lo estaba el bloque superior; la norma solo exige que el bloque de
    la esquina esté en el mismo corte y sea intra cuando hay `constrained_intra_pred` (§6.4.11.4,
-   §8.3.2.2.1). Arregla HCHP1_HHI_B. Causa hallada por Gemini.
+   §8.3.2.2.1). Arregla HCHP1_HHI_B.
 
 8. **Referencias tras MMCO 5 y en el filtro de bordes** (`lib.rs`, `mb16.rs`). Tres causas:
    el tope de la lista de referencias recortaba por el final y podía tirar referencias a largo
@@ -42,8 +42,7 @@ sale idéntico a la reconstrucción oficial después, y el resto de la batería 
    (tipos 0, 1 y 2) ni se cerraba el grupo de imágenes; y el filtro de bordes identificaba cada
    referencia por su POC, que se repite entre secuencias, así que dos imágenes distintas con el
    mismo POC parecían la misma (§8.7.2.1). Ahora cada referencia lleva un identificador propio.
-   Arregla MR3_TANDBERG_B, MR4_TANDBERG_C y MR5_TANDBERG_C. Causa y cambio hallados por Gemini;
-   de su parche se excluyó una modificación ajena a estos flujos (`abl_deblock`).
+   Arregla MR3_TANDBERG_B, MR4_TANDBERG_C y MR5_TANDBERG_C. Se excluyó una modificación ajena a estos flujos (`abl_deblock`).
 
 9. **Cortes con listas de referencias distintas** (`lib.rs`, `mb16.rs`, `mb_deblock.rs`, en la
    refactorización; véase abajo). Hallado por Crusty_H264, no por un flujo de la UIT-T: ninguno de los

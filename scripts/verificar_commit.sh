@@ -1,7 +1,7 @@
 #!/bin/sh
 # Verificación independiente (REF-15) de un commit de la refactorización, en un git worktree
 # aparte para no tocar el árbol de trabajo de quien refactoriza. Todo queda dentro del proyecto
-# (mandato del Director del 2026-10-11: prohibido escribir fuera de la carpeta del proyecto).
+# (aislamiento estricto: prohibido escribir fuera de la carpeta del proyecto).
 # Uso: sh verificar_commit.sh <commit> [rapido]
 #   rapido: solo compila el banco y pasa la red REF-1.
 # Completo: además pruebas del crate, clippy normal y pedantic, formato, unsafe y pánicos.
@@ -17,7 +17,7 @@ MODO="${2:-completo}"
 W="$H/v"
 T="$H/vt"
 FALLO=0
-# Sin restos (orden del Director del 2026-10-12): el worktree se retira siempre, también si
+# Sin restos (limpieza estricta): el worktree se retira siempre, también si
 # el script termina por un fallo o por una interrupción.
 retirar_worktree() { git -C "$H" worktree remove --force "$W" 2>/dev/null; }
 trap retirar_worktree EXIT

@@ -139,7 +139,7 @@ impl FrameDecoder {
 
     /// Recopila las muestras de referencia vecinas para un bloque luma intra 8×8.
     ///
-    /// Preserva estrictamente el PARCHE-CRUSTY (ARR-2, hallado por Gemini): `p[-1,-1]` depende
+    /// Preserva la corrección de conformidad UIT-T: `p[-1,-1]` depende
     /// solo del bloque de la esquina, no de que exista bloque superior (§6.4.11.4, §8.3.2.2.1).
     ///
     /// # Errors

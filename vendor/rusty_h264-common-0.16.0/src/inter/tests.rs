@@ -420,7 +420,7 @@ fn mc_luma_clamps_at_edges() {
     assert_eq!(out, [5, 5, 5, 5]);
 }
 
-/// Plano de 1 muestra declarado 2×2 (CODEX-COR3-MC1): no cubre `cw × ch`.
+/// Plano de 1 muestra declarado 2×2: no cubre `cw × ch`.
 const PLANO_CORTO: [u8; 1] = [5];
 
 #[test]
@@ -439,7 +439,7 @@ fn mc_luma_plano_corto_subpixel_es_error() {
 
 #[test]
 fn at_muestra_ausente_es_error() {
-    // Aunque la muestra (0,0) exista, el plano no cubre 2×2 (CODEX-COR3-MC2).
+    // Aunque la muestra (0,0) exista, el plano no cubre 2×2.
     assert!(matches!(at(&PLANO_CORTO, 2, 2, 0, 0), Err(FueraDeRango(_))));
     assert!(matches!(at(&PLANO_CORTO, 2, 2, 1, 1), Err(FueraDeRango(_))));
     assert_eq!(at(&[5, 6, 7, 8], 2, 2, 1, 1), Ok(8));

@@ -1,4 +1,4 @@
-"""Alcance aproximado de llamadas dentro de un archivo Rust (Claude, COR-3).
+"""Alcance aproximado de llamadas dentro de un archivo Rust.
 
 Uso: python alcance.py <archivo.rs> <raíz1,raíz2,...> [patrón]
 Corta el archivo en funciones (`fn nombre(` hasta la llave que la cierra, saltando #[cfg(test)]
