@@ -1,6 +1,6 @@
-# Crusty_H264 — Decodificador H.264 Seguro, Conforme y Puro en Rust
+# Crust H264 Video Decoder — Decodificador H.264 Seguro, Conforme y Puro en Rust
 
-Bienvenido al repositorio oficial de **Crusty_H264**, la implementación moderna y auditada en Rust, sin `unsafe` en su propio código (`#![forbid(unsafe_code)]`), del estándar de compresión de vídeo H.264 / AVC (ISO/IEC 14496-10 / UIT-T H.264).
+Bienvenido al repositorio oficial de **Crust H264 Video Decoder**, la implementación moderna y auditada en Rust, sin `unsafe` en su propio código (`#![forbid(unsafe_code)]`), del estándar de compresión de vídeo H.264 / AVC (ISO/IEC 14496-10 / UIT-T H.264).
 
 ## Sobre Celtilander
 
@@ -27,7 +27,7 @@ Saludos a todo el mundo.
 
 En el ecosistema informático contemporáneo, los decodificadores multimedia programados en C y C++ representan históricamente uno de los vectores más críticos de vulnerabilidad y explotación remota (desbordamientos de búfer, desreferencias de punteros nulos, carreras de memoria y uso tras liberación).
 
-**Crusty_H264** nace como una alternativa de ingeniería rigurosa, orientada a ofrecer:
+**Crust H264 Video Decoder** nace como una alternativa de ingeniería rigurosa, orientada a ofrecer:
 1. **Seguridad de Memoria**: Las dos bibliotecas del decodificador no contienen bloques `unsafe` (`#![forbid(unsafe_code)]`, que el compilador hace cumplir) ni llamadas FFI a C. Las dependencias de bajo nivel `wide`, `safe_arch` y `bytemuck` sí usan `unsafe` internamente, y la feature opcional `asm` añade `rusty_h264-accel` (intrínsecos SIMD). El banco de evaluación compila Cisco OpenH264 (C y ensamblador) solo como oráculo de comparación.
 2. **Fidelidad y Conformidad Normativa**: Resolución milimétrica de las discrepancias del estándar UIT-T H.264, validada bit a bit contra oráculos orquestados con FFmpeg y la suite de pruebas oficial de la UIT-T.
 3. **Arquitectura Limpia y Modular (SOLID)**: Reestructuración integral de componentes monolíticos en módulos atómicos de responsabilidad única.
@@ -56,11 +56,11 @@ La documentación de este proyecto se encuentra articulada en el directorio [`do
 El proyecto se distribuye en dos componentes centrales y un banco de evaluación:
 
 ```text
-crusty_h264/
-├── Cargo.toml                              # Paquete del banco (`banco_h264`), depende de crates/crusty_h264
+crust-h264-video-decoder/
+├── Cargo.toml                              # Paquete del banco (`banco_h264`), depende de crates/crust-h264-video-decoder
 ├── crates/
-│   ├── crusty_h264-common/                 # Primitivas matemáticas, predicción, transformadas y DCT
-│   └── crusty_h264/                        # Motor de decodificación H.264 y reordenación DPB
+│   ├── crust-h264-common/                 # Primitivas matemáticas, predicción, transformadas y DCT
+│   └── crust-h264-video-decoder/                        # Motor de decodificación H.264 y reordenación DPB
 ├── src/                                    # Ejecutable del banco de evaluación y CLI (`banco_h264`)
 ├── scripts/                                # Scripts ejecutables de verificación, auditoría y velocidad
 ├── tests/                                  # Pruebas de integración, verificación de cortes y fuzzing
@@ -78,7 +78,7 @@ crusty_h264/
 ### Comandos de Validación Inmediata
 ```bash
 # Las tres puertas se ejecutan en la raíz (banco) y en cada crate:
-for m in Cargo.toml crates/crusty_h264-common/Cargo.toml crates/crusty_h264/Cargo.toml; do
+for m in Cargo.toml crates/crust-h264-common/Cargo.toml crates/crust-h264-video-decoder/Cargo.toml; do
   cargo test   --manifest-path "$m" --all-features                                 # pruebas
   cargo clippy --manifest-path "$m" --all-targets --all-features -- -D warnings    # linter sin avisos
   cargo fmt    --manifest-path "$m" --check                                        # formato
@@ -86,7 +86,7 @@ done
 cargo audit                                                                        # vulnerabilidades
 ```
 
-Las pruebas viven en los crates (`crusty_h264-common`: 99; `crusty_h264`: 70); el banco de la raíz no tiene pruebas propias.
+Las pruebas viven en los crates (`crust-h264-common`: 99; `crust-h264-video-decoder`: 70); el banco de la raíz no tiene pruebas propias.
 
 ---
 

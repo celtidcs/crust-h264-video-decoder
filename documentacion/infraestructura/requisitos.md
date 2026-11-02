@@ -1,4 +1,4 @@
-# Requisitos del Sistema — Crusty_H264
+# Requisitos del Sistema — Crust H264 Video Decoder
 
 ## 1. Entorno de Compilación y Ejecución
 

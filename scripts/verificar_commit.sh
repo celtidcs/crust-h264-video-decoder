@@ -41,7 +41,7 @@ fi
 grep -E '^(ANTES|AHORA|RED|DISTINTO)' "$T/ultima-red.txt" | head -12
 [ "$FALLO" -ne 0 ] && echo "RED FALLIDA"
 [ "$MODO" = "rapido" ] && exit "$FALLO"
-for crate in crusty_h264 crusty_h264-common; do
+for crate in crust-h264-video-decoder crust-h264-common; do
   echo "--- $crate"
   # Desde COR-1b (2026-10-12) el decodificador ya no tiene la feature `std` (siempre la usa).
   FEAT="--features std"

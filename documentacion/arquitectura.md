@@ -1,8 +1,8 @@
-# Arquitectura del Sistema — Crusty_H264
+# Arquitectura del Sistema — Crust H264 Video Decoder
 
 ## 1. Filosofía de Diseño y Principios Rectores
 
-El diseño de **Crusty_H264** responde a una necesidad primordial: construir un decodificador de vídeo de altas prestaciones cuya seguridad esté garantizada a nivel del compilador, sin comprometer la fidelidad estricta al estándar UIT-T H.264.
+El diseño de **Crust H264 Video Decoder** responde a una necesidad primordial: construir un decodificador de vídeo de altas prestaciones cuya seguridad esté garantizada a nivel del compilador, sin comprometer la fidelidad estricta al estándar UIT-T H.264.
 
 Los cuatro pilares arquitectónicos que gobiernan el código son:
 
@@ -13,7 +13,7 @@ Los cuatro pilares arquitectónicos que gobiernan el código son:
    El código original concentraba la decodificación de macrobloques en archivos gigantescos de más de 8.500 líneas (como `mb16.rs`). La serie de refactorización nuclear (`NUC`) descompuso este monolito en submódulos especializados donde cada uno tiene una única responsabilidad matemática o de flujo.
 
 3. **Cota Estricta de Retención de Recursos (Bounded DPB)**:
-   A diferencia de los decodificadores convencionales que retienen flujos completos en memoria para reordenar fotogramas por POC (*Picture Order Count*), Crusty_H264 implementa un búfer acotado que calcula matemáticamente la capacidad del DPB según el nivel del estándar (Tabla A-1, acotado entre 1 y 16 fotogramas).
+   A diferencia de los decodificadores convencionales que retienen flujos completos en memoria para reordenar fotogramas por POC (*Picture Order Count*), Crust H264 Video Decoder implementa un búfer acotado que calcula matemáticamente la capacidad del DPB según el nivel del estándar (Tabla A-1, acotado entre 1 y 16 fotogramas).
 
 4. **Tratamiento Centralizado y Tipado de Errores**:
    No se emplean pánicos (`panic!`), ni llamadas descontroladas a `unwrap()` o `expect()` en rutas de decodificación. Ante flujos malformados, truncados o deliberadamente hostiles, el sistema propaga un error tipado y enriquecido (`DecodeError`).
@@ -75,7 +75,7 @@ flowchart TD
 
 ## 3. Descomposición Modular
 
-### 3.1. Crate `crusty_h264-common`
+### 3.1. Crate `crust-h264-common`
 Concentra las definiciones matemáticas, estructuras de datos compartidas y primitivas agnósticas al perfil:
 - **`bit_reader.rs`**: Lector de bits con lectura anticipada segura (`peek_bits`), consumo controlado y detección estricta de fin de datos (`OutOfData`).
 - **`bit_writer.rs`**: Constructor de flujos RBSP con prevención de emulación y serialización de sintaxis.
@@ -85,7 +85,7 @@ Concentra las definiciones matemáticas, estructuras de datos compartidas y prim
 - **`inter/`**: Compensación de movimiento a resolución de cuarto de píxel con filtrado Wiener de 6 tomas para semipíxel e interpolación bilineal para cuarto de píxel.
 - **`deblock/`**: Filtro de desbloqueo adaptativo de bordes conforme a la sección 8.7 de la norma UIT-T.
 
-### 3.2. Crate `crusty_h264`
+### 3.2. Crate `crust-h264-video-decoder`
 Implementa la máquina de estados que orquesta la interpretación del flujo:
 - **`cabac/` y `cabac_residuo.rs`**: Decodificación aritmética binaria adaptativa contextual.
 - **`mb_cabac_slice/`**: Procesamiento de macrobloques en cortes codificados con CABAC (`intra.rs`, `p.rs`, `b.rs`, `estado.rs`).

@@ -5,5 +5,5 @@ edition = "2024"
 
 [dependencies]
 openh264 = { version = "0.9", default-features = false, features = ["source"] }
-crusty_h264 = { path = "crates/crusty_h264", default-features = false }
+crust-h264-video-decoder = { path = "crates/crust-h264-video-decoder", default-features = false }
 sha2 = "0.11.0"

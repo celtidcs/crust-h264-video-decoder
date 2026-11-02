@@ -1,6 +1,14 @@
-# Historial de Cambios y Auditoría — Crusty_H264
+# Historial de Cambios y Auditoría — Crust H264 Video Decoder
 
 Este documento recoge de forma cronológica la evolución del decodificador, documentando las auditorías mecánicas, las correcciones de conformidad UIT-T y la reestructuración arquitectónica de la base de código.
+
+---
+
+## Próxima versión (en preparación)
+
+- **Nombre del proyecto**: pasa a llamarse **Crust H264 Video Decoder**. El repositorio pasa a ser `crust-h264-video-decoder`, y los crates, `crust-h264-video-decoder` (biblioteca `crust_h264_video_decoder`, en `crates/crust-h264-video-decoder`) y `crust-h264-common` (biblioteca `crust_h264_common`). **Cambio incompatible**: `crusty_h264::` pasa a ser `crust_h264_video_decoder::`, y `crusty_h264_common::`, `crust_h264_common::`. La salida decodificada no cambia.
+- **Pruebas del orden de presentación (POC)**: pruebas unitarias de `poc.rs` para los tipos 0, 1 y 2 según UIT-T H.264 (06/26) §8.2.1, con valores derivados de la norma. Una de ellas reproduce una desviación de la norma en el POC de tipo 0 después de una MMCO 5 (D-2026-11-02-1 en `documentacion/defectos-conocidos.md`); queda marcada como ignorada hasta su corrección.
+- **Análisis estático**: un parámetro de una prueba de fuzzing se llamaba `salt` y CodeQL lo tomaba por una sal criptográfica; se renombra a `desplazamiento_patron`.
 
 ---
 

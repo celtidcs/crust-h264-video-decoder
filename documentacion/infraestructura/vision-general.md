@@ -1,15 +1,15 @@
-# Visión General de Infraestructura — Crusty_H264
+# Visión General de Infraestructura — Crust H264 Video Decoder
 
 ## 1. Topología del Proyecto
 
 Las dependencias de terceros se descargan de crates.io en la primera compilación; los datos de prueba están todos en el repositorio:
 
 ```text
-crusty_h264/
+crust-h264-video-decoder/
 ├── Cargo.toml                    # Paquete del banco (`banco_h264`); no es un workspace
 ├── crates/                       # Bibliotecas del decodificador
-│   ├── crusty_h264-common/       # Primitivas matemáticas
-│   └── crusty_h264/              # Lógica de decodificación y reordenación
+│   ├── crust-h264-common/       # Primitivas matemáticas
+│   └── crust-h264-video-decoder/              # Lógica de decodificación y reordenación
 ├── src/                          # CLI y herramientas de diagnóstico
 ├── tests/                        # Casos de prueba de integración
 ├── conf/, fuzz/, calib/, cod/    # Insumos de calibración y secuencias de prueba oficiales

@@ -6,7 +6,7 @@ version = 4
 name = "banco_h264"
 version = "0.1.2"
 dependencies = [
- "crusty_h264",
+ "crust-h264-video-decoder",
  "openh264",
  "sha2",
 ]
@@ -60,20 +60,20 @@ dependencies = [
 ]
 
 [[package]]
-name = "crusty_h264"
-version = "0.1.2"
-dependencies = [
- "crusty_h264-common",
-]
-
-[[package]]
-name = "crusty_h264-common"
+name = "crust-h264-common"
 version = "0.1.2"
 dependencies = [
  "bytemuck",
  "once_cell",
  "portable-atomic",
  "wide 0.7.33",
+]
+
+[[package]]
+name = "crust-h264-video-decoder"
+version = "0.1.2"
+dependencies = [
+ "crust-h264-common",
 ]
 
 [[package]]

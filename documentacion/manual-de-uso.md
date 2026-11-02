@@ -1,6 +1,6 @@
-# Manual de Uso de Crusty_H264
+# Manual de Uso de Crust H264 Video Decoder
 
-Tienes toda la razon en tu planteamiento: Crusty_H264 es, fundamentalmente, una libreria de software (un conjunto de paquetes o crates de Rust), pensada para que otros programas la utilicen cuando necesitan decodificar video de forma rapida y completamente segura. 
+Tienes toda la razon en tu planteamiento: Crust H264 Video Decoder es, fundamentalmente, una libreria de software (un conjunto de paquetes o crates de Rust), pensada para que otros programas la utilicen cuando necesitan decodificar video de forma rapida y completamente segura. 
 
 No es una aplicacion con ventanas ni un reproductor con interfaz grafica como VLC. Sin embargo, para poder probarla, medir su velocidad y verificar que decodifica exactamente igual que otros reproductores, el proyecto incluye un programa de consola (CLI) llamado banco_h264.
 
@@ -42,13 +42,13 @@ banco_h264 decodificar rusty mi_video.264 fotogramas_salida.yuv
 El archivo resultante contendra los fotogramas en formato crudo YUV 4:2:0. Puedes abrir este archivo con programas como YUV Viewer, Vooya o FFmpeg para ver el video fotograma a fotograma con tus propios ojos.
 
 ### Paso 4: Comparar dos resultados fotograma a fotograma
-Si quieres comprobar si Crusty_H264 decodifica exactamente lo mismo que otro decodificador (por ejemplo OpenH264 o FFmpeg):
-1. Decodificas con Crusty:
-   banco_h264 decodificar rusty video.264 salida_crusty.yuv
+Si quieres comprobar si Crust H264 Video Decoder decodifica exactamente lo mismo que otro decodificador (por ejemplo OpenH264 o FFmpeg):
+1. Decodificas con Crust:
+   banco_h264 decodificar rusty video.264 salida_crust.yuv
 2. Decodificas con OpenH264:
    banco_h264 decodificar openh264 video.264 salida_cisco.yuv
 3. Comparas ambos archivos indicando su ancho y alto:
-   banco_h264 comparar salida_crusty.yuv salida_cisco.yuv 1920 1080
+   banco_h264 comparar salida_crust.yuv salida_cisco.yuv 1920 1080
 
 El programa comparara pixel a pixel ambos archivos y te dira si son totalmente identicos o en que fotograma aparece la primera discrepancia.
 
@@ -56,21 +56,21 @@ El programa comparara pixel a pixel ambos archivos y te dira si son totalmente i
 
 ## 2. Uso como libreria dentro de tu propio programa en Rust
 
-Si estas programando una aplicacion (por ejemplo, un navegador web, un reproductor multimedia, una herramienta de camaras de seguridad o un servidor de streaming), puedes anadir Crusty_H264 a tu archivo Cargo.toml para decodificar video directamente en tu codigo.
+Si estas programando una aplicacion (por ejemplo, un navegador web, un reproductor multimedia, una herramienta de camaras de seguridad o un servidor de streaming), puedes anadir Crust H264 Video Decoder a tu archivo Cargo.toml para decodificar video directamente en tu codigo.
 
 ### Paso 1: Configurar dependencias
-En el archivo Cargo.toml de tu aplicacion, anades la ruta donde tienes Crusty_H264:
+En el archivo Cargo.toml de tu aplicacion, anades la ruta donde tienes Crust H264 Video Decoder:
 
 ```toml
 [dependencies]
-crusty_h264 = { path = "ruta/a/crusty_h264/crates/crusty_h264" }
+crust-h264-video-decoder = { path = "ruta/a/crust-h264-video-decoder/crates/crust-h264-video-decoder" }
 ```
 
 ### Paso 2: Caso sencillo - Decodificar un archivo completo
 Si tienes en memoria todos los bytes del video y solo quieres obtener la lista de imagenes para mostrarlas o procesarlas:
 
 ```rust
-use crusty_h264::Decoder;
+use crust_h264_video_decoder::Decoder;
 use std::fs;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -107,8 +107,8 @@ En aplicaciones reales como reproductores de video o transmisiones en directo, n
 En este caso, se decodifica paquete a paquete y se utiliza el modulo de reordenacion acotada para que las imagenes salgan en el orden exacto de reproduccion sin gastar memoria de mas:
 
 ```rust
-use crusty_h264::{split_access_units, au_is_idr, Decoder};
-use crusty_h264::reordenacion::OrdenPresentacionH264;
+use crust_h264_video_decoder::{split_access_units, au_is_idr, Decoder};
+use crust_h264_video_decoder::reordenacion::OrdenPresentacionH264;
 
 fn procesar_flujo_en_directo(datos_video: &[u8], nivel_h264: u8) {
     let mut decodificador = Decoder::new();

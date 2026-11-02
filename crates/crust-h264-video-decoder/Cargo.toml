@@ -1,0 +1,41 @@
+[package]
+name = "crust-h264-video-decoder"
+version = "0.1.2"
+edition = "2021"
+rust-version = "1.80"
+# Mata Network es el autor original (rusty_h264 0.16.0); las correcciones posteriores son de celtidcs.
+authors = ["Mata Network", "celtidcs"]
+license = "BSD-2-Clause"
+description = "Decodificador H.264 en Rust (Baseline, Main y gran parte de High; CAVLC y CABAC) con correcciones de conformidad UIT-T y sin unsafe propio. Derivado de rusty_h264-decoder 0.16.0."
+repository = "https://github.com/celtidcs/crust-h264-video-decoder"
+documentation = "https://docs.rs/crust-h264-video-decoder"
+readme = "README.md"
+keywords = ["h264", "avc", "video", "codec", "decoder"]
+categories = ["multimedia::video", "multimedia::encoding"]
+# Las pruebas de integración incrustan datos de `tests/` en la raíz del repositorio, que no viajan
+# en el paquete publicado: se excluyen para que el paquete no contenga pruebas que no compilan.
+exclude = ["tests/"]
+
+[lib]
+name = "crust_h264_video_decoder"
+path = "src/lib.rs"
+
+[features]
+# Conjunto por defecto vacío: ni `asm` (núcleos SIMD de `rusty_h264-accel`, con intrínsecos
+# `unsafe`) ni `global-alloc` (instala `rusty_alloc-api` como asignador global del proceso).
+default = []
+asm = ["crust-h264-common/asm"]
+global-alloc = ["crust-h264-common/global-alloc"]
+libm = ["crust-h264-common/libm"]
+
+[dependencies]
+crust-h264-common = { version = "0.1.2", path = "../crust-h264-common", default-features = false, features = ["std"] }
+
+# El codificador del autor original solo sirve para generar semillas en `tests/fuzz_no_panic.rs`;
+# sigue usando la `rusty_h264-common` de crates.io, con la que construye sus fotogramas.
+[dev-dependencies]
+common_codificador = { package = "rusty_h264-common", version = "=0.16.0", default-features = false, features = ["std"] }
+rusty_h264-encoder = { version = "0.16.0", default-features = false, features = ["std"] }
+
+[lints.rust]
+unsafe_code = "forbid"

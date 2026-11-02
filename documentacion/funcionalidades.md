@@ -1,6 +1,6 @@
-# Catálogo de Funcionalidades — Crusty_H264
+# Catálogo de Funcionalidades — Crust H264 Video Decoder
 
-El decodificador **Crusty_H264** ofrece una cobertura exhaustiva del estándar H.264 / AVC para flujos de vídeo progresivos en formato de color YUV 4:2:0.
+El decodificador **Crust H264 Video Decoder** ofrece una cobertura exhaustiva del estándar H.264 / AVC para flujos de vídeo progresivos en formato de color YUV 4:2:0.
 
 ---
 
@@ -70,9 +70,9 @@ El decodificador **Crusty_H264** ofrece una cobertura exhaustiva del estándar H
 
 ## 4. Rendimiento y Comparativa Multirresolución (720p, Full HD 1080p, 4K)
 
-Las pruebas sistemáticas ejecutadas sobre secuencias del banco de velocidad (`vel/`) demuestran que la implementación en Rust sin `unsafe` propio (`#![forbid(unsafe_code)]`, compilada sin la feature `asm`) de **Crusty_H264** ofrece un rendimiento parejo o superior frente al decodificador en C/C++ y ensamblador de Cisco OpenH264:
+Las pruebas sistemáticas ejecutadas sobre secuencias del banco de velocidad (`vel/`) demuestran que la implementación en Rust sin `unsafe` propio (`#![forbid(unsafe_code)]`, compilada sin la feature `asm`) de **Crust H264 Video Decoder** ofrece un rendimiento parejo o superior frente al decodificador en C/C++ y ensamblador de Cisco OpenH264:
 
-| Secuencia | Resolución | Perfil / Herramientas | Fotogramas | Crusty_H264 (Safe Rust) | Cisco OpenH264 (C/ASM) | Razón Crusty / Cisco | Rendimiento Crusty |
+| Secuencia | Resolución | Perfil / Herramientas | Fotogramas | Crust H264 Video Decoder (Safe Rust) | Cisco OpenH264 (C/ASM) | Razón Crust / Cisco | Rendimiento Crust |
 |---|---|---|---|---|---|---|---|
 | `safari720.264` | 1280x690 (720p) | High, CABAC, B-frames, 8x8 | 120 | **1.162 ms** | 1.217 ms | **0.955** (4.5% más rápido) | **103.3 fps** |
 | `safari1080.264` | 1920x1036 (1080p scope) | High, CABAC, B-frames, 8x8 | 120 | **3.285 ms** | 3.648 ms | **0.900** (10.0% más rápido) | **36.5 fps** |
@@ -85,6 +85,6 @@ Las pruebas sistemáticas ejecutadas sobre secuencias del banco de velocidad (`v
 
 ### Observaciones de Ingeniería
 1. **Escalabilidad Lineal**: El tiempo de decodificación escala de forma casi perfectamente proporcional al número de macrobloques procesados (de 3.520 macrobloques en 720p a 31.200 en 4K).
-2. **Eficiencia en Full HD**: En resolución Full HD 1080p, Crusty_H264 supera holgadamente el umbral de reproducción en tiempo real (36.5 fps frente a los 25 fps estándar de la fuente).
+2. **Eficiencia en Full HD**: En resolución Full HD 1080p, Crust H264 Video Decoder supera holgadamente el umbral de reproducción en tiempo real (36.5 fps frente a los 25 fps estándar de la fuente).
 3. **Consumo de Memoria Acotado**: La ocupación máxima de memoria se mantiene dentro de los límites estrictos del perfil (225 MB en 720p, 506 MB en 1080p y 2.044 MB en 4K UHD para todo el espacio de trabajo y DPB).
 

@@ -1,14 +1,14 @@
-# Guía de Clonado y Puesta en Marcha — Crusty_H264
+# Guía de Clonado y Puesta en Marcha — Crust H264 Video Decoder
 
-Esta guía permite clonar y validar el proyecto `crusty_h264` desde cero en cualquier máquina con soporte de Rust.
+Esta guía permite clonar y validar el proyecto `crust-h264-video-decoder` desde cero en cualquier máquina con soporte de Rust.
 
 ---
 
 ## 1. Clonado del Repositorio
 
 ```bash
-git clone https://github.com/celtidcs/crusty_h264.git
-cd crusty_h264
+git clone https://github.com/celtidcs/crust-h264-video-decoder.git
+cd crust-h264-video-decoder
 ```
 
 ---
