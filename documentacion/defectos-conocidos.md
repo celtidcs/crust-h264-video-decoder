@@ -23,10 +23,20 @@ Por política deliberada de seguridad y simplicidad, el decodificador rechaza de
 
 ## 2. Puntos Ciegos y Fichas de Seguimiento
 
-### D-2026-10-21-1: POC de Tipo 2 en Imágenes No de Referencia
-- **Qué ocurre**: En el cálculo de POC de tipo 2 (§8.2.1.3), las imágenes no de referencia (`nal_ref_idc == 0`) deben derivar su POC a partir de la última imagen de referencia previa menos un desplazamiento. La batería de 2.129 flujos no incluye secuencias sintéticas extremas que mezclen tipo 2 continuo con fotogramas desechables no ordenados.
-- **Evidencia actual**: La red de 2.129 secuencias está al 100% en verde. Ningún flujo real conocido ha mostrado divergencia.
-- **Mitigación**: Los flujos reales de producción en MP4 y WebM emplean casi universalmente POC de tipo 0 (con `pic_order_cnt_lsb`) o tipo 1.
+### D-2026-10-21-1: POC de Tipos 1 y 2 tras Imágenes No de Referencia
+- **Qué dice la norma** (UIT-T H.264 06/26, §8.2.1.2 y §8.2.1.3, págs. 142–143): `prevFrameNum` y `prevFrameNumOffset` se toman de la **imagen anterior en orden de decodificación**, sea o no de referencia; con huecos en `frame_num`, esa imagen puede ser un fotograma «inexistente» inferido (§8.2.5.2). Para el tipo 0 (§8.2.1.1) la norma sí dice «imagen de **referencia** anterior».
+- **Qué hace el código**: `crates/crusty_h264/src/poc.rs` solo actualiza ese estado con imágenes de referencia, y el POC se calcula antes de insertar los fotogramas inexistentes de un hueco.
+- **Descartado**: sin huecos en `frame_num`, una imagen no de referencia lleva el mismo `frame_num` que la referencia siguiente y las dos fórmulas dan el mismo resultado; con huecos, los fotogramas inferidos son consecutivos y la detección de la vuelta del contador también coincide (comprobado a mano en casos con y sin vuelta).
+- **Sospecha sin confirmar**: que algún flujo, conforme u hostil, produzca una salida distinta por esta diferencia de redacción.
+- **Siguiente paso**: fabricar un flujo de prueba con huecos y POC de tipo 1 o 2 y compararlo con un decodificador de referencia externo.
+- **Cobertura**: pruebas unitarias de la fórmula en `crates/crusty_h264/src/poc/tests.rs` (tipos 0, 1 y 2, vuelta del contador e imágenes no de referencia).
+
+### D-2026-11-02-1: POC de Tipo 0 después de una MMCO 5
+- **Qué falla y cómo se reproduce**: según la norma (UIT-T H.264 06/26, §8.2.1, pág. 140, y §8.2.1.1), tras decodificar una imagen con `memory_management_control_operation` igual a 5, su `TopFieldOrderCnt` pasa a ser `TopFieldOrderCnt − PicOrderCnt` (0 en un fotograma progresivo), y la siguiente imagen toma ese valor como `prevPicOrderCntLsb`. `PocState::apply_mmco5` conserva en su lugar el `pic_order_cnt_lsb` de la imagen. Reproducción: `cargo test -p crusty_h264 --lib poc::tests::tipo0_tras_mmco5_el_lsb_previo_es_el_top_reajustado -- --ignored` (MaxPicOrderCntLsb 16; imagen con MMCO 5 y lsb 6; la siguiente referencia, con lsb 14, debería dar POC −2 y da 14).
+- **Hecho adicional**: el decodificador presenta la imagen con MMCO 5 con su POC anterior al reajuste (el valor que devuelve `apply_mmco5` no se usa).
+- **Pendiente de comprobar**: este documento (§3) registra que los flujos de conformidad progresivos coinciden bit a bit con Cisco OpenH264, pero no se ha comprobado cuáles contienen una MMCO 5 con POC de tipo 0, así que eso no descarta nada por sí solo.
+- **Sospecha sin confirmar**: que un flujo con MMCO 5, POC de tipo 0 y un `pic_order_cnt_lsb` distinto de 0 en esa imagen se presente en un orden distinto del de la norma.
+- **Siguiente paso**: corregir `apply_mmco5` para el tipo 0 según la norma, con un flujo de prueba que lo demuestre frente a un oráculo externo y la red de equivalencia como control de que nada más cambia.
 
 ---
 

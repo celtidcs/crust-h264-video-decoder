@@ -196,3 +196,6 @@ impl PocState {
         }
     }
 }
+
+#[cfg(test)]
+mod tests;
