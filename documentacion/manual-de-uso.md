@@ -63,15 +63,14 @@ En el archivo Cargo.toml de tu aplicacion, anades la ruta donde tienes Crusty_H2
 
 ```toml
 [dependencies]
-rusty_h264-decoder = { path = "ruta/a/crusty_h264/vendor/rusty_h264-decoder-0.16.0", default-features = false }
-rusty_h264-common = { path = "ruta/a/crusty_h264/vendor/rusty_h264-common-0.16.0", default-features = false, features = ["std"] }
+crusty_h264 = { path = "ruta/a/crusty_h264/crates/crusty_h264" }
 ```
 
 ### Paso 2: Caso sencillo - Decodificar un archivo completo
 Si tienes en memoria todos los bytes del video y solo quieres obtener la lista de imagenes para mostrarlas o procesarlas:
 
 ```rust
-use rusty_h264_decoder::Decoder;
+use crusty_h264::Decoder;
 use std::fs;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -108,8 +107,8 @@ En aplicaciones reales como reproductores de video o transmisiones en directo, n
 En este caso, se decodifica paquete a paquete y se utiliza el modulo de reordenacion acotada para que las imagenes salgan en el orden exacto de reproduccion sin gastar memoria de mas:
 
 ```rust
-use rusty_h264_decoder::{split_access_units, au_is_idr, Decoder};
-use rusty_h264_decoder::reordenacion::OrdenPresentacionH264;
+use crusty_h264::{split_access_units, au_is_idr, Decoder};
+use crusty_h264::reordenacion::OrdenPresentacionH264;
 
 fn procesar_flujo_en_directo(datos_video: &[u8], nivel_h264: u8) {
     let mut decodificador = Decoder::new();

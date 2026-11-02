@@ -2,14 +2,14 @@
 
 ## 1. Topología del Proyecto
 
-El proyecto está diseñado para funcionar de manera completamente autónoma sin dependencias externas de red durante la compilación o las pruebas:
+Las dependencias de terceros se descargan de crates.io en la primera compilación; los datos de prueba están todos en el repositorio:
 
 ```text
 crusty_h264/
-├── Cargo.toml                    # Declaración del workspace y configuración de compilación release
-├── vendor/                       # Código fuente de las librerías del decodificador
-│   ├── rusty_h264-common-0.16.0/ # Primitivas matemáticas
-│   └── rusty_h264-decoder-0.16.0/# Lógica de decodificación y reordenación
+├── Cargo.toml                    # Paquete del banco (`banco_h264`); no es un workspace
+├── crates/                       # Bibliotecas del decodificador
+│   ├── crusty_h264-common/       # Primitivas matemáticas
+│   └── crusty_h264/              # Lógica de decodificación y reordenación
 ├── src/                          # CLI y herramientas de diagnóstico
 ├── tests/                        # Casos de prueba de integración
 ├── conf/, fuzz/, calib/, cod/    # Insumos de calibración y secuencias de prueba oficiales

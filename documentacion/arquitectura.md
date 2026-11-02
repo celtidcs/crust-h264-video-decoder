@@ -7,7 +7,7 @@ El diseño de **Crusty_H264** responde a una necesidad primordial: construir un 
 Los cuatro pilares arquitectónicos que gobiernan el código son:
 
 1. **Inmunidad de Memoria por Construcción**:
-   Todo el código de producción en los dos crates (`common` y `decoder`) aplica `#![forbid(unsafe_code)]`. No existen bloques `unsafe`, ni punteros crudos sin encapsular, ni llamadas FFI hacia librerías externas en C. La garantía cubre el código propio de los dos crates, no sus dependencias: `wide`, `safe_arch` y `bytemuck` usan `unsafe` internamente, y la feature `asm` (activada por defecto en `rusty_h264-decoder`, desactivada en el banco) incorpora `rusty_h264-accel`, cuyos intrínsecos SIMD son `unsafe`.
+   Todo el código de producción en los dos crates (`common` y `decoder`) aplica `#![forbid(unsafe_code)]`. No existen bloques `unsafe`, ni punteros crudos sin encapsular, ni llamadas FFI hacia librerías externas en C. La garantía cubre el código propio de los dos crates, no sus dependencias: `wide`, `safe_arch` y `bytemuck` usan `unsafe` internamente, y la feature opcional `asm` (desactivada por defecto) incorpora `rusty_h264-accel`, cuyos intrínsecos SIMD son `unsafe`. La feature opcional `global-alloc` (también desactivada por defecto) instala `rusty_alloc-api` como asignador global del proceso.
 
 2. **Modularidad SOLID y Separación de Responsabilidades**:
    El código original concentraba la decodificación de macrobloques en archivos gigantescos de más de 8.500 líneas (como `mb16.rs`). La serie de refactorización nuclear (`NUC`) descompuso este monolito en submódulos especializados donde cada uno tiene una única responsabilidad matemática o de flujo.
@@ -85,7 +85,7 @@ Concentra las definiciones matemáticas, estructuras de datos compartidas y prim
 - **`inter/`**: Compensación de movimiento a resolución de cuarto de píxel con filtrado Wiener de 6 tomas para semipíxel e interpolación bilineal para cuarto de píxel.
 - **`deblock/`**: Filtro de desbloqueo adaptativo de bordes conforme a la sección 8.7 de la norma UIT-T.
 
-### 3.2. Crate `crusty_h264-decoder`
+### 3.2. Crate `crusty_h264`
 Implementa la máquina de estados que orquesta la interpretación del flujo:
 - **`cabac/` y `cabac_residuo.rs`**: Decodificación aritmética binaria adaptativa contextual.
 - **`mb_cabac_slice/`**: Procesamiento de macrobloques en cortes codificados con CABAC (`intra.rs`, `p.rs`, `b.rs`, `estado.rs`).

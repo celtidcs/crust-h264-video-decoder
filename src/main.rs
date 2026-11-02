@@ -16,7 +16,7 @@
 use sha2::{Digest, Sha256};
 
 // El búfer de reordenación de Crusty_H264 (exportado formalmente por la biblioteca).
-use rusty_h264_decoder::reordenacion as reordenacion_h264;
+use crusty_h264::reordenacion as reordenacion_h264;
 use std::alloc::{GlobalAlloc, Layout, System};
 use std::io::Write;
 use std::sync::atomic::{AtomicUsize, Ordering};
@@ -65,11 +65,11 @@ fn nivel_del_primer_sps(flujo: &[u8]) -> u8 {
 /// Decodificación unidad de acceso a unidad de acceso, con su mismo orden de presentación
 /// (vaciado en cada IDR y búfer acotado al DPB del nivel).
 fn decodificar_rusty_au(flujo: &[u8]) -> Result<Vec<Fotograma>, String> {
-    let mut dec = rusty_h264_decoder::Decoder::new();
+    let mut dec = crusty_h264::Decoder::new();
     let mut orden = reordenacion_h264::OrdenPresentacionH264::new(nivel_del_primer_sps(flujo));
     let mut fotos = Vec::new();
-    for au in rusty_h264_decoder::split_access_units(flujo) {
-        fotos.extend(orden.empezar_unidad(rusty_h264_decoder::au_is_idr(au)));
+    for au in crusty_h264::split_access_units(flujo) {
+        fotos.extend(orden.empezar_unidad(crusty_h264::au_is_idr(au)));
         if let Some(f) = dec.decode(au).map_err(|e| format!("{e:?}"))? {
             let dims = (f.width, f.height);
             fotos.extend(orden.entrar(f, dims, dec.last_poc(), dec.last_has_mmco5()));
@@ -92,7 +92,7 @@ fn decodificar_rusty_au(flujo: &[u8]) -> Result<Vec<Fotograma>, String> {
 }
 
 fn decodificar_rusty(flujo: &[u8]) -> Result<Vec<Fotograma>, String> {
-    let mut dec = rusty_h264_decoder::Decoder::new();
+    let mut dec = crusty_h264::Decoder::new();
     let fotos = dec.decode_stream(flujo).map_err(|e| format!("{e:?}"))?;
     Ok(fotos
         .into_iter()
@@ -136,7 +136,7 @@ fn decodificar_openh264(flujo: &[u8], por_au: bool) -> Result<Vec<Fotograma>, St
             .map_err(|e| e.to_string())?;
     let mut salida = Vec::new();
     let paquetes: Vec<&[u8]> = if por_au {
-        rusty_h264_decoder::split_access_units(flujo)
+        crusty_h264::split_access_units(flujo)
     } else {
         openh264::nal_units(flujo).collect()
     };
@@ -282,11 +282,8 @@ fn main() {
         Some("comparar") => comparar(&args),
         Some("diag") => {
             let flujo = std::fs::read(&args[2]).expect("leer");
-            let mut dec = rusty_h264_decoder::Decoder::new();
-            for (i, au) in rusty_h264_decoder::split_access_units(&flujo)
-                .iter()
-                .enumerate()
-            {
+            let mut dec = crusty_h264::Decoder::new();
+            for (i, au) in crusty_h264::split_access_units(&flujo).iter().enumerate() {
                 let tipos: Vec<u8> = openh264::nal_units(au)
                     .map(|n| {
                         let k = n.iter().position(|&b| b == 1).map_or(0, |p| p + 1);

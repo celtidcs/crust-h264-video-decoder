@@ -57,10 +57,10 @@ El proyecto se distribuye en dos componentes centrales y un banco de evaluación
 
 ```text
 crusty_h264/
-├── Cargo.toml                              # Paquete del banco; redirige a vendor/ con [patch]
-├── vendor/
-│   ├── rusty_h264-common-0.16.0/           # Primitivas matemáticas, predicción, transformadas y DCT
-│   └── rusty_h264-decoder-0.16.0/          # Motor de decodificación H.264 y reordenación DPB
+├── Cargo.toml                              # Paquete del banco (`banco_h264`), depende de crates/crusty_h264
+├── crates/
+│   ├── crusty_h264-common/                 # Primitivas matemáticas, predicción, transformadas y DCT
+│   └── crusty_h264/                        # Motor de decodificación H.264 y reordenación DPB
 ├── src/                                    # Ejecutable del banco de evaluación y CLI (`banco_h264`)
 ├── scripts/                                # Scripts ejecutables de verificación, auditoría y velocidad
 ├── tests/                                  # Pruebas de integración, verificación de cortes y fuzzing
@@ -77,21 +77,16 @@ crusty_h264/
 
 ### Comandos de Validación Inmediata
 ```bash
-# Comprobación de compilación del decodificador
-cargo check
-
-# Ejecución de la suite completa de pruebas unitarias
-cargo test
-
-# Verificación de linter estricto sin avisos
-cargo clippy --all-targets -- -D warnings
-
-# Verificación de formato estricto
-cargo fmt --check
-
-# Auditoría de dependencias frente a vulnerabilidades
-cargo audit
+# Las tres puertas se ejecutan en la raíz (banco) y en cada crate:
+for m in Cargo.toml crates/crusty_h264-common/Cargo.toml crates/crusty_h264/Cargo.toml; do
+  cargo test   --manifest-path "$m" --all-features                                 # pruebas
+  cargo clippy --manifest-path "$m" --all-targets --all-features -- -D warnings    # linter sin avisos
+  cargo fmt    --manifest-path "$m" --check                                        # formato
+done
+cargo audit                                                                        # vulnerabilidades
 ```
+
+Las pruebas viven en los crates (`crusty_h264-common`: 99; `crusty_h264`: 70); el banco de la raíz no tiene pruebas propias.
 
 ---
 

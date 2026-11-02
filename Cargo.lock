@@ -4,10 +4,10 @@ version = 4
 
 [[package]]
 name = "banco_h264"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
+ "crusty_h264",
  "openh264",
- "rusty_h264-decoder",
  "sha2",
 ]
 
@@ -57,6 +57,23 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5ca28b0ae3115b884660db4118d803791fd6756b6e88f39c0f3f7859060d7566"
 dependencies = [
  "libc",
+]
+
+[[package]]
+name = "crusty_h264"
+version = "0.1.2"
+dependencies = [
+ "crusty_h264-common",
+]
+
+[[package]]
+name = "crusty_h264-common"
+version = "0.1.2"
+dependencies = [
+ "bytemuck",
+ "once_cell",
+ "portable-atomic",
+ "wide 0.7.33",
 ]
 
 [[package]]
@@ -174,23 +191,6 @@ name = "r-efi"
 version = "6.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f8dcc9c7d52a811697d2151c701e0d08956f92b0e24136cf4cf27b57a6a0d9bf"
-
-[[package]]
-name = "rusty_h264-common"
-version = "0.16.0"
-dependencies = [
- "bytemuck",
- "once_cell",
- "portable-atomic",
- "wide 0.7.33",
-]
-
-[[package]]
-name = "rusty_h264-decoder"
-version = "0.16.0"
-dependencies = [
- "rusty_h264-common",
-]
 
 [[package]]
 name = "safe_arch"

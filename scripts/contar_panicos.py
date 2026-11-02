@@ -1,6 +1,6 @@
-"""Cuenta puntos de pánico de producción en los crates de un directorio `vendor`.
+"""Cuenta puntos de pánico de producción en los crates de un directorio (por defecto `crates/`).
 
-Uso: python contar_panicos.py <directorio vendor>
+Uso: python contar_panicos.py [<directorio de crates>]
 
 Se recorre `src/` entero (incluidas subcarpetas). En cada archivo cuenta lo que hay antes del primer
 módulo de pruebas (`#[cfg(test)]` seguido de `mod`); un `#[cfg(test)]` suelto (p. ej. sobre un
@@ -16,8 +16,8 @@ PATRON = re.compile(r"\.unwrap\(\)|\.expect\(|unreachable!|panic!\(")
 MODULO_PRUEBAS = re.compile(r"#\[cfg\(test\)\]\s*(pub(\(crate\))?\s+)?mod\s")
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-vendor = sys.argv[1] if len(sys.argv) > 1 else os.path.join(RAIZ, "vendor")
-for crate in sorted(glob.glob(os.path.join(vendor, "*"))):
+crates = sys.argv[1] if len(sys.argv) > 1 else os.path.join(RAIZ, "crates")
+for crate in sorted(glob.glob(os.path.join(crates, "*"))):
     produccion, pruebas = {}, {}
     for f in glob.glob(os.path.join(crate, "src", "**", "*.rs"), recursive=True):
         t = open(f, encoding="utf-8").read()

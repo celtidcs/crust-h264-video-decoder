@@ -41,24 +41,24 @@ fi
 grep -E '^(ANTES|AHORA|RED|DISTINTO)' "$T/ultima-red.txt" | head -12
 [ "$FALLO" -ne 0 ] && echo "RED FALLIDA"
 [ "$MODO" = "rapido" ] && exit "$FALLO"
-for crate in rusty_h264-decoder-0.16.0 rusty_h264-common-0.16.0; do
+for crate in crusty_h264 crusty_h264-common; do
   echo "--- $crate"
   # Desde COR-1b (2026-10-12) el decodificador ya no tiene la feature `std` (siempre la usa).
   FEAT="--features std"
-  grep -q '^std = ' "$W/vendor/$crate/Cargo.toml" || FEAT=""
+  grep -q '^std = ' "$W/crates/$crate/Cargo.toml" || FEAT=""
   SALIDA="$T/ultimas-pruebas-$crate.txt"
-  if ! ( cd "$W/vendor/$crate" && CARGO_TARGET_DIR="$T" cargo test --release -q --no-default-features $FEAT >"$SALIDA" 2>&1 ); then
+  if ! ( cd "$W/crates/$crate" && CARGO_TARGET_DIR="$T" cargo test --release -q --no-default-features $FEAT >"$SALIDA" 2>&1 ); then
     FALLO=1
     echo "PRUEBAS FALLIDAS en $crate (detalle en $SALIDA):"
     grep -E '^error' -A6 "$SALIDA" | head -30
   fi
   grep -E '^test result|FAILED|^error' "$SALIDA" | grep -v ' 0 passed; 0 failed; 0 ignored'
-  echo "clippy normal (avisos): $(cd "$W/vendor/$crate" && CARGO_TARGET_DIR="$T" cargo clippy --release --no-default-features $FEAT --lib 2>&1 | grep -c '^warning')"
-  echo "clippy pedantic (avisos): $(cd "$W/vendor/$crate" && CARGO_TARGET_DIR="$T" cargo clippy --release --no-default-features $FEAT --lib -- -W clippy::pedantic 2>&1 | grep -c '^warning')"
-  echo "fmt (bloques con diferencias): $(cd "$W/vendor/$crate" && cargo fmt --check -- --config newline_style=Native 2>/dev/null | grep -c '^Diff in')"
+  echo "clippy normal (avisos): $(cd "$W/crates/$crate" && CARGO_TARGET_DIR="$T" cargo clippy --release --no-default-features $FEAT --lib 2>&1 | grep -c '^warning')"
+  echo "clippy pedantic (avisos): $(cd "$W/crates/$crate" && CARGO_TARGET_DIR="$T" cargo clippy --release --no-default-features $FEAT --lib -- -W clippy::pedantic 2>&1 | grep -c '^warning')"
+  echo "fmt (bloques con diferencias): $(cd "$W/crates/$crate" && cargo fmt --check -- --config newline_style=Native 2>/dev/null | grep -c '^Diff in')"
   # forbid puede estar en Cargo.toml ([lints]) o como atributo de crate en src/lib.rs.
-  echo "forbid unsafe: Cargo.toml $(grep -c 'unsafe_code = "forbid"' "$W/vendor/$crate/Cargo.toml"), lib.rs $(grep -c '^#!\[forbid(unsafe_code)\]' "$W/vendor/$crate/src/lib.rs") | unsafe en src: $(grep -rnw 'unsafe' --include=*.rs "$W/vendor/$crate/src" | grep -vE '^\S+:\s*//|forbid|//.*unsafe' | wc -l)"
+  echo "forbid unsafe: Cargo.toml $(grep -c 'unsafe_code = "forbid"' "$W/crates/$crate/Cargo.toml"), lib.rs $(grep -c '^#!\[forbid(unsafe_code)\]' "$W/crates/$crate/src/lib.rs") | unsafe en src: $(grep -rnw 'unsafe' --include=*.rs "$W/crates/$crate/src" | grep -vE '^\S+:\s*//|forbid|//.*unsafe' | wc -l)"
 done
-python "$H/scripts/contar_panicos.py" "$W/vendor"
+python "$H/scripts/contar_panicos.py" "$W/crates"
 [ "$FALLO" -ne 0 ] && echo "VERIFICACIÓN FALLIDA"
 exit "$FALLO"

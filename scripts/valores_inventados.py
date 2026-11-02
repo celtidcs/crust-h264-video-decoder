@@ -9,7 +9,7 @@ import re
 from pathlib import Path
 
 PROYECTO = Path(__file__).resolve().parent.parent
-RAIZ = PROYECTO / 'vendor' if (PROYECTO / 'vendor').exists() else PROYECTO / 'h264/vendor'
+RAIZ = PROYECTO / 'crates'
 PATRON = re.compile(r'unwrap_or(_default|_else)?\(|\.unwrap\(\)|\.expect\(')
 
 
