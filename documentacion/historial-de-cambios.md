@@ -7,7 +7,8 @@ Este documento recoge de forma cronológica la evolución del decodificador, doc
 ## Próxima versión (en preparación)
 
 - **Nombre del proyecto**: pasa a llamarse **Crust H264 Video Decoder**. El repositorio pasa a ser `crust-h264-video-decoder`, y los crates, `crust-h264-video-decoder` (biblioteca `crust_h264_video_decoder`, en `crates/crust-h264-video-decoder`) y `crust-h264-common` (biblioteca `crust_h264_common`). **Cambio incompatible**: `crusty_h264::` pasa a ser `crust_h264_video_decoder::`, y `crusty_h264_common::`, `crust_h264_common::`. La salida decodificada no cambia.
-- **Pruebas del orden de presentación (POC)**: pruebas unitarias de `poc.rs` para los tipos 0, 1 y 2 según UIT-T H.264 (06/26) §8.2.1, con valores derivados de la norma. Una de ellas reproduce una desviación de la norma en el POC de tipo 0 después de una MMCO 5 (D-2026-11-02-1 en `documentacion/defectos-conocidos.md`); queda marcada como ignorada hasta su corrección.
+- **Pruebas del orden de presentación (POC)**: pruebas unitarias de `poc.rs` para los tipos 0, 1 y 2 según UIT-T H.264 (06/26) §8.2.1, con valores derivados de la norma. Una de ellas reproducía una desviación de la norma en el POC de tipo 0 después de una MMCO 5 (D-2026-11-02-1 en `documentacion/defectos-conocidos.md`).
+- **POC de tipo 0 tras una MMCO 5**: se corrige el estado que usa la imagen siguiente (D-2026-11-02-1). Los cuatro flujos de conformidad de la UIT-T con MMCO 5 siguen coincidiendo fotograma a fotograma con su salida oficial.
 - **Análisis estático**: un parámetro de una prueba de fuzzing se llamaba `salt` y CodeQL lo tomaba por una sal criptográfica; se renombra a `desplazamiento_patron`.
 
 ---

@@ -31,12 +31,11 @@ Por política deliberada de seguridad y simplicidad, el decodificador rechaza de
 - **Siguiente paso**: fabricar un flujo de prueba con huecos y POC de tipo 1 o 2 y compararlo con un decodificador de referencia externo.
 - **Cobertura**: pruebas unitarias de la fórmula en `crates/crust-h264-video-decoder/src/poc/tests.rs` (tipos 0, 1 y 2, vuelta del contador e imágenes no de referencia).
 
-### D-2026-11-02-1: POC de Tipo 0 después de una MMCO 5
-- **Qué falla y cómo se reproduce**: según la norma (UIT-T H.264 06/26, §8.2.1, pág. 140, y §8.2.1.1), tras decodificar una imagen con `memory_management_control_operation` igual a 5, su `TopFieldOrderCnt` pasa a ser `TopFieldOrderCnt − PicOrderCnt` (0 en un fotograma progresivo), y la siguiente imagen toma ese valor como `prevPicOrderCntLsb`. `PocState::apply_mmco5` conserva en su lugar el `pic_order_cnt_lsb` de la imagen. Reproducción: `cargo test -p crust-h264-video-decoder --lib poc::tests::tipo0_tras_mmco5_el_lsb_previo_es_el_top_reajustado -- --ignored` (MaxPicOrderCntLsb 16; imagen con MMCO 5 y lsb 6; la siguiente referencia, con lsb 14, debería dar POC −2 y da 14).
-- **Hecho adicional**: el decodificador presenta la imagen con MMCO 5 con su POC anterior al reajuste (el valor que devuelve `apply_mmco5` no se usa).
-- **Pendiente de comprobar**: este documento (§3) registra que los flujos de conformidad progresivos coinciden bit a bit con Cisco OpenH264, pero no se ha comprobado cuáles contienen una MMCO 5 con POC de tipo 0, así que eso no descarta nada por sí solo.
-- **Sospecha sin confirmar**: que un flujo con MMCO 5, POC de tipo 0 y un `pic_order_cnt_lsb` distinto de 0 en esa imagen se presente en un orden distinto del de la norma.
-- **Siguiente paso**: corregir `apply_mmco5` para el tipo 0 según la norma, con un flujo de prueba que lo demuestre frente a un oráculo externo y la red de equivalencia como control de que nada más cambia.
+### D-2026-11-02-1: POC de Tipo 0 después de una MMCO 5 — CORREGIDO
+- **Qué fallaba**: según la norma (UIT-T H.264 06/26, §8.2.1, pág. 140, y §8.2.1.1), tras decodificar una imagen con `memory_management_control_operation` igual a 5, su `TopFieldOrderCnt` pasa a ser `TopFieldOrderCnt − PicOrderCnt` (0 en un fotograma progresivo), y la imagen siguiente toma ese valor como `prevPicOrderCntLsb`. `PocState::apply_mmco5` conservaba en su lugar el `pic_order_cnt_lsb` de la imagen.
+- **Corrección**: `apply_mmco5` (tipo 0) guarda ahora como `prevPicOrderCntLsb` el `TopFieldOrderCnt` reajustado. La prueba `crates/crust-h264-video-decoder/src/poc/tests.rs::tipo0_tras_mmco5_el_lsb_previo_es_el_top_reajustado` lo vigila (con el comportamiento anterior falla: da 14 en lugar de −2).
+- **Comprobado contra la salida oficial**: los cuatro flujos de conformidad de la UIT-T con MMCO 5 (MR4_TANDBERG_C con POC de tipo 0 y lsb distinto de 0 en esas imágenes; MR5_TANDBERG_C, tipo 1; MR2_TANDBERG_E y MR3_TANDBERG_B, tipo 2) coinciden fotograma a fotograma (300/300) con su YUV oficial antes y después del cambio; la red de equivalencia sigue en 2.132/2.132.
+- **Pregunta abierta, sin cambio**: el decodificador presenta la propia imagen con MMCO 5 con su POC anterior al reajuste. Con ese comportamiento, MR4_TANDBERG_C coincide con la salida oficial, así que no se modifica sin un flujo que demuestre lo contrario.
 
 ---
 

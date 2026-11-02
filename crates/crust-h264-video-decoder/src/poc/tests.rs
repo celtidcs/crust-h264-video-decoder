@@ -129,11 +129,9 @@ fn tipo0_campo_inferior_anterior_da_el_minimo() {
 /// TopFieldOrderCnt − PicOrderCnt = 6 − 6 = 0, y la siguiente imagen usa prevPicOrderCntMsb = 0 y
 /// prevPicOrderCntLsb = 0. Ref con lsb 14: 14 > 0 y 14 − 0 > 8 → Msb = −16 → POC −2.
 ///
-/// Hoy falla (da 14): `PocState::apply_mmco5` deja `prev_lsb` en el lsb de la imagen (6), no en
-/// su TopFieldOrderCnt reajustado (0). Es la reproducción del defecto D-2026-11-02-1; se ejecuta
-/// con `cargo test -- --ignored` hasta que se corrija.
+/// Vigila la corrección de D-2026-11-02-1 (antes daba 14: `apply_mmco5` dejaba `prev_lsb` en el
+/// lsb de la imagen, 6, en lugar de su TopFieldOrderCnt reajustado, 0).
 #[test]
-#[ignore = "reproduce el defecto D-2026-11-02-1 (POC tipo 0 tras MMCO 5); véase documentacion/defectos-conocidos.md"]
 fn tipo0_tras_mmco5_el_lsb_previo_es_el_top_reajustado() {
     let sps = sps(0, None);
     let mut estado = PocState::default();

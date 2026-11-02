@@ -23,10 +23,15 @@ impl PocState {
         self.prev_has_mmco5 = true;
         match poc_type {
             0 => {
-                let new_poc = current_poc - self.prev_msb;
+                // UIT-T H.264 (06/26) §8.2.1, pág. 140: tras una MMCO 5, TopFieldOrderCnt de la imagen pasa a
+                // ser TopFieldOrderCnt − PicOrderCnt(imagen), y §8.2.1.1 toma ese valor como
+                // prevPicOrderCntLsb de la siguiente (con prevPicOrderCntMsb = 0). `compute_poc` acaba de
+                // guardar el Msb y el lsb de esta imagen de referencia, así que TopFieldOrderCnt = Msb + lsb.
+                let top = self.prev_msb + self.prev_lsb;
                 self.prev_msb = 0;
-                self.prev_lsb = new_poc;
-                new_poc
+                self.prev_lsb = top - current_poc;
+                // PicOrderCnt de la imagen tras el reajuste: Min(Top', Bottom') = 0.
+                0
             }
             1 => {
                 #[allow(clippy::cast_possible_truncation)]
