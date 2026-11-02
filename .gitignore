@@ -14,6 +14,10 @@ tmp/
 red/flujos/
 red/mutantes/
 *.yuv
+# Excepción: salidas de referencia del oráculo que las pruebas del decodificador incrustan con
+# include_bytes!; sin ellas las pruebas no compilan en un clon limpio.
+!tests/cabac_data/*_ref.yuv
+!tests/cortes_data/*_ref.yuv
 
 # OS artifacts
 Thumbs.db

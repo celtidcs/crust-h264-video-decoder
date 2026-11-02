@@ -7,3 +7,8 @@ scripts/** linguist-documentation=true
 scripts/** linguist-detectable=false
 tests/** linguist-documentation=true
 tests/** linguist-detectable=false
+
+# Datos binarios de vídeo: sin conversión de fin de línea ni diff de texto. Muchos YUV no contienen
+# ningún byte NUL y git, con core.autocrlf, los tomaría por texto y alteraría sus CRLF.
+*.yuv binary
+*.264 binary
