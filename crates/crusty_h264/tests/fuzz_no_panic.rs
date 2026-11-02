@@ -83,18 +83,21 @@ fn seed_streams() -> Vec<Vec<u8>> {
 }
 
 /// A deterministic textured frame (gradients + a block) so residuals are non-trivial.
-fn textured_frame(w: usize, h: usize, salt: u64) -> YuvFrame {
+///
+/// `desplazamiento_patron` desplaza el degradado de luma y croma para que fotogramas sucesivos
+/// difieran; es un valor de prueba, sin ninguna relación con la criptografía.
+fn textured_frame(w: usize, h: usize, desplazamiento_patron: u64) -> YuvFrame {
     let mut f = YuvFrame::black(w, h);
     for y in 0..h {
         for x in 0..w {
-            f.y[y * w + x] = ((x * 3 + y * 5 + salt as usize * 7) & 0xff) as u8;
+            f.y[y * w + x] = ((x * 3 + y * 5 + desplazamiento_patron as usize * 7) & 0xff) as u8;
         }
     }
     let (cw, ch) = (w / 2, h / 2);
     for y in 0..ch {
         for x in 0..cw {
-            f.u[y * cw + x] = ((x * 2 + salt as usize) & 0xff) as u8;
-            f.v[y * cw + x] = ((y * 2 + salt as usize) & 0xff) as u8;
+            f.u[y * cw + x] = ((x * 2 + desplazamiento_patron as usize) & 0xff) as u8;
+            f.v[y * cw + x] = ((y * 2 + desplazamiento_patron as usize) & 0xff) as u8;
         }
     }
     f
