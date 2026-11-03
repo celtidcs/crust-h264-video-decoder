@@ -383,6 +383,34 @@ impl MbBs {
 /// Sentinel for an unused reference slot.
 const NO_REF: i32 = i32::MIN;
 
+/// Cota de saturación de cada componente de vector de movimiento (en cuartos de
+/// muestra de luma) al derivar la intensidad de borde: los componentes se llevan a
+/// `[-COTA_MV_DESBLOQUEO, COTA_MV_DESBLOQUEO - 1]` = `[-16384, 16383]`.
+///
+/// De dónde sale (V4, D-2026-11-02-3): UIT-T H.264, Anexo A (§A.3.1), limita un
+/// flujo conforme a `[-2048, 2047.75]` muestras en horizontal y, con el `MaxVmvR`
+/// máximo de la tabla A-1 (512), a `[-512, 511.75]` en vertical, es decir
+/// `[-8192, 8191]` y `[-2048, 2047]` cuartos: la cota (2^14) nunca altera un flujo
+/// conforme. Y la diferencia de dos componentes saturados cae en
+/// `[-32767, 32767]`: cabe en `i16` sin vuelta y nunca vale `i16::MIN`, así que la
+/// resta en `i16` del empaquetado, la resta en `i32` del camino de baldosas y el
+/// núcleo AVX2 de `rusty_h264-accel` (`sub_epi16` + `abs_epi16`) deciden igual.
+const COTA_MV_DESBLOQUEO: i32 = 1 << 14;
+
+/// Satura un componente de vector a `[-COTA_MV_DESBLOQUEO, COTA_MV_DESBLOQUEO - 1]`
+/// (véase [`COTA_MV_DESBLOQUEO`]). Es la única entrada de vectores a la derivación
+/// de intensidades: la usan [`pack_mb`] y `Blk::load`, para que los dos caminos
+/// vean los mismos valores.
+///
+/// Sustituye a la truncación `as i16`, que convertía vectores no conformes en
+/// otros arbitrarios (`40000` → `-25536`) y dejaba al núcleo AVX2 recibir
+/// diferencias que vuelven a `i16::MIN`.
+#[inline(always)]
+fn saturar_componente_mv(v: i32) -> i16 {
+    // Sin pérdida: tras el `clamp` el valor está en [-16384, 16383] ⊂ i16.
+    v.clamp(-COTA_MV_DESBLOQUEO, COTA_MV_DESBLOQUEO - 1) as i16
+}
+
 /// One 4×4 block's deblocking state, gathered into a per-macroblock tile.
 ///
 /// The frame-wide `inter`/`nnz`/`mv`/`ref_id` arrays are indexed `by * w4 + bx`,
@@ -458,6 +486,10 @@ impl Blk {
                 *info.mv1.get(i).ok_or(FueraDeRango("mv1"))?,
             )
         };
+        // Los mismos valores que ve `pack_mb` (V4): saturados, de modo que `bs1_tile`
+        // resta en `i32` sin desbordar y decide igual que el camino empaquetado.
+        let sat = |v: i32| i32::from(saturar_componente_mv(v));
+        let (mvx, mvy, mv1x, mv1y) = (sat(mvx), sat(mvy), sat(mv1x), sat(mv1y));
         Ok(Blk {
             inter: *info.inter.get(i).ok_or(FueraDeRango("inter"))?,
             nz: *info.nnz.get(i).ok_or(FueraDeRango("nnz"))? != 0,
@@ -1120,8 +1152,8 @@ pub fn pack_mb(
             // Branchless: the original tested `nnz != 0` and branched to set the
             // bit, a data-dependent branch on coefficient presence.
             rec.nnz_mask |= ((nnz[c] != 0) as u16) << k;
-            rec.mvx[k] = mvr[c].0 as i16;
-            rec.mvy[k] = mvr[c].1 as i16;
+            rec.mvx[k] = saturar_componente_mv(mvr[c].0);
+            rec.mvy[k] = saturar_componente_mv(mvr[c].1);
         }
         if map0 {
             for (dst, &r0) in rec.ref_id[r * 4..r * 4 + 4].iter_mut().zip(rid) {
@@ -1137,8 +1169,8 @@ pub fn pack_mb(
                 let k = r * 4 + c;
                 let r1 = map_ref(map1, info.poc1, rid1[c])?;
                 rec.ref1[k] = r1;
-                rec.mvx1[k] = mv1r[c].0 as i16;
-                rec.mvy1[k] = mv1r[c].1 as i16;
+                rec.mvx1[k] = saturar_componente_mv(mv1r[c].0);
+                rec.mvy1[k] = saturar_componente_mv(mv1r[c].1);
                 rec.l1_used |= ((r1 != NO_REF) as u16) << k;
             }
         }
@@ -1354,13 +1386,13 @@ fn pk_differs(p: &MbPack, pk: usize, q: &MbPack, qk: usize) -> bool {
         // wraps to a large unsigned. Two `abs` (sign-mask, xor, subtract each) become
         // an add and a compare, on the hottest per-edge predicate in the derivation.
         //
-        // `wrapping_sub` A PROPÓSITO (V3, D-2026-11-02-2): dos componentes i16 pueden
-        // diferir en más de lo que cabe en i16 en un flujo no conforme, y la resta
-        // `-` entraba en pánico con las comprobaciones aritméticas activas. La vuelta
-        // en i16 es lo que ya hacía la compilación de release y lo que hace el núcleo
-        // AVX2 de `rusty_h264-accel` (`sub_epi16`), así que la salida no cambia y las
-        // compilaciones con y sin `asm` deciden igual. Barrera:
-        // `deblock/tests/desbordamiento_movimiento.rs`.
+        // `wrapping_sub` A PROPÓSITO (V3, D-2026-11-02-2): con un `MbPack` construido a
+        // mano, dos componentes i16 pueden diferir en más de lo que cabe en i16 y la
+        // resta `-` entraría en pánico con las comprobaciones aritméticas activas. Lo
+        // que sale de `pack_mb` ya no llega a eso (V4, D-2026-11-02-3): los vectores
+        // están saturados a ±2^14 (`COTA_MV_DESBLOQUEO`) y su diferencia nunca vuelve.
+        // Barreras: `deblock/tests/desbordamiento_movimiento.rs` (paquetes a mano) y
+        // `deblock/tests/saturacion_vectores.rs` (empaquetado real).
         let far4 = |d: i16| (d.wrapping_add(3) as u16) >= 7;
         let far = far4(p.mvx[pk].wrapping_sub(q.mvx[qk])) | far4(p.mvy[pk].wrapping_sub(q.mvy[qk]));
         return (p.ref_id[pk] != q.ref_id[qk]) | ((p.ref_id[pk] != NO_REF) & far);
@@ -2073,10 +2105,15 @@ mod derive_tests;
 #[cfg(test)]
 #[path = "deblock/tests/desbordamiento_movimiento.rs"]
 mod desbordamiento_movimiento;
+
 /// Desplazamientos del filtro por macrobloque (COR-4, D-2026-10-12-2).
 #[cfg(test)]
 #[path = "deblock/tests/desplazamientos_por_macrobloque.rs"]
 mod desplazamientos_por_macrobloque;
+/// Saturación de los vectores que entran en la derivación (V4, D-2026-11-02-3).
+#[cfg(test)]
+#[path = "deblock/tests/saturacion_vectores.rs"]
+mod saturacion_vectores;
 #[cfg(test)]
 mod tests;
 #[cfg(test)]

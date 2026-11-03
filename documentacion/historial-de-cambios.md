@@ -11,6 +11,7 @@ Este documento recoge de forma cronológica la evolución del decodificador, doc
 - **POC de tipo 0 tras una MMCO 5**: se corrige el estado que usa la imagen siguiente (D-2026-11-02-1). Los cuatro flujos de conformidad de la UIT-T con MMCO 5 siguen coincidiendo fotograma a fotograma con su salida oficial.
 - **Integración de fuzzing con cargo-fuzz**: se añade el arnés formal en `fuzz/` con tres objetivos sobre la API pública (`fuzz_annex_b`, `fuzz_access_units` y `fuzz_decode_stream`), evaluados bajo libFuzzer con semilla fija (`-seed=12345`) en tandas de 100.000 ejecuciones con corpus vacío en los tres objetivos, junto con la evaluación en profundidad partiendo del corpus `fuzz/base` en `fuzz_decode_stream`.
 - **Desbordamiento aritmético en la prueba de movimiento del filtro de desbloqueo**: se sustituye la resta directa en `i16` por `wrapping_sub` en `pk_differs` (D-2026-11-02-2), evitando pánicos por comprobaciones aritméticas activas ante vectores extremos en flujos no conformes detectados por el fuzzing.
+- **Vectores de movimiento del filtro de desbloqueo**: se saturan a ±16384 cuartos de muestra en lugar de truncarse a 16 bits (D-2026-11-02-3). Con flujos no conformes, la intensidad de borde ya no depende de la CPU ni de si se usan los núcleos SIMD (`asm`), y desaparece un posible desbordamiento en el cálculo por baldosas. Los flujos conformes no cambian.
 - **Análisis estático**: un parámetro de una prueba de fuzzing se llamaba `salt` y CodeQL lo tomaba por una sal criptográfica; se renombra a `desplazamiento_patron`.
 
 ---

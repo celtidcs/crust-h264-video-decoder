@@ -1,14 +1,12 @@
 //! Barrera de V3 (D-2026-11-02-2): la prueba de movimiento del desbloqueo
 //! (UIT-T H.264 §8.7.2.1, `|Δmv| >= 4` en cuartos de píxel) no puede entrar en
-//! pánico cuando la diferencia de dos vectores empaquetados en `i16` no cabe en
-//! `i16`.
+//! pánico cuando la diferencia de dos vectores de un `MbPack` construido a mano no
+//! cabe en `i16`.
 //!
-//! Esos vectores solo aparecen en flujos no conformes (los encontró el fuzzing de
-//! `fuzz_decode_stream` con el corpus `fuzz/base`), pero el decodificador debe
-//! rechazar o tolerar la entrada sin abortar. La semántica acordada es la vuelta
-//! en `i16` (`wrapping_sub`), la misma que aplica el núcleo AVX2 de
-//! `rusty_h264-accel`, para que las compilaciones con y sin la feature `asm`
-//! decidan igual.
+//! Lo que produce `pack_mb` ya no llega a esas diferencias (V4, D-2026-11-02-3:
+//! vectores saturados a ±2^14; barrera en `saturacion_vectores.rs`). Aquí se
+//! prueban paquetes hechos a mano con la semántica de vuelta en `i16`
+//! (`wrapping_sub`) de `pk_differs`, para que siga sin haber pánico.
 
 use super::*;
 
@@ -81,7 +79,9 @@ fn paquete_par(a: i16, b: i16) -> MbPack {
 }
 
 /// `true` si la diferencia de `a` y `b`, con vuelta en `i16`, es exactamente
-/// `i16::MIN`: el único caso en que el núcleo AVX2 discrepa (D-2026-11-02-3).
+/// `i16::MIN`: el único caso en que el núcleo AVX2 discrepa de `pk_differs` con un
+/// paquete hecho a mano (D-2026-11-02-3). `pack_mb` no produce esos pares: lo vigila
+/// `saturacion_vectores::empaquetado_evita_que_la_diferencia_vuelva_a_minimo`.
 fn vuelve_a_minimo(a: i16, b: i16) -> bool {
     a.wrapping_sub(b) == i16::MIN || b.wrapping_sub(a) == i16::MIN
 }
@@ -103,22 +103,4 @@ fn despachador_igual_a_escalar_con_diferencias_fuera_de_i16() {
     }
     // Calibración: el filtro no puede dejar la prueba vacía en silencio.
     assert_eq!(comprobados, 7);
-}
-
-/// D-2026-11-02-3 (abierto, no se corrige en V3): con `--features asm` en una CPU
-/// con AVX2, `abs_epi16(i16::MIN)` es `i16::MIN`, que no es `> 3`, así que el
-/// núcleo dice «cerca» donde el escalar dice «lejos». Solo afecta a flujos no
-/// conformes. Sin `asm` el despachador es el escalar y la prueba pasa.
-#[test]
-#[ignore = "D-2026-11-02-3: el núcleo AVX2 de rusty_h264-accel discrepa del escalar cuando la diferencia vuelve a i16::MIN"]
-fn despachador_igual_a_escalar_cuando_la_diferencia_vuelve_a_minimo() {
-    for (a, b) in [(0, i16::MIN), (i16::MAX, -1)] {
-        assert!(vuelve_a_minimo(a, b));
-        let p = paquete_par(a, b);
-        assert_eq!(
-            bs_motion_masks(&p),
-            bs_motion_masks_scalar(&p),
-            "a={a} b={b}: despachador (AVX2 con `asm`) != escalar"
-        );
-    }
 }
