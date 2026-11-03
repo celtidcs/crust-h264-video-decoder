@@ -1,0 +1,35 @@
+[package]
+name = "crust-h264-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+crust-h264-common = { path = "../crates/crust-h264-common" }
+crust-h264-video-decoder = { path = "../crates/crust-h264-video-decoder" }
+
+# Evita interferir con los paquetes raíz y crates secundarios
+[workspace]
+members = ["."]
+
+[[bin]]
+name = "fuzz_annex_b"
+path = "fuzz_targets/fuzz_annex_b.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "fuzz_access_units"
+path = "fuzz_targets/fuzz_access_units.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "fuzz_decode_stream"
+path = "fuzz_targets/fuzz_decode_stream.rs"
+test = false
+doc = false

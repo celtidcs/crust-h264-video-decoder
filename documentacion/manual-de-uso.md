@@ -150,12 +150,49 @@ fn mostrar_en_pantalla<T>(_imagenes: Vec<T>) {
 
 ## 3. Como comprobar que el decodificador no comete ni un solo fallo
 
-El proyecto incluye un script en Python en la carpeta de utilidades (`scripts/red.py`) que somete al decodificador a una prueba masiva con 2.129 videos oficiales y mutaciones complejas creadas para intentar romperlo.
+El proyecto incluye un script en Python en la carpeta de utilidades (`scripts/red.py`) que somete al decodificador a una prueba masiva con 2.132 videos oficiales y mutaciones complejas creadas para intentar romperlo.
 
 Para ejecutar esta comprobacion:
 ```bash
 python scripts/red.py comprobar
 ```
 El script procesara los miles de videos en paralelo y comparara cada resultado con la linea base oficial. Si todo el codigo funciona a la perfeccion, veras el mensaje:
-`RED EN VERDE: 2129/2129 idénticas`.
+`RED EN VERDE: 2132/2132 idénticas`.
 Cualquier fallo, por minimo que sea, se detectara en el acto con indicacion exacta del archivo que ha discrepado.
+
+
+---
+
+## 4. Pruebas de Fuzzing con `cargo-fuzz`
+
+El subpaquete `fuzz/` contiene tres objetivos de prueba basados en libFuzzer diseñados para explorar las fronteras del decodificador:
+- `fuzz_annex_b`: análisis de capa NAL y des-prevención de emulación.
+- `fuzz_access_units`: división y ensamblado de unidades de acceso.
+- `fuzz_decode_stream`: decodificación de flujos completos y alimentados por unidades de acceso a través de la API pública de `Decoder`.
+
+### Requisitos previos
+El fuzzing con `cargo-fuzz` requiere la cadena de herramientas `nightly` de Rust y el componente `rust-src`:
+```bash
+rustup toolchain install nightly --profile minimal
+rustup component add rust-src --toolchain nightly
+cargo install cargo-fuzz
+```
+
+### Modalidades de ejecución y corpus de partida
+
+Se recomienda el uso de dos modalidades según el objetivo de la prueba:
+- **Corpus vacío (exploración superficial de cabeceras y rechazos)**: útil para someter a prueba el parser superficial de capas NAL y rechazos tempranos a muy alta cadencia (~20.000 ejecuciones/s).
+  ```bash
+  cargo +nightly fuzz run fuzz_decode_stream -- -seed=12345 -runs=100000 -max_len=65536
+  ```
+- **Corpus base (`fuzz/base`, exploración profunda del decodificador)**: permite alcanzar la lógica interna del decodificador (transformadas, compensación de movimiento, deblocking), ejecutándose a ~4 ejecuciones/s. Conviene prever que 100.000 ejecuciones con este corpus tardan aproximadamente 6 horas (medido en Linux: 22 331 s).
+  Dado que libFuzzer escribe nuevos hallazgos en el primer directorio de corpus suministrado, se debe copiar previamente `fuzz/base` a un directorio de trabajo independiente para preservar el corpus versionado intacto:
+
+  ```bash
+  # 1. Crear directorio de trabajo temporal y copiar el corpus base
+  mkdir -p /tmp/corpus_fuzz_decode
+  cp -r fuzz/base/* /tmp/corpus_fuzz_decode/
+
+  # 2. Ejecutar el objetivo con semilla y número de ejecuciones fijos
+  cargo +nightly fuzz run fuzz_decode_stream /tmp/corpus_fuzz_decode/ -- -seed=12345 -runs=100000 -max_len=65536
+  ```

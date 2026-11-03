@@ -9,6 +9,12 @@ material_secundario/
 scratch/
 .tmp/
 tmp/
+**/__pycache__/
+
+# Fuzzing
+fuzz/target/
+fuzz/corpus/
+fuzz/artifacts/
 
 # Archivos generados por el banco y la red
 red/flujos/
