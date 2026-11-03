@@ -1353,8 +1353,16 @@ fn pk_differs(p: &MbPack, pk: usize, q: &MbPack, qk: usize) -> bool {
         // predicate -- d in -3..=3 maps to 0..=6, d >= 4 maps to >= 7, and any d <= -4
         // wraps to a large unsigned. Two `abs` (sign-mask, xor, subtract each) become
         // an add and a compare, on the hottest per-edge predicate in the derivation.
+        //
+        // `wrapping_sub` A PROPÓSITO (V3, D-2026-11-02-2): dos componentes i16 pueden
+        // diferir en más de lo que cabe en i16 en un flujo no conforme, y la resta
+        // `-` entraba en pánico con las comprobaciones aritméticas activas. La vuelta
+        // en i16 es lo que ya hacía la compilación de release y lo que hace el núcleo
+        // AVX2 de `rusty_h264-accel` (`sub_epi16`), así que la salida no cambia y las
+        // compilaciones con y sin `asm` deciden igual. Barrera:
+        // `deblock/tests/desbordamiento_movimiento.rs`.
         let far4 = |d: i16| (d.wrapping_add(3) as u16) >= 7;
-        let far = far4(p.mvx[pk] - q.mvx[qk]) | far4(p.mvy[pk] - q.mvy[qk]);
+        let far = far4(p.mvx[pk].wrapping_sub(q.mvx[qk])) | far4(p.mvy[pk].wrapping_sub(q.mvy[qk]));
         return (p.ref_id[pk] != q.ref_id[qk]) | ((p.ref_id[pk] != NO_REF) & far);
     }
     pk_differs_two_list(p, pk, q, qk)
@@ -2061,6 +2069,10 @@ mod chroma_bs_tests;
 #[cfg(test)]
 #[path = "deblock/tests/derive_tests.rs"]
 mod derive_tests;
+/// Desbordamiento i16 en la prueba de movimiento (V3, D-2026-11-02-2).
+#[cfg(test)]
+#[path = "deblock/tests/desbordamiento_movimiento.rs"]
+mod desbordamiento_movimiento;
 /// Desplazamientos del filtro por macrobloque (COR-4, D-2026-10-12-2).
 #[cfg(test)]
 #[path = "deblock/tests/desplazamientos_por_macrobloque.rs"]
