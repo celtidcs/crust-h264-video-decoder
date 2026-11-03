@@ -37,6 +37,18 @@ Por política deliberada de seguridad y simplicidad, el decodificador rechaza de
 - **Comprobado contra la salida oficial**: los cuatro flujos de conformidad de la UIT-T con MMCO 5 (MR4_TANDBERG_C con POC de tipo 0 y lsb distinto de 0 en esas imágenes; MR5_TANDBERG_C, tipo 1; MR2_TANDBERG_E y MR3_TANDBERG_B, tipo 2) coinciden fotograma a fotograma (300/300) con su YUV oficial antes y después del cambio; la red de equivalencia sigue en 2.132/2.132.
 - **Pregunta abierta, sin cambio**: el decodificador presenta la propia imagen con MMCO 5 con su POC anterior al reajuste. Con ese comportamiento, MR4_TANDBERG_C coincide con la salida oficial, así que no se modifica sin un flujo que demuestre lo contrario.
 
+### D-2026-11-02-2: Pánico por desbordamiento en la prueba de movimiento del desbloqueo — CORREGIDO
+- **Qué fallaba**: `pk_differs` (`crates/crust-h264-common/src/deblock.rs`), la prueba de movimiento de §8.7.2.1 (`|Δmv| >= 4` en cuartos de píxel), restaba dos componentes `i16` con `-`. En un flujo no conforme la diferencia puede no caber en `i16`, y con las comprobaciones aritméticas activas (compilación de depuración, pruebas, fuzzing) el decodificador entraba en pánico («attempt to subtract with overflow»). Lo encontró el fuzzing de `fuzz_decode_stream` partiendo del corpus `fuzz/base`.
+- **Corrección**: la resta es ahora `wrapping_sub`, con vuelta en `i16`. Es lo que ya hacía la compilación de release, así que la salida no cambia, y es lo mismo que hace el núcleo AVX2 de `rusty_h264-accel` (feature `asm`). Se descartó la resta en `i32` porque haría que las compilaciones con y sin `asm` decidieran distinto, y porque el empaquetado ya trunca los vectores a `i16`.
+- **Barrera**: `crates/crust-h264-common/src/deblock/tests/desbordamiento_movimiento.rs`. Sin la corrección falla con el mismo pánico, en la misma línea, que el caso del fuzzing.
+- **Comprobado**: red de equivalencia 2.132/2.132 idéntica; velocidad igual que antes (razón entre 0,992 y 1,002 en los siete flujos de `vel/`).
+
+### D-2026-11-02-3: El núcleo AVX2 discrepa del escalar cuando la diferencia vuelve a `i16::MIN` — ABIERTO
+- **Qué falla**: con `--features asm` en una CPU con AVX2, `rusty_h264-accel::bs_motion_masks` calcula `abs_epi16(sub_epi16(a, b))`, y `abs_epi16(i16::MIN)` vale `i16::MIN`, que no es `> 3`: el núcleo dice «movimiento parecido» donde la versión escalar dice «distinto». Solo ocurre cuando la diferencia con vuelta es exactamente −32768, es decir, con vectores fuera de los límites de la norma (flujos no conformes). No hay pánico; cambia como mucho la fuerza del filtro en esas aristas.
+- **Cómo se reproduce**: `cargo test --all-features desbordamiento -- --ignored` en `crates/crust-h264-common` (prueba `despachador_igual_a_escalar_cuando_la_diferencia_vuelve_a_minimo`). Medido en Linux: el despachador da (0, 0) y el escalar (6, 32). Sin `asm`, el despachador es el escalar y la prueba pasa.
+- **Descartado**: los demás pares extremos (siete, en la misma prueba sin `#[ignore]`) dan la misma respuesta en el núcleo y en el escalar.
+- **Siguiente paso**: decidir si se corrige en el escalar (para que imite al núcleo) o se propone la corrección del núcleo al proyecto original. No se ha hecho porque el núcleo es una dependencia externa y la decisión necesita el acuerdo de los tres agentes.
+
 ---
 
 ## 3. Estado Frente a Oráculos Externos
