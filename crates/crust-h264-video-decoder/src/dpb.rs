@@ -11,6 +11,7 @@ use crust_h264_common::BitReader;
 
 use crate::constantes::{MAX_OPERACIONES_MMCO, MAX_PLANOS_POOL, MUESTRA_NEUTRA_8BIT};
 use crate::error::DecodeError;
+use crate::params::Sps;
 use crate::Decoder;
 
 /// A reference picture: deblocked reconstruction at coded resolution.
@@ -82,6 +83,9 @@ pub(crate) struct RefFrame {
     /// sliding window until explicitly unmarked (spec §8.2.4).
     pub long_term: bool,
     pub long_term_idx: u32,
+    /// Marca si este fotograma es un marcador "non-existing" generado por hueco en `frame_num`
+    /// (UIT-T H.264 §8.2.5.2). Con `pic_order_cnt_type == 0` se excluye de listas B (§8.2.4.2.3).
+    pub non_existing: bool,
     /// Globally unique, monotonically increasing identity distinguishing
     /// distinct pictures in the DPB for in-loop deblocking filter strength
     /// derivation (ITU-T Rec. H.264 §8.7.2.1).
@@ -118,6 +122,11 @@ impl RefFrame {
     #[inline]
     pub(crate) fn pic_id(&self) -> u32 {
         self.pic_id
+    }
+
+    #[inline]
+    pub(crate) fn is_non_existing(&self) -> bool {
+        self.non_existing
     }
 
     #[inline]
@@ -250,8 +259,11 @@ impl Decoder {
         max_refs: usize,
         w: usize,
         h: usize,
+        sps: &Sps,
     ) {
-        if max_fn == 0 {
+        // UIT-T H.264 §8.2.5.2 (Guarda G): se invoca solo si frame_num != PrevRefFrameNum
+        // y frame_num != (PrevRefFrameNum + 1) % MaxFrameNum.
+        if max_fn == 0 || frame_num == self.prev_ref_frame_num {
             return;
         }
         let start = (self.prev_ref_frame_num + 1) % max_fn;
@@ -259,17 +271,33 @@ impl Decoder {
         if gap == 0 {
             return;
         }
-        // Each placeholder is inserted at the front then the DPB is truncated to
-        // `max_refs`, so for a gap larger than that only the most recent `max_refs`
-        // placeholders can survive. Materialise just those — a malformed stream can
-        // declare a gap of MaxFrameNum-1 (up to 65535), and allocating that many
-        // full frames would be a CPU/memory DoS.
+        // Criterio F: derivación secuencial de POC para los inexistentes (§8.2.5.2).
+        // En el DPB solo se materializan los últimos n = min(gap, cap) <= 16 fotogramas
+        // para prevenir ataques DoS de memoria.
+        // Derivación de cota: como gap < max_fn, la secuencia de inexistentes contiene a lo
+        // sumo una vuelta sobre 0. Si la vuelta ocurre en el tramo omitido (skip_count fotogramas),
+        // el primer fotograma superviviente u = (start + skip_count) % max_fn cumple u < prev_frame_num,
+        // por lo que compute_poc detecta la vuelta e incrementa prev_frame_num_offset de manera idéntica.
+        // Si ocurre en el tramo superviviente, se detecta igualmente al alcanzar 0.
+        // Por tanto, basta evaluar compute_poc únicamente en los n fotogramas supervivientes (n <= 16).
+        // El coste se reduce de O(gap * cycle) a O(min(gap, cap) * cycle) <= 16 * 255 = 4080 sumas.
         let cap = max_refs.max(1);
         let n = (gap as usize).min(cap);
-        let (cw, ch) = (w, h);
-        #[allow(clippy::cast_possible_truncation)]
-        let mut expected = (frame_num + max_fn - n as u32) % max_fn;
+        let skip_count = (gap as usize).saturating_sub(n);
+        let mut surviving = Vec::with_capacity(n);
+        let mut u = (start + skip_count as u32) % max_fn;
         for _ in 0..n {
+            let poc = if sps.pic_order_cnt_type != 0 {
+                self.poc.compute_poc(sps, false, 1, u, 0, (0, 0))
+            } else {
+                0
+            };
+            surviving.push((u, poc));
+            u = (u + 1) % max_fn;
+        }
+
+        let (cw, ch) = (w, h);
+        for (fn_val, poc_val) in surviving {
             self.refs.insert(
                 0,
                 Arc::new(RefFrame {
@@ -279,8 +307,8 @@ impl Decoder {
                     pv: vec![MUESTRA_NEUTRA_8BIT; (cw / 2 + 2 * CPAD) * (ch / 2 + 2 * CPAD)],
                     cw,
                     ch,
-                    frame_num: expected,
-                    poc: 0,
+                    frame_num: fn_val,
+                    poc: poc_val,
                     mv: Vec::new(),
                     ref_idx: Vec::new(),
                     mv1: Vec::new(),
@@ -289,6 +317,7 @@ impl Decoder {
                     w4: 0,
                     long_term: false,
                     long_term_idx: 0,
+                    non_existing: true,
                     pic_id: next_pic_id(),
                 }),
             );
@@ -299,7 +328,6 @@ impl Decoder {
                     break;
                 }
             }
-            expected = (expected + 1) % max_fn;
         }
         self.prev_ref_frame_num = (frame_num + max_fn - 1) % max_fn;
     }

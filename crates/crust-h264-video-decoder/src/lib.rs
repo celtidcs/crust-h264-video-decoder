@@ -317,6 +317,30 @@ impl Decoder {
                 delta_poc_bottom = r.read_se()?; // delta_pic_order_cnt[1]
             }
         }
+        // redundant_pic_cnt: a non-zero value marks a *redundant* coded picture
+        // (an alternative representation of the primary picture). A primary
+        // decoder discards it (UIT-T H.264 clause 3, def. 3.132, p. 13; §7.4.3) WITHOUT any normative effect
+        // on DPB or POC state. Must be checked before gap synthesis or POC derivation.
+        if pps.redundant_pic_cnt_present_flag {
+            let redundant_pic_cnt = r.read_ue()?;
+            if redundant_pic_cnt != 0 {
+                return Ok(None);
+            }
+        }
+
+        // Synthesize placeholder short-term references for any gap in frame_num
+        // (spec §8.2.5.2) so the DPB / PicNum mapping stays correct and POC state advances.
+        if first_mb_in_slice == 0 && !is_idr && sps.gaps_in_frame_num_allowed {
+            self.insert_frame_num_gaps(
+                frame_num,
+                1u32 << sps.log2_max_frame_num,
+                sps.max_num_ref_frames.max(1) as usize,
+                sps.pic_width_in_mbs * MB_DIM,
+                sps.pic_height_in_mbs * MB_DIM,
+                sps,
+            );
+        }
+
         // PicOrderCnt is determined by the first slice of the picture; later
         // slices share it (and must not re-advance the POC state).
         let pic_poc = if first_mb_in_slice == 0 {
@@ -330,20 +354,10 @@ impl Decoder {
             )
         } else {
             // COR-3, pendiente de acuerdo: sin imagen en curso este 0 es provisional; el
-            // corte se rechaza SIEMPRE más abajo («slice continues a missing picture») y
+            // corte se rechaza SIEMPRE más abajo ("slice continues a missing picture") y
             // nunca da imagen. Adelantar el rechazo cambia el motivo en 6 flujos de la red.
             self.cur.as_ref().map_or(0, |p| p.poc)
         };
-        // redundant_pic_cnt: a non-zero value marks a *redundant* coded picture
-        // (an alternative representation of the primary picture). A primary
-        // decoder discards it (spec §7.4.3, §8.2.5 note). Must be read here or the
-        // rest of the slice header desyncs.
-        if pps.redundant_pic_cnt_present_flag {
-            let redundant_pic_cnt = r.read_ue()?;
-            if redundant_pic_cnt != 0 {
-                return Ok(None);
-            }
-        }
         // B slices choose direct-mode derivation here (spec §7.3.3).
         let direct_spatial = if is_b { r.read_bit()? } else { true };
         let mut num_ref_idx_l0 = pps.num_ref_idx_l0_default as usize;
@@ -417,18 +431,6 @@ impl Decoder {
             u8::try_from((pps.pic_init_qp + slice_qp_delta).clamp(QP_MIN, i32::from(QP_MAX)))
                 .unwrap_or(0);
 
-        // Synthesize placeholder short-term references for any gap in frame_num
-        // (spec §8.2.5.2) so the DPB / PicNum mapping stays correct.
-        if first_mb_in_slice == 0 && !is_idr && sps.gaps_in_frame_num_allowed {
-            self.insert_frame_num_gaps(
-                frame_num,
-                1u32 << sps.log2_max_frame_num,
-                sps.max_num_ref_frames.max(1) as usize,
-                sps.pic_width_in_mbs * MB_DIM,
-                sps.pic_height_in_mbs * MB_DIM,
-            );
-        }
-
         // Build the reference list(s) for this slice. P uses RefPicList0 only;
         // B uses RefPicList0 and RefPicList1 (POC-ordered).
         let max_fn = 1u32 << sps.log2_max_frame_num;
@@ -443,6 +445,7 @@ impl Decoder {
                     num1: num_ref_idx_l1,
                     mods0: &reorder_l0,
                     mods1: &reorder_l1,
+                    pic_order_cnt_type: sps.pic_order_cnt_type,
                 },
             )?
         } else if is_p {
@@ -663,6 +666,7 @@ impl Decoder {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crust_h264_common::NalUnit;
 
     fn ref_at(poc: i32, fnum: u32) -> Ref {
         alloc::sync::Arc::new(RefFrame {
@@ -681,6 +685,7 @@ mod tests {
             w4: 0,
             long_term: false,
             long_term_idx: 0,
+            non_existing: false,
             pic_id: next_pic_id(),
         })
     }
@@ -699,6 +704,7 @@ mod tests {
                 num1: 4,
                 mods0: &[],
                 mods1: &[],
+                pic_order_cnt_type: 0,
             },
         )
         .unwrap();
@@ -729,6 +735,7 @@ mod tests {
                 num1: 3,
                 mods0: &[],
                 mods1: &[],
+                pic_order_cnt_type: 0,
             },
         )
         .unwrap();
@@ -740,8 +747,9 @@ mod tests {
     fn frame_num_gaps_insert_placeholders() {
         let mut d = Decoder::new();
         d.prev_ref_frame_num = 2;
+        let sps = sps_prueba(0, 8, None);
         // frame_num jumps 2 -> 5: placeholders for the skipped 3 and 4.
-        d.insert_frame_num_gaps(5, 16, 8, 16, 16);
+        d.insert_frame_num_gaps(5, 16, 8, 16, 16, &sps);
         let fns: Vec<u32> = d.refs.iter().map(|r| r.frame_num).collect();
         assert_eq!(fns, vec![4, 3], "most-recent placeholder at the front");
         assert_eq!(d.prev_ref_frame_num, 4);
@@ -756,7 +764,8 @@ mod tests {
         // Wrap across MaxFrameNum: prev 14, frame_num 1 (max 16) -> fill 15, 0.
         let mut d = Decoder::new();
         d.prev_ref_frame_num = 14;
-        d.insert_frame_num_gaps(1, 16, 8, 16, 16);
+        let sps = sps_prueba(0, 8, None);
+        d.insert_frame_num_gaps(1, 16, 8, 16, 16, &sps);
         assert_eq!(
             d.refs.iter().map(|r| r.frame_num).collect::<Vec<_>>(),
             vec![0, 15]
@@ -764,7 +773,7 @@ mod tests {
         // No gap (consecutive) inserts nothing.
         let mut d = Decoder::new();
         d.prev_ref_frame_num = 3;
-        d.insert_frame_num_gaps(4, 16, 8, 16, 16);
+        d.insert_frame_num_gaps(4, 16, 8, 16, 16, &sps);
         assert!(d.refs.is_empty());
     }
 
@@ -776,5 +785,665 @@ mod tests {
         let nal = crust_h264_common::NalUnit::new(3, NalUnitType::IdrSlice, vec![0x88, 0x80]);
         let err = d.decode(&nal.to_annex_b()).unwrap_err();
         assert_eq!(err, DecodeError::MissingParameterSet);
+    }
+
+    fn dpb_con_hueco() -> Decoder {
+        let mut d = Decoder::new();
+        d.prev_ref_frame_num = 2;
+        d.refs = vec![ref_at(6, 2), ref_at(2, 1)];
+        let sps = sps_prueba(0, 8, None);
+        d.insert_frame_num_gaps(5, 16, 8, 16, 16, &sps);
+        d
+    }
+
+    fn lista0_tipo(d: &Decoder, pic_order_cnt_type: u32) -> Vec<i32> {
+        let (l0, _) = build_ref_list_b(
+            &d.refs,
+            &ContextoListaB {
+                curr_poc: 4,
+                curr_frame_num: 5,
+                max_frame_num: 16,
+                num0: 4,
+                num1: 4,
+                mods0: &[],
+                mods1: &[],
+                pic_order_cnt_type,
+            },
+        )
+        .unwrap();
+        l0.iter().map(|r| r.poc).collect()
+    }
+
+    /// Control sin hueco: L0 ordenada por cercanía a curr_poc 4 -> [2, 6].
+    #[test]
+    fn repro_control_sin_hueco() {
+        let mut d = Decoder::new();
+        d.refs = vec![ref_at(6, 2), ref_at(2, 1)];
+        assert_eq!(lista0_tipo(&d, 0), vec![2, 6]);
+    }
+
+    /// §8.2.4.2.3: con tipo 0 los inexistentes no entran en las listas B.
+    #[test]
+    fn repro_tipo0_inexistentes_fuera_de_lista_b() {
+        assert_eq!(lista0_tipo(&dpb_con_hueco(), 0), vec![2, 6]);
+    }
+
+    fn sps_prueba(poc_type: u32, max_refs: u32, ciclo: Option<&[i32]>) -> Sps {
+        let mut w = crust_h264_common::bit_writer::BitWriter::new();
+        w.write_bits(77, 8); // Perfil Main (permite B)
+        w.write_bits(0, 8);
+        w.write_bits(30, 8);
+        w.write_ue(0); // sps_id
+        w.write_ue(0); // log2_max_frame_num_minus4 -> log2 = 4 (MaxFrameNum = 16)
+        w.write_ue(poc_type);
+        match poc_type {
+            0 => w.write_ue(2), // log2_max_pic_order_cnt_lsb_minus4 -> 6 (MaxPicOrderCntLsb = 64)
+            1 => {
+                let c = ciclo.unwrap_or(&[4]);
+                w.write_bit(false); // delta_pic_order_always_zero_flag = 0
+                w.write_se(0); // offset_for_non_ref_pic
+                w.write_se(0); // offset_for_top_to_bottom_field
+                w.write_ue(c.len() as u32);
+                for &o in c {
+                    w.write_se(o);
+                }
+            }
+            _ => {}
+        }
+        w.write_ue(max_refs); // max_num_ref_frames
+        w.write_bit(true); // gaps_in_frame_num_value_allowed_flag = 1
+        w.write_ue(0); // pic_width_in_mbs_minus1 -> 16 px
+        w.write_ue(0); // pic_height_in_map_units_minus1 -> 16 px
+        w.write_bit(true); // frame_mbs_only_flag
+        w.write_bit(true); // direct_8x8_inference_flag
+        w.write_bit(false); // frame_cropping_flag
+        w.write_bit(false); // vui_parameters_present_flag
+        w.rbsp_trailing_bits();
+        Sps::parse(&w.into_bytes()).expect("SPS de prueba válido")
+    }
+
+    fn sps_annex_b(poc_type: u32, max_refs: u32, ciclo: Option<&[i32]>) -> (Sps, Vec<u8>) {
+        let mut w = crust_h264_common::bit_writer::BitWriter::new();
+        w.write_bits(77, 8); // Perfil Main
+        w.write_bits(0, 8);
+        w.write_bits(30, 8);
+        w.write_ue(0);
+        w.write_ue(0);
+        w.write_ue(poc_type);
+        match poc_type {
+            0 => w.write_ue(2),
+            1 => {
+                let c = ciclo.unwrap_or(&[4]);
+                w.write_bit(false);
+                w.write_se(0);
+                w.write_se(0);
+                w.write_ue(c.len() as u32);
+                for &o in c {
+                    w.write_se(o);
+                }
+            }
+            _ => {}
+        }
+        w.write_ue(max_refs);
+        w.write_bit(true);
+        w.write_ue(0);
+        w.write_ue(0);
+        w.write_bit(true);
+        w.write_bit(true);
+        w.write_bit(false);
+        w.write_bit(false);
+        w.rbsp_trailing_bits();
+        let rbsp = w.into_bytes();
+        let sps = Sps::parse(&rbsp).expect("SPS parse");
+        let nal = NalUnit::new(3, NalUnitType::Sps, rbsp);
+        (sps, nal.to_annex_b())
+    }
+
+    fn pps_annex_b(sps_id: u32, pps_id: u32) -> Vec<u8> {
+        let mut w = crust_h264_common::bit_writer::BitWriter::new();
+        w.write_ue(pps_id);
+        w.write_ue(sps_id);
+        w.write_bit(false); // entropy_coding_mode_flag = 0 (CAVLC)
+        w.write_bit(false); // bottom_field_pic_order_present = 0
+        w.write_ue(0); // num_slice_groups_minus1 = 0
+        w.write_ue(3); // num_ref_idx_l0_default_active_minus1 = 3 (4 activas)
+        w.write_ue(3); // num_ref_idx_l1_default_active_minus1 = 3 (4 activas)
+        w.write_bit(false); // weighted_pred = 0
+        w.write_bits(0, 2); // weighted_bipred_idc = 0
+        w.write_se(0); // pic_init_qp = 26
+        w.write_se(0); // pic_init_qs = 26
+        w.write_se(0); // chroma_qp_index_offset = 0
+        w.write_bit(false); // deblocking_filter_control = 0
+        w.write_bit(false); // constrained_intra_pred = 0
+        w.write_bit(true); // redundant_pic_cnt_present_flag = true
+        w.rbsp_trailing_bits();
+        let nal = NalUnit::new(3, NalUnitType::Pps, w.into_bytes());
+        nal.to_annex_b()
+    }
+
+    fn slice_idr_annex_b(poc_type: u32, poc_lsb: u32, delta_poc0: i32, luma_byte: u8) -> Vec<u8> {
+        let mut w = crust_h264_common::bit_writer::BitWriter::new();
+        w.write_ue(0); // first_mb_in_slice = 0
+        w.write_ue(7); // slice_type = 7 (I)
+        w.write_ue(0); // pps_id = 0
+        w.write_bits(0, 4); // frame_num = 0
+        w.write_ue(0); // idr_pic_id = 0
+        if poc_type == 0 {
+            w.write_bits(poc_lsb, 6);
+        } else if poc_type == 1 {
+            w.write_se(delta_poc0);
+        }
+        w.write_ue(0); // redundant_pic_cnt = 0
+        w.write_bit(false); // no_output_of_prior_pics_flag
+        w.write_bit(false); // long_term_reference_flag
+        w.write_se(0); // slice_qp_delta = 0
+                       // Macrobloque I_PCM (mb_type = 25)
+        w.write_ue(25);
+        w.align_zero();
+        for _ in 0..256 {
+            w.write_bits(u32::from(luma_byte), 8);
+        }
+        for _ in 0..128 {
+            w.write_bits(128, 8);
+        }
+        w.rbsp_trailing_bits();
+        let nal = NalUnit::new(3, NalUnitType::IdrSlice, w.into_bytes());
+        nal.to_annex_b()
+    }
+
+    fn slice_p_annex_b(
+        frame_num: u32,
+        poc_type: u32,
+        poc_lsb: u32,
+        delta_poc0: i32,
+        redundant_cnt: u32,
+        luma_byte: u8,
+    ) -> Vec<u8> {
+        let mut w = crust_h264_common::bit_writer::BitWriter::new();
+        w.write_ue(0); // first_mb = 0
+        w.write_ue(0); // slice_type = 0 (P)
+        w.write_ue(0); // pps_id = 0
+        w.write_bits(frame_num, 4);
+        if poc_type == 0 {
+            w.write_bits(poc_lsb, 6);
+        } else if poc_type == 1 {
+            w.write_se(delta_poc0);
+        }
+        w.write_ue(redundant_cnt); // redundant_pic_cnt
+        if redundant_cnt == 0 {
+            w.write_bit(false); // num_ref_idx_active_override_flag = 0
+            w.write_bit(false); // ref_pic_list_modification_flag_l0 = 0
+            w.write_bit(false); // adaptive_ref_pic_marking_mode_flag = 0
+            w.write_se(0); // slice_qp_delta = 0
+                           // mb_skip_run = 0
+            w.write_ue(0);
+            // Macrobloque I_PCM en corte P (mb_type = 30 = 5 + 25)
+            w.write_ue(30);
+            w.align_zero();
+            for _ in 0..256 {
+                w.write_bits(u32::from(luma_byte), 8);
+            }
+            for _ in 0..128 {
+                w.write_bits(128, 8);
+            }
+        }
+        w.rbsp_trailing_bits();
+        let nal = NalUnit::new(3, NalUnitType::NonIdrSlice, w.into_bytes());
+        nal.to_annex_b()
+    }
+
+    fn slice_b_annex_b(
+        frame_num: u32,
+        poc_type: u32,
+        poc_lsb: u32,
+        delta_poc0: i32,
+        ref_idx_l0: u32,
+    ) -> Vec<u8> {
+        let mut w = crust_h264_common::bit_writer::BitWriter::new();
+        w.write_ue(0); // first_mb = 0
+        w.write_ue(1); // slice_type = 1 (B)
+        w.write_ue(0); // pps_id = 0
+        w.write_bits(frame_num, 4);
+        if poc_type == 0 {
+            w.write_bits(poc_lsb, 6);
+        } else if poc_type == 1 {
+            w.write_se(delta_poc0);
+        }
+        w.write_ue(0); // redundant_pic_cnt = 0
+        w.write_bit(true); // direct_spatial_mv_pred_flag = 1
+        w.write_bit(false); // num_ref_idx_active_override_flag = 0
+        w.write_bit(false); // ref_pic_list_modification_flag_l0 = 0
+        w.write_bit(false); // ref_pic_list_modification_flag_l1 = 0
+        w.write_se(0); // slice_qp_delta = 0
+
+        // mb_skip_run = 0
+        w.write_ue(0);
+        // Macrobloque B_L0_16x16 (mb_type = 1)
+        w.write_ue(1);
+        w.write_ue(ref_idx_l0);
+        w.write_se(0); // mvd l0 x
+        w.write_se(0); // mvd l0 y
+        w.write_ue(0); // cbp = 0
+        w.rbsp_trailing_bits();
+
+        let nal = NalUnit::new(0, NalUnitType::NonIdrSlice, w.into_bytes());
+        nal.to_annex_b()
+    }
+
+    /// §8.2.5.2: con tipo 2 el POC de los inexistentes se deriva: frame_num 3 -> 6, 4 -> 8.
+    #[test]
+    fn repro_tipo2_poc_de_inexistentes() {
+        let mut d = Decoder::new();
+        d.prev_ref_frame_num = 2;
+        d.refs = vec![ref_at(6, 2), ref_at(2, 1)];
+        let sps = sps_prueba(2, 8, None);
+        d.insert_frame_num_gaps(5, 16, 8, 16, 16, &sps);
+        let pocs: Vec<i32> = d.refs.iter().map(|r| r.poc).collect();
+        assert_eq!(pocs, vec![8, 6, 6, 2]);
+    }
+
+    /// §8.2.5.2 Guarda G: si frame_num == prev_ref_frame_num en flujo no conforme,
+    /// no debe procesarse un falso hueco de MaxFrameNum - 1.
+    #[test]
+    fn g_flujo_no_conforme_guarda_fn_igual_prev_ref_fn() {
+        let mut d = Decoder::new();
+        d.prev_ref_frame_num = 5;
+        let sps = sps_prueba(0, 8, None);
+        d.insert_frame_num_gaps(5, 16, 8, 16, 16, &sps);
+        assert!(d.refs.is_empty());
+    }
+
+    /// Criterio F: cuando el hueco supera max_refs (gap = 8 > max_refs = 2),
+    /// solo sobreviven los 2 más recientes en DPB (POC 36 y 34), y el estado POC
+    /// avanza correctamente (curr_poc = 38).
+    #[test]
+    fn f_hueco_mayor_que_max_refs_con_vuelta_no_materializada() {
+        let mut d = Decoder::new();
+        let sps = sps_prueba(2, 2, None);
+        d.poc.compute_poc(&sps, true, 1, 0, 0, (0, 0));
+        d.prev_ref_frame_num = 10;
+        d.poc.compute_poc(&sps, false, 1, 10, 0, (0, 0));
+        // Salto 10 -> 3: gap = 8. Sobreviven fn 1 y 2 con POC 34 y 36.
+        d.insert_frame_num_gaps(3, 16, 2, 16, 16, &sps);
+        assert_eq!(d.refs.len(), 2);
+        assert_eq!(d.refs[0].frame_num, 2);
+        assert_eq!(d.refs[0].poc, 36);
+        assert_eq!(d.refs[1].frame_num, 1);
+        assert_eq!(d.refs[1].poc, 34);
+        let curr_poc = d.poc.compute_poc(&sps, false, 1, 3, 0, (0, 0));
+        assert_eq!(curr_poc, 38);
+    }
+
+    /// Criterio E (Tipo 0): con pic_order_cnt_type == 0, los inexistentes se filtran de L0.
+    /// Para curr_poc = 2, L0[1] apunta a la imagen con luma 192 (sin filtro daría 64).
+    #[test]
+    fn e_oraculo_sintetico_tipo0() {
+        let mut d = Decoder::new();
+        let sps = sps_prueba(0, 8, None);
+        d.prev_ref_frame_num = 0;
+        let mut p0 = (*ref_at(0, 0)).clone();
+        p0.py = vec![64; (16 + 2 * LPAD) * (16 + 2 * LPAD)];
+        d.refs.push(alloc::sync::Arc::new(p0));
+
+        d.insert_frame_num_gaps(2, 16, 8, 16, 16, &sps);
+
+        let mut p1 = (*ref_at(4, 2)).clone();
+        p1.py = vec![192; (16 + 2 * LPAD) * (16 + 2 * LPAD)];
+        d.refs.insert(0, alloc::sync::Arc::new(p1));
+
+        let (l0, _) = build_ref_list_b(
+            &d.refs,
+            &ContextoListaB {
+                curr_poc: 2,
+                curr_frame_num: 3,
+                max_frame_num: 16,
+                num0: 2,
+                num1: 2,
+                mods0: &[],
+                mods1: &[],
+                pic_order_cnt_type: 0,
+            },
+        )
+        .unwrap();
+
+        assert_eq!(l0.len(), 2);
+        assert_eq!(l0[1].plano_luma()[LPAD * (16 + 2 * LPAD) + LPAD], 192);
+    }
+
+    /// Criterio E (Tipo 1): con pic_order_cnt_type == 1, los inexistentes derivan POC.
+    /// Para curr_poc = 2, L0[0] apunta a P0 con luma 64 (si el inexistente tuviese POC 0 daría 128).
+    #[test]
+    fn e_oraculo_sintetico_tipo1() {
+        let mut d = Decoder::new();
+        let sps = sps_prueba(1, 8, Some(&[4]));
+        d.poc.compute_poc(&sps, true, 1, 0, 0, (0, 0));
+        let mut p0 = (*ref_at(0, 0)).clone();
+        p0.py = vec![64; (16 + 2 * LPAD) * (16 + 2 * LPAD)];
+        d.refs.push(alloc::sync::Arc::new(p0));
+        d.prev_ref_frame_num = 0;
+
+        d.insert_frame_num_gaps(2, 16, 8, 16, 16, &sps);
+
+        let p1_poc = d.poc.compute_poc(&sps, false, 1, 2, 0, (0, 0));
+        assert_eq!(p1_poc, 8);
+        let mut p1 = (*ref_at(8, 2)).clone();
+        p1.py = vec![192; (16 + 2 * LPAD) * (16 + 2 * LPAD)];
+        d.refs.insert(0, alloc::sync::Arc::new(p1));
+
+        let (l0, _) = build_ref_list_b(
+            &d.refs,
+            &ContextoListaB {
+                curr_poc: 2,
+                curr_frame_num: 3,
+                max_frame_num: 16,
+                num0: 3,
+                num1: 3,
+                mods0: &[],
+                mods1: &[],
+                pic_order_cnt_type: 1,
+            },
+        )
+        .unwrap();
+
+        assert_eq!(l0[0].plano_luma()[LPAD * (16 + 2 * LPAD) + LPAD], 64);
+    }
+
+    /// El avance de estado de los huecos debe ocurrir antes de derivar
+    /// el `PicOrderCnt` del fotograma actual (§8.2.5.2).
+    #[test]
+    fn huecos_procesados_antes_de_compute_poc_en_imagen_actual() {
+        let mut d = Decoder::new();
+        let (_, sps_nal) = sps_annex_b(1, 4, Some(&[2]));
+        let pps_nal = pps_annex_b(0, 0);
+        d.decode(&sps_nal).unwrap();
+        d.decode(&pps_nal).unwrap();
+
+        // IDR fn 0 -> POC 0
+        let idr = slice_idr_annex_b(1, 0, 0, 64);
+        d.decode(&idr).unwrap();
+
+        // P fn 3 (huecos en 1 y 2):
+        // Con el orden correcto, los huecos 1 y 2 avanzan el estado antes de procesar fn 3.
+        // fn 3 se procesa con prev_fn = 2, avanzando el estado a prev_fn = 3.
+        let p3 = slice_p_annex_b(3, 1, 0, 0, 0, 192);
+        d.decode(&p3).unwrap();
+        assert_eq!(d.last_poc(), 6);
+
+        // Si los huecos se insertasen después de compute_poc,
+        // el estado de la siguiente imagen quedaría corrompido.
+        let p4 = slice_p_annex_b(4, 1, 0, 0, 0, 192);
+        d.decode(&p4).unwrap();
+        assert_eq!(d.last_poc(), 8);
+    }
+
+    /// Con tipo 0, los inexistentes NO deben llamar a `compute_poc`
+    /// ni tocar `prev_poc_msb` ni `prev_poc_lsb`.
+    #[test]
+    fn tipo0_hueco_no_invoca_compute_poc_para_preservar_msb_lsb() {
+        let mut d = Decoder::new();
+        let sps = sps_prueba(0, 4, None);
+        // IDR fn 0, poc_lsb = 0 -> POC 0
+        d.poc.compute_poc(&sps, true, 3, 0, 0, (0, 0));
+        // Ref 1 con poc_lsb = 4 -> POC 4, dejando prev_lsb = 4
+        d.poc.compute_poc(&sps, false, 3, 1, 4, (0, 0));
+        d.prev_ref_frame_num = 1;
+
+        // Salto a fn 3: hueco en fn 2. Con tipo 0 NO debe invocar compute_poc
+        d.insert_frame_num_gaps(3, 16, 4, 16, 16, &sps);
+
+        // Imagen real fn 3 con poc_lsb = 34:
+        // Como el hueco no tocó prev_lsb (que sigue en 4), 34 - 4 = 30 < 32 -> POC 34.
+        // Si el hueco hubiese invocado compute_poc con lsb 0,
+        // prev_lsb habría pasado a 0, y para fn 3 (34 - 0 = 34 > 32) restaría 64,
+        // derivando POC -30 erróneo.
+        let curr_poc = d.poc.compute_poc(&sps, false, 3, 3, 34, (0, 0));
+        assert_eq!(curr_poc, 34);
+    }
+
+    /// Un corte redundante no debe alterar las referencias del DPB ni el estado de `PicOrderCnt`
+    /// (UIT-T H.264 definición 3.132, pág. 13 de la norma, PDF pág. 37, y §7.4.3).
+    #[test]
+    fn corte_redundante_no_avanza_poc_ni_dpb() {
+        let mut d = Decoder::new();
+        let (_, sps_nal) = sps_annex_b(2, 4, None);
+        let pps_nal = pps_annex_b(0, 0);
+        d.decode(&sps_nal).unwrap();
+        d.decode(&pps_nal).unwrap();
+
+        // 1. Primaria IDR fn 0 -> POC 0
+        let idr = slice_idr_annex_b(2, 0, 0, 64);
+        let f0 = d.decode(&idr).unwrap();
+        assert!(f0.is_some());
+        assert_eq!(d.refs.len(), 1);
+        assert_eq!(d.prev_ref_frame_num, 0);
+        assert_eq!(d.last_poc(), 0);
+
+        // 2. Corte redundante con redundant_pic_cnt = 1 y frame_num = 2 (con hueco)
+        let red = slice_p_annex_b(2, 2, 0, 0, 1, 200);
+        let res = d.decode(&red).unwrap();
+        assert!(res.is_none());
+        assert_eq!(
+            d.refs.len(),
+            1,
+            "el corte redundante no debe insertar huecos en el DPB"
+        );
+        assert_eq!(
+            d.prev_ref_frame_num, 0,
+            "el corte redundante no debe alterar prev_ref_frame_num"
+        );
+
+        // 3. Imagen primaria posterior fn 1:
+        // Como el corte redundante no debió ejecutar compute_poc ni avanzar prev_frame_num,
+        // prev_frame_num sigue en 0. Para fn 1 (1 >= 0), no hay vuelta: POC = 2*(0+1) = 2.
+        // Si el corte redundante hubiese ejecutado compute_poc con fn 2,
+        // prev_frame_num habría pasado a 2, por lo que para fn 1 (1 < 2) se detectaría vuelta
+        // sumando 16 a offset y derivando POC = 2*(16+1) = 34 != 2.
+        let p1 = slice_p_annex_b(1, 2, 0, 0, 0, 100);
+        let f1 = d.decode(&p1).unwrap();
+        assert!(f1.is_some());
+        assert_eq!(d.last_poc(), 2);
+    }
+
+    /// Con tipo 0, los inexistentes deben filtrarse también de `greater`
+    /// para que no entren en List 1 (§8.2.4.2.3).
+    #[test]
+    fn tipo0_inexistentes_excluidos_de_greater_y_l1() {
+        let mut d = Decoder::new();
+        let sps = sps_prueba(0, 4, None);
+        d.prev_ref_frame_num = 0;
+
+        // Inexistente fn 1 sintetizado en DPB con POC 0
+        d.insert_frame_num_gaps(2, 16, 4, 16, 16, &sps);
+
+        // Añadir una referencia válida con POC negativo (-4)
+        let mut p_neg = (*ref_at(0, 0)).clone();
+        p_neg.poc = -4;
+        d.refs.push(alloc::sync::Arc::new(p_neg));
+
+        // Para una imagen B con curr_poc = -2:
+        // El inexistente tiene POC 0 > curr_poc (-2) -> entraría en `greater`.
+        // En List 1, `greater` va al principio.
+        // Con el filtro activo en `greater`, el inexistente se excluye de `greater` y List 1
+        // solo contiene la referencia válida.
+        // Sin el filtro en `greater`, el inexistente entraría en `greater`
+        // y aparecería en List 1 en el índice 0 con POC 0.
+        let (_, l1) = build_ref_list_b(
+            &d.refs,
+            &ContextoListaB {
+                curr_poc: -2,
+                curr_frame_num: 3,
+                max_frame_num: 16,
+                num0: 2,
+                num1: 2,
+                mods0: &[],
+                mods1: &[],
+                pic_order_cnt_type: 0,
+            },
+        )
+        .unwrap();
+
+        assert_eq!(l1.len(), 1);
+        assert_eq!(l1[0].poc, -4);
+        assert!(!l1[0].is_non_existing());
+    }
+
+    /// Con tipo 0, los inexistentes deben filtrarse de `long` de forma defensiva (§8.2.4.2.3).
+    #[test]
+    fn tipo0_inexistentes_excluidos_de_long_si_estuviesen_marcados() {
+        let mut d = Decoder::new();
+        let sps = sps_prueba(0, 4, None);
+        d.prev_ref_frame_num = 0;
+        d.insert_frame_num_gaps(2, 16, 4, 16, 16, &sps);
+        // Forzar marcaje long_term en el inexistente para verificar el filtro unificado en long
+        let mut ne_long = (*d.refs[0]).clone();
+        ne_long.long_term = true;
+        ne_long.long_term_idx = 0;
+        d.refs[0] = alloc::sync::Arc::new(ne_long);
+
+        // Añadir una referencia válida a largo plazo
+        let mut ref_valida = (*ref_at(0, 0)).clone();
+        ref_valida.long_term = true;
+        ref_valida.long_term_idx = 1;
+        d.refs.push(alloc::sync::Arc::new(ref_valida));
+
+        let (l0, l1) = build_ref_list_b(
+            &d.refs,
+            &ContextoListaB {
+                curr_poc: 0,
+                curr_frame_num: 3,
+                max_frame_num: 16,
+                num0: 2,
+                num1: 2,
+                mods0: &[],
+                mods1: &[],
+                pic_order_cnt_type: 0,
+            },
+        )
+        .unwrap();
+
+        assert_eq!(l0.len(), 1);
+        assert!(!l0[0].is_non_existing());
+        assert_eq!(l1.len(), 1);
+        assert!(!l1[0].is_non_existing());
+    }
+
+    /// Criterio E extremo a extremo (Tipo 0): decodificación completa mediante `Decoder::decode`
+    /// con flujo Annex-B sintético. El corte B decodifica un macrobloque con referencia
+    /// a List0[1] (imagen primaria P con luma 192), comprobando que el inexistente fn 1
+    /// fue filtrado (sin el filtro daría luma 128 del inexistente).
+    #[test]
+    fn e_oraculo_end_to_end_tipo0() {
+        let mut d = Decoder::new();
+        let (_, sps_nal) = sps_annex_b(0, 4, None);
+        let pps_nal = pps_annex_b(0, 0);
+        d.decode(&sps_nal).unwrap();
+        d.decode(&pps_nal).unwrap();
+
+        // 1. IDR fn 0, poc_lsb = 0 -> POC 0. Luma = 64.
+        let idr = slice_idr_annex_b(0, 0, 0, 64);
+        let f0 = d.decode(&idr).unwrap();
+        assert!(f0.is_some());
+        assert_eq!(d.last_poc(), 0);
+
+        // 2. P fn 2 (gap en fn 1 sintetiza inexistente con POC 0 y luma 128)
+        // P tiene poc_lsb = 4 -> POC 4. Luma = 192.
+        let p_slice = slice_p_annex_b(2, 0, 4, 0, 0, 192);
+        let f1 = d.decode(&p_slice).unwrap();
+        assert!(f1.is_some());
+        assert_eq!(d.last_poc(), 4);
+
+        // 3. B fn 3, poc_lsb = 2 -> POC 2.
+        // List0 con tipo 0 filtra el inexistente fn 1:
+        // less (poc < 2): [fn 0 (poc 0, luma 64)]
+        // greater (poc > 2): [fn 2 (poc 4, luma 192)]
+        // List0 = [fn 0, fn 2]
+        // Pedimos ref_idx_l0 = 1 -> referencia fn 2 con luma 192.
+        let b_slice = slice_b_annex_b(3, 0, 2, 0, 1);
+        let fb = d.decode(&b_slice).unwrap();
+        assert!(fb.is_some());
+        assert_eq!(d.last_poc(), 2);
+        let luma_pixel = fb.unwrap().y[0];
+        assert_eq!(luma_pixel, 192);
+    }
+
+    /// Criterio E extremo a extremo (Tipo 1, caso cerrado acordado):
+    /// SPS ciclo [4], offset_for_non_ref_pic = 0, delta_pic_order_always_zero_flag = 0.
+    /// Pic 0: IDR fn 0, POC 0, luma 64.
+    /// Hueco en fn 1: inexistente con POC 4 derivado (luma 128).
+    /// Pic 1: P fn 2, delta_poc0 = 0 -> POC 8, luma 192.
+    /// Corte B: fn 3, no-ref, delta_poc0 = -6 -> curr_poc = 8 - 6 = 2.
+    /// Macrobloque B con ref_idx_l0 = 0.
+    /// List0 = [P0 (poc 0, luma 64), NE (poc 4, luma 128), P1 (poc 8, luma 192)].
+    /// ref_idx_l0 = 0 -> P0 (luma 64).
+    /// Si el inexistente tuviese POC 0, aparecería en List0[0] dando luma 128.
+    #[test]
+    fn e_oraculo_end_to_end_tipo1_acordado() {
+        let mut d = Decoder::new();
+        let (_, sps_nal) = sps_annex_b(1, 4, Some(&[4]));
+        let pps_nal = pps_annex_b(0, 0);
+        d.decode(&sps_nal).unwrap();
+        d.decode(&pps_nal).unwrap();
+
+        // 1. IDR fn 0 -> POC 0. Luma = 64.
+        let idr = slice_idr_annex_b(1, 0, 0, 64);
+        let f0 = d.decode(&idr).unwrap();
+        assert!(f0.is_some());
+        assert_eq!(d.last_poc(), 0);
+
+        // 2. P fn 2 (gap en fn 1: POC 4 derivado, luma 128)
+        // P fn 2: delta_poc0 = 0 -> POC 8. Luma = 192.
+        let p_slice = slice_p_annex_b(2, 1, 0, 0, 0, 192);
+        let f1 = d.decode(&p_slice).unwrap();
+        assert!(f1.is_some());
+        assert_eq!(d.last_poc(), 8);
+
+        // 3. B fn 3: delta_poc0 = -6 -> curr_poc = 2.
+        // List0[0] = fn 0 (poc 0, luma 64).
+        // ref_idx_l0 = 0 -> selecciona luma 64.
+        let b_slice = slice_b_annex_b(3, 1, 0, -6, 0);
+        let fb = d.decode(&b_slice).unwrap();
+        assert!(fb.is_some());
+        assert_eq!(d.last_poc(), 2);
+        let luma_pixel = fb.unwrap().y[0];
+        assert_eq!(luma_pixel, 64);
+    }
+
+    /// Criterio E extremo a extremo (Tipo 1, caso con delta en P):
+    /// El inexistente fn 1 deriva su POC con `compute_poc` (POC 4) y entra en List0.
+    /// El corte B selecciona ref_idx_l0 = 1 (fn 2 con luma 192).
+    #[test]
+    fn e_oraculo_end_to_end_tipo1() {
+        let mut d = Decoder::new();
+        let (_, sps_nal) = sps_annex_b(1, 4, Some(&[4]));
+        let pps_nal = pps_annex_b(0, 0);
+        d.decode(&sps_nal).unwrap();
+        d.decode(&pps_nal).unwrap();
+
+        // 1. IDR fn 0 -> POC 0. Luma = 64.
+        let idr = slice_idr_annex_b(1, 0, 0, 64);
+        let f0 = d.decode(&idr).unwrap();
+        assert!(f0.is_some());
+        assert_eq!(d.last_poc(), 0);
+
+        // 2. P fn 2 (gap en fn 1: abs 1 -> esperado 4 -> poc 4, luma 128)
+        // P fn 2: abs 2 -> esperado 8. delta_poc_0 = -6 -> POC = 8 - 6 = 2. Luma = 192.
+        let p_slice = slice_p_annex_b(2, 1, 0, -6, 0, 192);
+        let f1 = d.decode(&p_slice).unwrap();
+        assert!(f1.is_some());
+        assert_eq!(d.last_poc(), 2);
+
+        // 3. B slice fn 3: abs 3 - 1 = 2 -> esperado 8. delta_poc_0 = -2 -> POC = 8 - 2 = 6.
+        // curr_poc = 6.
+        // En tipo 1 los inexistentes derivan POC (fn 1 tiene POC 4) y entran en List0.
+        // less (poc < 6, orden descendente): [fn 1 (poc 4, luma 128), fn 2 (poc 2, luma 192), fn 0 (poc 0, luma 64)].
+        // List0[0] = fn 1 (poc 4, luma 128).
+        // List0[1] = fn 2 (poc 2, luma 192).
+        // ref_idx_l0 = 1 -> referencia fn 2 con luma 192.
+        let b_slice = slice_b_annex_b(3, 1, 0, -2, 1);
+        let fb = d.decode(&b_slice).unwrap();
+        assert!(fb.is_some());
+        assert_eq!(d.last_poc(), 6);
+        let luma_pixel = fb.unwrap().y[0];
+        assert_eq!(luma_pixel, 192);
     }
 }

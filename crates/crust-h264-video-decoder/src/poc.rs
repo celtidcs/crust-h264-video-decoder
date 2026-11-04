@@ -1,6 +1,6 @@
 //! Derivación del recuento de orden de imagen (`PicOrderCnt`, UIT-T H.264 §8.2.1).
 //!
-//! Mantiene el estado entre imágenes de referencia para calcular `PicOrderCnt` en los
+//! Mantiene el estado entre imágenes en orden de decodificación para calcular `PicOrderCnt` en los
 //! modos de tipo 0 (§8.2.1.1), tipo 1 (§8.2.1.2) y tipo 2 (§8.2.1.3), así como el
 //! reajuste tras una operación `MMCO 5` (§8.2.5.4.5).
 
@@ -107,11 +107,9 @@ impl PocState {
         let bottom = top
             .saturating_add(i64::from(sps.offset_for_top_to_bottom_field))
             .saturating_add(d1);
-        if nal_ref_idc != 0 {
-            self.prev_frame_num_offset = offset;
-            self.prev_frame_num = frame_num;
-            self.prev_has_mmco5 = false;
-        }
+        self.prev_frame_num_offset = offset;
+        self.prev_frame_num = frame_num;
+        self.prev_has_mmco5 = false;
         #[allow(clippy::cast_possible_truncation)]
         {
             top.min(bottom)
@@ -180,11 +178,9 @@ impl PocState {
                 } else {
                     2 * (offset + i64::from(frame_num)) - i64::from(nal_ref_idc == 0)
                 };
-                if nal_ref_idc != 0 {
-                    self.prev_frame_num_offset = offset;
-                    self.prev_frame_num = frame_num;
-                    self.prev_has_mmco5 = false;
-                }
+                self.prev_frame_num_offset = offset;
+                self.prev_frame_num = frame_num;
+                self.prev_has_mmco5 = false;
                 #[allow(clippy::cast_possible_truncation)]
                 {
                     poc as i32

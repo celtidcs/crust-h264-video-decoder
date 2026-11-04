@@ -28,6 +28,7 @@ pub(crate) struct ContextoListaB<'a> {
     pub num1: usize,
     pub mods0: &'a [(u32, u32)],
     pub mods1: &'a [(u32, u32)],
+    pub pic_order_cnt_type: u32,
 }
 
 /// Parses a `ref_pic_list_modification` command list (spec §7.3.3.1) into
@@ -91,17 +92,23 @@ pub(crate) fn build_ref_list_b(
     dpb: &[Ref],
     ctx: &ContextoListaB<'_>,
 ) -> Result<(Vec<Ref>, Vec<Ref>), DecodeError> {
-    let mut less: Vec<Ref> = dpb
+    // UIT-T H.264 §8.2.4.2.3: con pic_order_cnt_type == 0 los fotogramas inexistentes
+    // no se incluyen en RefPicList0 ni RefPicList1.
+    let filtrar_inexistentes = ctx.pic_order_cnt_type == 0;
+    let candidatos = dpb
         .iter()
+        .filter(|r| !(filtrar_inexistentes && r.is_non_existing()));
+    let mut less: Vec<Ref> = candidatos
+        .clone()
         .filter(|r| !r.is_long_term() && r.pic_poc() < ctx.curr_poc)
         .cloned()
         .collect();
-    let mut greater: Vec<Ref> = dpb
-        .iter()
+    let mut greater: Vec<Ref> = candidatos
+        .clone()
         .filter(|r| !r.is_long_term() && r.pic_poc() > ctx.curr_poc)
         .cloned()
         .collect();
-    let mut long: Vec<Ref> = dpb.iter().filter(|r| r.is_long_term()).cloned().collect();
+    let mut long: Vec<Ref> = candidatos.filter(|r| r.is_long_term()).cloned().collect();
     less.sort_by_key(|r| core::cmp::Reverse(r.pic_poc())); // nearest past first
     greater.sort_by_key(|r| r.pic_poc()); // nearest future first
     long.sort_by_key(|r| r.lt_idx());

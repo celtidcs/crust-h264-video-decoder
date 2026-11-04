@@ -793,6 +793,7 @@ impl FrameDecoder {
             w4,
             long_term: false,
             long_term_idx: 0,
+            non_existing: false,
             pic_id: crate::next_pic_id(),
         }
     }
